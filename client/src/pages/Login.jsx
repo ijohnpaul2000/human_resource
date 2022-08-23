@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 
+//* React-Router-DOM IMPORTS
+import { useNavigate } from "react-router-dom";
+
 //* REDUX IMPORTS
-import { useSelector, useDispatch } from "react-redux";
-import { LOGIN } from "../redux/features/authReducer";
+import { useDispatch } from "react-redux";
+import { LOGIN, RESET_STATE } from "../redux/features/authReducer";
 
 //* FORM IMPORTS
 import { initialValues, validationSchema } from "../yupUtils/auth/Login";
@@ -15,17 +18,32 @@ import { ToastContainer } from "react-toastify";
 
 const Login = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       let URL = "http://localhost:5000/api/auth";
-      const response = await axios.post(URL, values);
-      const data = await response.data;
-      await dispatch(LOGIN(data));
-      notifyToast("Login Successful", "success");
+
+      try {
+        const response = await axios.post(URL, values);
+        const data = await response.data;
+        await dispatch(LOGIN(data));
+        notifyToast("Login Successful", "success");
+        setTimeout(() => {
+          navigate("/dashboard");
+        }, 2000);
+      } catch (error) {
+        console.log(error);
+        notifyToast(error.response.data.message, "error");
+      }
     },
   });
+
+  useEffect(() => {
+    dispatch(RESET_STATE());
+  }, [dispatch]);
 
   return (
     <div className="h-screen font-poppins">
