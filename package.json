@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server": "nodemon server/app.js"
+    "server": "nodemon server/app.js",
+    "client": "npm start --prefix client",
+    "start": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [],
   "author": "",
@@ -21,6 +23,7 @@
     "moment": "^2.29.4",
     "mysql2": "^2.3.3",
     "nodemon": "^2.0.19",
+    "react-toastify": "^9.0.8",
     "sequelize": "^6.21.4",
     "sequelize-cli": "^6.4.1",
     "uuid": "^8.3.2"

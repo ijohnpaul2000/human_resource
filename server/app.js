@@ -2,23 +2,29 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 require("dotenv").config({ path: "../.env" });
+const { errorHandler } = require("./middlewares/errorMiddleware");
 
 //* ROUTES IMPORTS
 const userRoutes = require("./routes/userRoutes");
+const authRoutes = require("./routes/authRoutes");
 
 //* ENV Variables
 const PORT = process.env.PORT || 5000;
 
-//* Middlewares
+//* Express Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({ origin: "http://localhost:3000" }));
 
 //* Routers
 app.use("/api/users", userRoutes);
+app.use("/api/auth", authRoutes);
 
 //* Database
 const db = require("./models");
+
+//* App Middleware
+app.use(errorHandler);
 
 db.sequelize.sync().then(() => {
   app.listen(PORT, () => {
