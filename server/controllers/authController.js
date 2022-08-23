@@ -21,6 +21,8 @@ const login = expressAsyncHandler(async (req, res) => {
   res.status(200).json({
     id: user.id,
     username: user.username,
+    date_added: user.date_added,
+    hashedPassword: user.password,
     user_level: user.user_level,
     token: generateToken(user.id),
   });

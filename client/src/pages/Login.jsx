@@ -30,6 +30,7 @@ const Login = () => {
         const response = await axios.post(URL, values);
         const data = await response.data;
         await dispatch(LOGIN(data));
+
         notifyToast("Login Successful", "success");
         setTimeout(() => {
           navigate("/dashboard");
@@ -58,6 +59,12 @@ const Login = () => {
         {/* RIGHT PANEL */}
         <div className="h-full px-4">
           <div className="grid place-content-center h-full bg-white">
+            <h1>Super User: superuserOTFSAC</h1>
+            <h1>Password: superuserOTFSAC</h1>
+            <h1>Admin: AdminOTFSAC</h1>
+            <h1>Password: AdminOTFSAC</h1>
+            <br />
+
             <form onSubmit={formik.handleSubmit} className="max-w-[400px]">
               <h1 className="text-4xl font-medium text-gray-700 mb-10">
                 Welcome to{" "}

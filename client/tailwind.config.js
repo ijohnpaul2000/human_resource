@@ -6,6 +6,9 @@ module.exports = {
       fontFamily: {
         poppins: "Poppins",
       },
+      fontSize: {
+        fsXL: "clamp(1rem, 7vw + 1rem, 5rem)",
+      },
     },
   },
   plugins: [],
