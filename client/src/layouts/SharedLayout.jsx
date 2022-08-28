@@ -5,7 +5,7 @@ import { FaBars } from "react-icons/fa";
 
 //REDUX
 import { useDispatch, useSelector } from "react-redux";
-import { toggleSidebar } from "../redux/features/sidebarReducer";
+import { TOGGLE_SIDEBAR } from "../redux/features/sidebarReducer";
 
 const SharedLayout = () => {
   const dispatch = useDispatch();
@@ -15,13 +15,17 @@ const SharedLayout = () => {
     <>
       <Sidebar />
       <div
-        className={`relative flex  ${
+        className={`relative block p-4 ${
           isSidebarOpen
-            ? " left-[250px] h-screen  w-[calc(100%-250px)]"
+            ? " left-[250px] h-screen  w-[calc(100%-250px)] "
             : "w-full"
         }`}
       >
-        <FaBars onClick={() => dispatch(toggleSidebar())} />
+        <FaBars
+          onClick={() => dispatch(TOGGLE_SIDEBAR())}
+          className="mb-5"
+          size={20}
+        />
         <Outlet />
       </div>
     </>

@@ -9,7 +9,7 @@
     @apply p-4 flex items-center duration-300;
   }
   li:hover {
-    @apply bg-gray-100;
+    @apply bg-gray-100 text-black;
   }
   li svg {
     @apply mr-3;

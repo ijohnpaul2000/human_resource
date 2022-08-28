@@ -1,4 +1,6 @@
 import React from "react";
+import { sidebarData } from "../data/sidebarData";
+
 import { AiOutlineDatabase, AiOutlineHome } from "react-icons/ai";
 import { IoStatsChartSharp, IoSettingsOutline } from "react-icons/io5";
 import { HiOutlineChevronRight } from "react-icons/hi";
@@ -7,12 +9,20 @@ import { IoLogOutOutline } from "react-icons/io5";
 
 //REDUX
 import { useDispatch, useSelector } from "react-redux";
-import { toggleSidebar, toggleSubMenu } from "../redux/features/sidebarReducer";
+import {
+  TOGGLE_SIDEBAR,
+  TOGGLE_SUBMENU,
+  SET_LINK_ACTIVE,
+} from "../redux/features/sidebarReducer";
+import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
   const isSidebarOpen = useSelector((state) => state.sidebar.isSidebarOpen);
   const isSubMenuOpen = useSelector((state) => state.sidebar.isSubMenuOpen);
+  const linkActive = useSelector((state) => state.sidebar.linkActive);
+
+  console.log(sidebarData);
 
   return (
     <header
@@ -24,7 +34,7 @@ const Sidebar = () => {
         <MdOutlineSecurity
           size={35}
           onClick={() => {
-            dispatch(toggleSidebar());
+            dispatch(TOGGLE_SIDEBAR());
           }}
         />
 
@@ -34,38 +44,64 @@ const Sidebar = () => {
       </div>
       <nav>
         <ul>
-          <li>
-            <AiOutlineHome /> Dashboard
-          </li>
+          <Link
+            to="/dashboard"
+            onClick={() => dispatch(SET_LINK_ACTIVE("Dashboard"))}
+          >
+            <li
+              className={`${
+                linkActive === "Dashboard" && "bg-gray-700 text-white"
+              }`}
+            >
+              <AiOutlineHome /> Dashboard
+            </li>
+          </Link>
           <div className="">
-            <li onClick={() => dispatch(toggleSubMenu())}>
+            <li onClick={() => dispatch(TOGGLE_SUBMENU())}>
               <AiOutlineDatabase />
               Hiring Process Menu{" "}
               <HiOutlineChevronRight
                 className={`ml-4 ${isSubMenuOpen ? "rotate-90 " : ""}`}
               />
             </li>
+
+            {/* MAPPING LINKS FOR HIRING PROCESS */}
+
             <div className={`${isSubMenuOpen ? "" : "hidden"}`}>
-              <li>
-                <span>Applicant Screening</span>
-              </li>
-              <li>
-                <span>Applicant Requirements</span>
-              </li>
-              <li>
-                <span>Applicant Appointment</span>
-              </li>
-              <li>
-                <span>Applicant Status</span>
-              </li>
-              <li>
-                <span>Applicant Examination</span>
-              </li>
+              {sidebarData.map((item) => (
+                <Link
+                  to={item.path}
+                  onClick={() => {
+                    dispatch(SET_LINK_ACTIVE(item.title));
+                    console.log(item.title);
+                  }}
+                >
+                  <li
+                    className={`${
+                      linkActive === item.title && "bg-gray-700 text-white"
+                    } `}
+                  >
+                    {item.title}
+                  </li>
+                </Link>
+              ))}
             </div>
           </div>
-          <li>
-            <IoStatsChartSharp /> Reports
-          </li>
+
+          <Link
+            to="/reports"
+            onClick={() => dispatch(SET_LINK_ACTIVE("Reports"))}
+          >
+            <li
+              className={`${
+                linkActive === "Reports" && "bg-gray-700 text-white"
+              } `}
+            >
+              <IoStatsChartSharp /> Reports
+            </li>
+          </Link>
+
+          {/* //TODO: ADD DIALOG FOR PREFERENCES NO NEED TO SET LINK ACTIVE BECAUSE IT'S A DIALOG*/}
           <li>
             <IoSettingsOutline />
             Preferences
