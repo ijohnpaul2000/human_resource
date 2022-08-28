@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { sidebarData } from "../data/sidebarData";
 
 import { AiOutlineDatabase, AiOutlineHome } from "react-icons/ai";
@@ -13,6 +13,7 @@ import {
   TOGGLE_SIDEBAR,
   TOGGLE_SUBMENU,
   SET_LINK_ACTIVE,
+  RESET_STATE as RESET_SIDEBAR_STATE,
 } from "../redux/features/sidebarReducer";
 import { Link } from "react-router-dom";
 
@@ -22,7 +23,9 @@ const Sidebar = () => {
   const isSubMenuOpen = useSelector((state) => state.sidebar.isSubMenuOpen);
   const linkActive = useSelector((state) => state.sidebar.linkActive);
 
-  console.log(sidebarData);
+  useEffect(() => {
+    dispatch(RESET_SIDEBAR_STATE());
+  }, []);
 
   return (
     <header
@@ -42,7 +45,7 @@ const Sidebar = () => {
           Orion Task Force Security Agency Co.,
         </h1>
       </div>
-      <nav>
+      <nav className="mt-8">
         <ul>
           <Link
             to="/dashboard"

@@ -6,10 +6,16 @@ import { FaBars } from "react-icons/fa";
 //REDUX
 import { useDispatch, useSelector } from "react-redux";
 import { TOGGLE_SIDEBAR } from "../redux/features/sidebarReducer";
+import NotAuthenticated from "../pages/NotAuthenticated";
 
 const SharedLayout = () => {
   const dispatch = useDispatch();
   const isSidebarOpen = useSelector((state) => state.sidebar.isSidebarOpen);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
+  if (!isAuthenticated) {
+    return <NotAuthenticated />;
+  }
 
   return (
     <>

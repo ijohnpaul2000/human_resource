@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Error404 = () => {
+const NotAuthenticated = () => {
   return (
     <div className="h-screen px-4 font-poppins">
       <div className="h-full grid place-content-center">
@@ -18,4 +18,4 @@ const Error404 = () => {
   );
 };
 
-export default Error404;
+export default NotAuthenticated;
