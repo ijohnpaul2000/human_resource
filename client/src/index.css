@@ -3,3 +3,18 @@
 @tailwind utilities;
 
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+@layer base {
+  li {
+    @apply p-4 flex items-center duration-300;
+  }
+  li:hover {
+    @apply bg-gray-100;
+  }
+  li svg {
+    @apply mr-3;
+  }
+  li span {
+    @apply ml-10;
+  }
+}
