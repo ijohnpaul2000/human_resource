@@ -1,3 +1,5 @@
+const moment = require("moment");
+
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
     "User",
@@ -30,10 +32,12 @@ module.exports = (sequelize, DataTypes) => {
       user_level: {
         type: DataTypes.STRING,
         allowNull: false,
+        defaultValue: "user",
       },
       date_added: {
         type: DataTypes.DATEONLY,
         allowNull: false,
+        defaultValue: moment().format("YYYY-MM-DD"),
       },
       email: {
         type: DataTypes.STRING,

@@ -6,6 +6,7 @@ import { persistStore, persistReducer } from "redux-persist";
 import thunk from "redux-thunk";
 
 import authReducer from "./features/authReducer";
+import appReducer from "./features/appReducer";
 
 const persisConfig = {
   key: "root",
@@ -14,6 +15,7 @@ const persisConfig = {
 
 const rootReducer = combineReducers({
   auth: authReducer,
+  app: appReducer,
 });
 const persistedReducer = persistReducer(persisConfig, rootReducer);
 export const store = configureStore({

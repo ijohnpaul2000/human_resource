@@ -22,7 +22,7 @@ const POSTuser = expressAsyncHandler(async (req, res) => {
   const existingUser = await User.findOne({ where: { username } });
 
   if (existingUser) {
-    return res.status(400).send("User already exists");
+    return res.status(400).json({ message: "User already exists" });
   }
 
   const gensalt = 10;
