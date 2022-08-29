@@ -1,4 +1,5 @@
 const Applicant = require("../models").Applicant;
+
 const expressAsyncHandler = require("express-async-handler");
 const moment = require("moment");
 const { v4 } = require("uuid");
@@ -24,8 +25,9 @@ const POSTapplicant = expressAsyncHandler(async (req, res) => {
     citizenship,
     educational_background,
     civil_status,
-    employment_status,
-    employment_notes,
+    applicant_status,
+    application_status,
+    application_notes,
     isRequirementComplete,
     religion,
   } = req.body;
@@ -35,6 +37,8 @@ const POSTapplicant = expressAsyncHandler(async (req, res) => {
   if (existingApplicant) {
     return res.status(400).json({ message: "Applicant already exists" });
   }
+
+  const formattedDate = moment(birthdate).format("YYYY-MM-DD");
 
   try {
     const newApplicant = {
@@ -48,14 +52,15 @@ const POSTapplicant = expressAsyncHandler(async (req, res) => {
       email,
       address,
       city,
-      birthdate,
+      birthdate: formattedDate,
       birthplace,
       sex,
       citizenship,
       educational_background,
       civil_status,
-      employment_status,
-      employment_notes,
+      applicant_status,
+      application_status,
+      application_notes,
       isRequirementComplete,
       religion,
     };
@@ -63,6 +68,7 @@ const POSTapplicant = expressAsyncHandler(async (req, res) => {
     await Applicant.create(newApplicant);
     res.status(200).json(newApplicant);
   } catch (error) {
+    console.log(error);
     res
       .status(500)
       .json({ message: "Something went wrong! Please try again later." });
@@ -137,10 +143,19 @@ const PUTapplicant = expressAsyncHandler(async (req, res) => {
 const DELETEapplicant = expressAsyncHandler(async (req, res) => {
   const { applicant_id } = req.params;
 
+  const existingApplicant = await Applicant.findOne({
+    where: { id: applicant_id },
+  });
+
+  if (!existingApplicant) {
+    return res.status(400).json({ message: "Applicant does not exist" });
+  }
+
   try {
     await Applicant.destroy({ where: { id: applicant_id } });
     res.status(200).json({ message: "Applicant deleted successfully" });
   } catch (error) {
+    console.log(error);
     res
       .status(500)
       .json({ message: "Something went wrong! Please try again later." });

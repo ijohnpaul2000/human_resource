@@ -70,11 +70,15 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      employment_status: {
+      applicant_status: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      employment_notes: {
+      application_status: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      application_notes: {
         type: DataTypes.STRING,
         allowNull: false,
       },

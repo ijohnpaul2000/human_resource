@@ -8,6 +8,7 @@ const { errorHandler } = require("./middlewares/errorMiddleware");
 const userRoutes = require("./routes/userRoutes");
 const authRoutes = require("./routes/authRoutes");
 const applicantRoutes = require("./routes/applicantRoutes");
+const appointmentRoutes = require("./routes/appointmentRoutes");
 
 //* ENV Variables
 const PORT = process.env.PORT || 5000;
@@ -21,6 +22,7 @@ app.use(cors({ origin: "http://localhost:3000" }));
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/applicants", applicantRoutes);
+app.use("/api/appointments", appointmentRoutes);
 
 //* Database
 const db = require("./models");

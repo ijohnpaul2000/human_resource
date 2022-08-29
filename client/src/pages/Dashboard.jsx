@@ -5,7 +5,7 @@ const Dashboard = () => {
   return (
     <div className="">
       <div className="header">Dashboard</div>
-      <div className="flex flex-wrap mt-6 -mx-3">
+      <div className="flex flex-wrap ">
         <div className="m-4 w-80">
           <div className="after:opacity-95 after:bg-gradient-to-tl after:from-cyan-900 after:to-cyan-800 relative flex min-w-0 flex-col items-center break-words rounded-2xl border-0 border-solid border-blue-900 bg-white bg-clip-border shadow-none after:absolute after:top-0 after:bottom-0 after:left-0 after:z-10 after:block after:h-full after:w-full after:rounded-2xl after:content-['']">
             <div className="mb-7.5 absolute h-full w-full rounded-2xl bg-cover bg-center"></div>
