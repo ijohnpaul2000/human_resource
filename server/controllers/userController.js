@@ -7,7 +7,6 @@ const bcrypt = require("bcryptjs");
 //@desc Create a new user
 //@access Public
 const POSTuser = expressAsyncHandler(async (req, res) => {
-  console.log(req);
   const {
     firstname,
     middlename,

@@ -27,9 +27,10 @@ const POSTappointment = expressAsyncHandler(async (req, res) => {
   });
 
   if (existingAppointment) {
-    return res
-      .status(400)
-      .json({ message: "This applicant has existing appointment." });
+    return res.status(400).json({
+      message:
+        "This applicant has existing appointment. Either Update or Delete the requirements record.",
+    });
   }
 
   if (!existingApplicant) {
@@ -48,11 +49,11 @@ const POSTappointment = expressAsyncHandler(async (req, res) => {
     };
 
     const createdAppointment = await Appointment.create(newAppointment);
-
-    res.status(201).json(createdAppointment);
+    res.status(200).json(createdAppointment);
   } catch (error) {
-    console.log(error);
-    res.status(400).json({ message: error.message });
+    res
+      .status(500)
+      .json({ message: "Something went wrong! Please try again later." });
   }
 });
 
@@ -60,8 +61,14 @@ const POSTappointment = expressAsyncHandler(async (req, res) => {
 // @desc Get all appointments
 // @access Public
 const GETappointments = expressAsyncHandler(async (req, res) => {
-  const appointments = await Appointment.findAll();
-  res.status(200).json(appointments);
+  try {
+    const appointments = await Appointment.findAll();
+    res.status(200).json(appointments);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Something went wrong! Please try again later." });
+  }
 });
 
 // @route GET /api/appointments/:id
@@ -70,17 +77,25 @@ const GETappointments = expressAsyncHandler(async (req, res) => {
 const GETappointmentById = expressAsyncHandler(async (req, res) => {
   const { applicant_id } = req.params;
 
-  const applicantWithAppointment = await Applicant.findByPk(applicant_id);
-  const appointment = await Appointment.findOne({ where: { applicant_id } });
+  try {
+    const applicant = await Applicant.findByPk(applicant_id);
+    const appointment = await Appointment.findOne({
+      where: { applicant_id },
+    });
 
-  if (!applicantWithAppointment) {
-    return res.status(404).json({ message: "Appointment not found" });
+    if (!applicant) {
+      return res.status(404).json({ message: "Appointment not found" });
+    }
+
+    res.status(200).json({
+      applicant,
+      appointment,
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Something went wrong! Please try again later." });
   }
-
-  res.status(200).json({
-    applicant: applicantWithAppointment,
-    appointment,
-  });
 });
 
 // @route PUT /api/appointments/:id
