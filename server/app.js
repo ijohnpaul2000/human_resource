@@ -7,6 +7,7 @@ const { errorHandler } = require("./middlewares/errorMiddleware");
 //* ROUTES IMPORTS
 const userRoutes = require("./routes/userRoutes");
 const authRoutes = require("./routes/authRoutes");
+const applicantRoutes = require("./routes/applicantRoutes");
 
 //* ENV Variables
 const PORT = process.env.PORT || 5000;
@@ -19,6 +20,7 @@ app.use(cors({ origin: "http://localhost:3000" }));
 //* Routers
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/applicants", applicantRoutes);
 
 //* Database
 const db = require("./models");

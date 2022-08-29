@@ -17,7 +17,6 @@ const POSTuser = expressAsyncHandler(async (req, res) => {
     user_level,
     email,
   } = req.body;
-  const date_added = new Date();
 
   const existingUser = await User.findOne({ where: { username } });
 
@@ -38,13 +37,14 @@ const POSTuser = expressAsyncHandler(async (req, res) => {
       password: hashedPassword,
       user_level,
       email,
-      date_added,
     };
 
     await User.create(newUser);
     res.status(200).json(newUser);
   } catch (err) {
-    console.log(err);
+    res
+      .status(500)
+      .json({ message: "Something went wrong! Please try again later." });
   }
 });
 
@@ -52,8 +52,14 @@ const POSTuser = expressAsyncHandler(async (req, res) => {
 //@desc Get all users
 //@access Public
 const GETusers = expressAsyncHandler(async (req, res) => {
-  const users = await User.findAll();
-  res.status(200).json(users);
+  try {
+    const users = await User.findAll();
+    res.status(200).json(users);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Something went wrong! Please try again later." });
+  }
 });
 
 //@route GET /api/users/:id
@@ -61,8 +67,17 @@ const GETusers = expressAsyncHandler(async (req, res) => {
 //@access Public
 const GETuser = expressAsyncHandler(async (req, res) => {
   const { id } = req.params;
-  const user = await User.findOne({ where: { id } });
-  res.status(200).json(user);
+  try {
+    const user = await User.findOne({ where: { id } });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Something went wrong! Please try again later." });
+  }
 });
 
 //@route PUT /api/users/:id
@@ -90,7 +105,9 @@ const PUTuser = expressAsyncHandler(async (req, res) => {
     await User.update(updatedUser, { where: { id } });
     res.status(200).json({ message: "User updated successfully" });
   } catch (err) {
-    console.log(err);
+    res
+      .status(500)
+      .json({ message: "Something went wrong! Please try again later." });
   }
 });
 
@@ -109,7 +126,9 @@ const DELETEuser = expressAsyncHandler(async (req, res) => {
     await User.destroy({ where: { id } });
     res.status(200).json({ message: "User deleted successfully" });
   } catch (err) {
-    console.log(err);
+    res
+      .status(500)
+      .json({ message: "Something went wrong! Please try again later." });
   }
 });
 module.exports = { POSTuser, GETusers, GETuser, PUTuser, DELETEuser };
