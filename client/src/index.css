@@ -21,4 +21,36 @@
   .header {
     @apply font-bold text-2xl pb-4;
   }
+
+  .formFields {
+    @apply block w-full px-3 py-1.5 text-base font-normal rounded
+           transition text-gray-700 bg-white bg-clip-padding border 
+           border-solid border-gray-300 ease-in-out m-0 focus:text-gray-700 
+           focus:bg-white focus:border-blue-600 focus:outline-none;
+  }
+
+  .select-decorator {
+    @apply block appearance-none w-full bg-gray-200 text-gray-700 
+           py-3 px-4 pr-8 rounded leading-tight focus:bg-white;
+  }
+
+  .form-btn {
+    @apply px-6
+      py-3
+      my-4
+      bg-blue-600
+      text-white
+      font-medium
+      text-xs
+      leading-tight
+      uppercase
+      rounded
+      shadow-md
+      hover:bg-blue-700 hover:shadow-lg
+      focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
+      active:bg-blue-800 active:shadow-lg
+      transition
+      duration-150
+      ease-in-out;
+  }
 }
