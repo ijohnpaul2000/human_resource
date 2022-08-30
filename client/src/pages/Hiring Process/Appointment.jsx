@@ -1,8 +1,15 @@
 import React from "react";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
+import { Button } from "primereact/button";
+import { Dialog } from "primereact/dialog";
+import { useDispatch, useSelector } from "react-redux";
+import { IS_MODAL_OPENED } from "../../redux/features/appoinmentReducer";
+import AddAppointment from "../../components/AddAppointment";
 
 const Appointment = () => {
+  const dispatch = useDispatch();
+  const { isModalOpened } = useSelector((store) => store.appointment);
   const data = [
     {
       applicant_id: "b6f79a17-9056-4b05-9086-b32366de9939",
@@ -23,6 +30,21 @@ const Appointment = () => {
     { field: "appointment_type", header: "Appointment Type" },
   ];
 
+  const renderHeader = () => {
+    return (
+      <div className="flex align-items-center gap-4">
+        <Button
+          type="button"
+          label="Add Appointment"
+          icon="pi pi-plus"
+          className="p-button-success"
+          onClick={() => dispatch(IS_MODAL_OPENED(true))}
+          tooltipOptions={{ position: "bottom" }}
+        />
+      </div>
+    );
+  };
+
   const columnComponent = columns.map((item) => (
     <Column
       key={item.field}
@@ -39,84 +61,22 @@ const Appointment = () => {
     />
   ));
 
-  // const columns = () => {
-  //   return (
-  //     <>
-  //       <Column
-  //         field="applicant_id"
-  //         header="Applicant"
-  //         headerStyle={{
-  //           justifyContent: "center",
-  //           padding: "1rem 2rem",
-  //           wordBreak: "normal",
-  //           color: "#000",
-  //         }}
-  //         sortable
-  //         filter
-  //       />
-  //       <Column
-  //         field="appointment_date"
-  //         header="Appointment Date"
-  //         headerStyle={{
-  //           justifyContent: "center",
-  //           padding: "1rem 2rem",
-  //           wordBreak: "normal",
-  //         }}
-  //         sortable
-  //         filter
-  //       />
-  //       <Column
-  //         field="appointment_time"
-  //         header="Appointment Time"
-  //         headerStyle={{
-  //           justifyContent: "center",
-  //           padding: "1rem 2rem",
-  //           wordBreak: "normal",
-  //         }}
-  //         sortable
-  //         filter
-  //       />
-  //       <Column
-  //         field="appointment_location"
-  //         header="Appointment Location"
-  //         headerStyle={{
-  //           justifyContent: "center",
-  //           padding: "1rem 2rem",
-  //           wordBreak: "normal",
-  //         }}
-  //         sortable
-  //         filter
-  //       />
-  //       <Column
-  //         field="appointment_description"
-  //         header="Appointment Description"
-  //         headerStyle={{
-  //           justifyContent: "center",
-  //           padding: "1rem 2rem",
-  //           wordBreak: "normal",
-  //         }}
-  //         sortable
-  //         filter
-  //       />
-  //       <Column
-  //         field="appointment_type"
-  //         header="Appointment Type"
-  //         headerStyle={{
-  //           justifyContent: "center",
-  //           padding: "1rem 2rem",
-  //           wordBreak: "normal",
-  //         }}
-  //         sortable
-  //         filter
-  //       />
-  //     </>
-  //   );
-  // };
   return (
     <div>
-      <DataTable value={data} responsiveLayout="scroll">
+      <div className="header">Applicant Screening</div>
+      <DataTable value={data} responsiveLayout="scroll" header={renderHeader}>
         {columnComponent}
       </DataTable>
+      <Dialog
+        visible={isModalOpened}
+        header="New Appointment"
+        breakpoints={{ "960px": "75vw", "640px": "100vw" }}
+        style={{ width: "50vw" }}
+        modal
+        onHide={() => dispatch(IS_MODAL_OPENED(false))}
+      >
+        <AddAppointment />
+      </Dialog>
     </div>
   );
 };
