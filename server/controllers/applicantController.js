@@ -62,16 +62,12 @@ const POSTapplicant = expressAsyncHandler(async (req, res) => {
       application_status,
       application_notes,
       isRequirementComplete,
-      religion,
     };
 
     await Applicant.create(newApplicant);
     res.status(200).json(newApplicant);
   } catch (error) {
-    console.log(error);
-    res
-      .status(500)
-      .json({ message: "Something went wrong! Please try again later." });
+    res.status(500).json(error.errors[0].message);
   }
 });
 

@@ -13,81 +13,110 @@ const Appointment = () => {
       appointment_type: "1st Interview",
     },
   ];
-  const columns = () => {
-    return (
-      <>
-        <Column
-          field="applicant_id"
-          header="Applicant"
-          headerStyle={{
-            justifyContent: "center",
-            padding: "1rem 2rem",
-            wordBreak: "normal",
-          }}
-          sortable
-          filter
-        />
-        <Column
-          field="appointment_date"
-          header="Appointment Date"
-          headerStyle={{
-            justifyContent: "center",
-            padding: "1rem 2rem",
-            wordBreak: "normal",
-          }}
-          sortable
-          filter
-        />
-        <Column
-          field="appointment_time"
-          header="Appointment Time"
-          headerStyle={{
-            justifyContent: "center",
-            padding: "1rem 2rem",
-            wordBreak: "normal",
-          }}
-          sortable
-          filter
-        />
-        <Column
-          field="appointment_location"
-          header="Appointment Location"
-          headerStyle={{
-            justifyContent: "center",
-            padding: "1rem 2rem",
-            wordBreak: "normal",
-          }}
-          sortable
-          filter
-        />
-        <Column
-          field="appointment_description"
-          header="Appointment Description"
-          headerStyle={{
-            justifyContent: "center",
-            padding: "1rem 2rem",
-            wordBreak: "normal",
-          }}
-          sortable
-          filter
-        />
-        <Column
-          field="appointment_type"
-          header="Appointment Type"
-          headerStyle={{
-            justifyContent: "center",
-            padding: "1rem 2rem",
-            wordBreak: "normal",
-          }}
-          sortable
-          filter
-        />
-      </>
-    );
-  };
+
+  const columns = [
+    { field: "applicant_id", header: "Applicant ID" },
+    { field: "appointment_date", header: "Appointment Date" },
+    { field: "appointment_time", header: "Appointment Time" },
+    { field: "appointment_location", header: "Appointment Location" },
+    { field: "appointment_description", header: "Appointment Description" },
+    { field: "appointment_type", header: "Appointment Type" },
+  ];
+
+  const columnComponent = columns.map((item) => (
+    <Column
+      key={item.field}
+      field={item.field}
+      header={item.header}
+      headerStyle={{
+        justifyContent: "center",
+        padding: "1rem 2rem",
+        wordBreak: "normal",
+        color: "#000",
+      }}
+      sortable
+      filter
+    />
+  ));
+
+  // const columns = () => {
+  //   return (
+  //     <>
+  //       <Column
+  //         field="applicant_id"
+  //         header="Applicant"
+  //         headerStyle={{
+  //           justifyContent: "center",
+  //           padding: "1rem 2rem",
+  //           wordBreak: "normal",
+  //           color: "#000",
+  //         }}
+  //         sortable
+  //         filter
+  //       />
+  //       <Column
+  //         field="appointment_date"
+  //         header="Appointment Date"
+  //         headerStyle={{
+  //           justifyContent: "center",
+  //           padding: "1rem 2rem",
+  //           wordBreak: "normal",
+  //         }}
+  //         sortable
+  //         filter
+  //       />
+  //       <Column
+  //         field="appointment_time"
+  //         header="Appointment Time"
+  //         headerStyle={{
+  //           justifyContent: "center",
+  //           padding: "1rem 2rem",
+  //           wordBreak: "normal",
+  //         }}
+  //         sortable
+  //         filter
+  //       />
+  //       <Column
+  //         field="appointment_location"
+  //         header="Appointment Location"
+  //         headerStyle={{
+  //           justifyContent: "center",
+  //           padding: "1rem 2rem",
+  //           wordBreak: "normal",
+  //         }}
+  //         sortable
+  //         filter
+  //       />
+  //       <Column
+  //         field="appointment_description"
+  //         header="Appointment Description"
+  //         headerStyle={{
+  //           justifyContent: "center",
+  //           padding: "1rem 2rem",
+  //           wordBreak: "normal",
+  //         }}
+  //         sortable
+  //         filter
+  //       />
+  //       <Column
+  //         field="appointment_type"
+  //         header="Appointment Type"
+  //         headerStyle={{
+  //           justifyContent: "center",
+  //           padding: "1rem 2rem",
+  //           wordBreak: "normal",
+  //         }}
+  //         sortable
+  //         filter
+  //       />
+  //     </>
+  //   );
+  // };
   return (
     <div>
-      <DataTable value={data}>{columns}</DataTable>
+      <DataTable value={data} responsiveLayout="scroll">
+        {columnComponent}
+      </DataTable>
     </div>
   );
 };
