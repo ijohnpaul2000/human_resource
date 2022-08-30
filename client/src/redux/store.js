@@ -8,6 +8,7 @@ import thunk from "redux-thunk";
 import authReducer from "./features/authReducer";
 import appReducer from "./features/appReducer";
 import sidebarReducer from "./features/sidebarReducer";
+import appoinmentReducer from "./features/appoinmentReducer";
 
 const persisConfig = {
   key: "root",
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   app: appReducer,
   sidebar: sidebarReducer,
+  appointment: appoinmentReducer,
 });
 const persistedReducer = persistReducer(persisConfig, rootReducer);
 export const store = configureStore({
