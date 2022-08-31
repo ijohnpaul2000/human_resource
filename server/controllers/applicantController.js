@@ -62,6 +62,7 @@ const POSTapplicant = expressAsyncHandler(async (req, res) => {
       application_status,
       application_notes,
       isRequirementComplete,
+      religion,
     };
 
     await Applicant.create(newApplicant);

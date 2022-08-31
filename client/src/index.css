@@ -53,4 +53,8 @@
       duration-150
       ease-in-out;
   }
+
+  .p-dialog {
+    @apply md:max-w-[50%];
+  }
 }

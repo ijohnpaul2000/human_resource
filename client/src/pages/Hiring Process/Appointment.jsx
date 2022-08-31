@@ -1,15 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { useDispatch, useSelector } from "react-redux";
 import { IS_MODAL_OPENED } from "../../redux/features/appoinmentReducer";
+import { getApplicantsInfo } from "../../redux/features/appoinmentReducer";
 import AddAppointment from "../../components/AddAppointment";
 
 const Appointment = () => {
   const dispatch = useDispatch();
-  const { isModalOpened } = useSelector((store) => store.appointment);
+  const { isModalOpened, applicantInfo } = useSelector(
+    (store) => store.appointment
+  );
+
   const data = [
     {
       applicant_id: "b6f79a17-9056-4b05-9086-b32366de9939",
@@ -64,14 +68,15 @@ const Appointment = () => {
   return (
     <div>
       <div className="header">Applicant Screening</div>
+
       <DataTable value={data} responsiveLayout="scroll" header={renderHeader}>
         {columnComponent}
       </DataTable>
       <Dialog
         visible={isModalOpened}
         header="New Appointment"
-        breakpoints={{ "960px": "75vw", "640px": "100vw" }}
-        style={{ width: "50vw" }}
+        style={{ width: "700px" }}
+        className="p-fluid"
         modal
         onHide={() => dispatch(IS_MODAL_OPENED(false))}
       >
