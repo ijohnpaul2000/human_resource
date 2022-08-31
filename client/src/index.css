@@ -5,6 +5,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
 
 @layer base {
+  /* * {
+    @apply font-poppins;
+  } */
   li {
     @apply p-4 flex items-center duration-300;
   }

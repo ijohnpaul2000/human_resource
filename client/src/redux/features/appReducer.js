@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { notifyToast } from "../../helpers/notifyToast";
 
 const initialState = {
   isAppLoading: false,

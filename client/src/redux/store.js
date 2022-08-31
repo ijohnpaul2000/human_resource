@@ -9,6 +9,7 @@ import authReducer from "./features/authReducer";
 import appReducer from "./features/appReducer";
 import sidebarReducer from "./features/sidebarReducer";
 import appoinmentReducer from "./features/appoinmentReducer";
+import modalReducer from "./features/modalReducer";
 
 const persisConfig = {
   key: "root",
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   app: appReducer,
   sidebar: sidebarReducer,
   appointment: appoinmentReducer,
+  modal: modalReducer,
 });
 const persistedReducer = persistReducer(persisConfig, rootReducer);
 export const store = configureStore({

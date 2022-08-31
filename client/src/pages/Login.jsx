@@ -83,7 +83,7 @@ const Login = () => {
   }, [dispatch]);
 
   return (
-    <div className="h-screen font-poppins">
+    <div className="h-screen">
       <div className="grid grid-cols-1 md:grid-cols-[60%,40%] h-full">
         {/* LEFT PANEL */}
         <div className="h-full hidden md:grid md:place-content-center bg-gray-600 px-4 ">

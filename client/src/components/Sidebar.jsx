@@ -15,17 +15,31 @@ import {
   SET_LINK_ACTIVE,
   RESET_STATE as RESET_SIDEBAR_STATE,
 } from "../redux/features/sidebarReducer";
-import { Link } from "react-router-dom";
+
+import { Link, useNavigate } from "react-router-dom";
+import { LOGOUT } from "../redux/features/authReducer";
+import { SET_MODAL } from "../redux/features/modalReducer";
+import { renderDialog } from "../helpers/renderDialog";
+import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
+import useAvatar from "../hooks/useAvatar";
 
 const Sidebar = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const avatar = useAvatar();
+
   const isSidebarOpen = useSelector((state) => state.sidebar.isSidebarOpen);
   const isSubMenuOpen = useSelector((state) => state.sidebar.isSubMenuOpen);
   const linkActive = useSelector((state) => state.sidebar.linkActive);
 
-  useEffect(() => {
-    dispatch(RESET_SIDEBAR_STATE());
-  }, []);
+  const currentUser = useSelector((state) => state.auth.user.username);
+  const curretUserLevel = useSelector((state) => state.auth.user.user_level);
+
+  const handleLogout = () => {
+    navigate("/");
+    dispatch(LOGOUT());
+  };
 
   return (
     <header
@@ -45,7 +59,17 @@ const Sidebar = () => {
           Orion Task Force Security Agency Co.,
         </h1>
       </div>
-      <nav className="mt-8">
+
+      {/*  ACCOUNT INFO */}
+      <div className="p-4 font-medium flex  border-t-2 border-gray-400">
+        <img src={avatar} alt="" className="max-w-[50px]" />
+        <div className="pl-4">
+          <p className="">{currentUser}</p>
+          <p className="">{curretUserLevel}</p>
+        </div>
+      </div>
+
+      <nav className="">
         <ul>
           <Link
             to="/dashboard"
@@ -73,6 +97,7 @@ const Sidebar = () => {
             <div className={`${isSubMenuOpen ? "" : "hidden"}`}>
               {sidebarData.map((item) => (
                 <Link
+                  key={item.path}
                   to={item.path}
                   onClick={() => {
                     dispatch(SET_LINK_ACTIVE(item.title));
@@ -109,12 +134,24 @@ const Sidebar = () => {
             <IoSettingsOutline />
             Preferences
           </li>
-          <li>
+          <li
+            onClick={() =>
+              renderDialog(
+                "Do you want to log out?",
+                "Logout Confirmation",
+                "pi pi-info-circle",
+                "DANGER",
+                handleLogout,
+                dispatch(SET_MODAL({ isOpen: false }))
+              )
+            }
+          >
             <IoLogOutOutline />
             Sign Out
           </li>
         </ul>
       </nav>
+      <ConfirmDialog />
     </header>
   );
 };
