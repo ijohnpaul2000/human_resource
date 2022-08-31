@@ -21,10 +21,10 @@ const SharedLayout = () => {
     <>
       <Sidebar />
       <div
-        className={`relative block p-4 ${
+        className={`relative block p-4  ${
           isSidebarOpen
             ? " left-[250px] h-screen  w-[calc(100%-250px)] "
-            : "w-full"
+            : "w-full "
         }`}
       >
         <FaBars

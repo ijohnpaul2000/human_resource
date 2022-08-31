@@ -10,6 +10,7 @@ const authRoutes = require("./routes/authRoutes");
 const applicantRoutes = require("./routes/applicantRoutes");
 const appointmentRoutes = require("./routes/appointmentRoutes");
 const requirementRoutes = require("./routes/RequirementRoutes");
+const employeeRoutes = require("./routes/employeeRoutes");
 
 //* ENV Variables
 const PORT = process.env.PORT || 5000;
@@ -25,6 +26,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/applicants", applicantRoutes);
 app.use("/api/appointments", appointmentRoutes);
 app.use("/api/requirements", requirementRoutes);
+app.use("/api/employees", employeeRoutes);
 
 //* Database
 const db = require("./models");

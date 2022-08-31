@@ -62,12 +62,15 @@ const POSTapplicant = expressAsyncHandler(async (req, res) => {
       application_status,
       application_notes,
       isRequirementComplete,
+      religion,
     };
 
     await Applicant.create(newApplicant);
-    res.status(200).json(newApplicant);
+    res.status(200).json({ message: "Applicant created successfully" });
   } catch (error) {
-    res.status(500).json(error.errors[0].message);
+    res
+      .status(500)
+      .json({ message: "Something went wrong! Please try again later." });
   }
 });
 
@@ -126,7 +129,6 @@ const PUTapplicant = expressAsyncHandler(async (req, res) => {
     await Applicant.update(updatedApplicant, { where: { id: applicant_id } });
     res.status(200).json({ message: "Applicant updated successfully!" });
   } catch (error) {
-    console.log(error);
     res
       .status(500)
       .json({ message: "Something went wrong! Please try again later." });
