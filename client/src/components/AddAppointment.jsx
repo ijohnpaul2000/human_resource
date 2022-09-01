@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
-import { Dropdown } from "primereact/dropdown";
-import { BsChevronRight } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getApplicantsInfo,
-  SET_SELECTED_APPLICANT,
-} from "../redux/features/appoinmentReducer";
+import { getApplicantsInfo } from "../redux/features/appoinmentReducer";
 import { useFormik } from "formik";
+import { notifyToast } from "../helpers/notifyToast";
+import { ToastContainer } from "react-toastify";
+import axios from "axios";
+
 import {
   initialValues,
   validationSchema,
@@ -22,18 +21,18 @@ const AddAppointment = () => {
     initialValues,
     validationSchema,
     onSubmit: async (values, { resetForm }) => {
-      alert(JSON.stringify(values, null, 2));
-      // try {
-      //   const response = await axios.post(
-      //     "http://localhost:5000/api/applicants/",
-      //     values
-      //   );
-      //   console.log(response);
-      //   notifyToast("Applicant Added", "success");
-      // } catch (error) {
-      //   notifyToast(error, "error");
-      // }
-      resetForm();
+      // alert(JSON.stringify(values, null, 2));
+      try {
+        const response = await axios.post(
+          "http://localhost:5000/api/appointments",
+          values
+        );
+        resetForm();
+        console.log(response);
+        notifyToast("Applicant Added", "success");
+      } catch (error) {
+        notifyToast(error.response.data.message, "error");
+      }
     },
   });
 
@@ -53,42 +52,6 @@ const AddAppointment = () => {
     );
   };
 
-  //Selected Option UI
-  const selectedOption = (option, props) => {
-    if (option) {
-      return (
-        <div className="flex gap-x-4">
-          <img
-            alt={option.firstname}
-            src="https://avatars.dicebear.com/api/micah/1.svg?background=%23510400"
-            className="inline object-cover w-8 h-8 rounded-full"
-          />
-          <div className="self-center">
-            {option.firstname} {option.middlename} {option.lastname}
-          </div>
-        </div>
-      );
-    }
-
-    return <span>{props.placeholder}</span>;
-  };
-
-  // Dropdown Option UI
-  const optionTemplate = (option) => {
-    return (
-      <div className="flex gap-x-4">
-        <img
-          alt={option.firstname}
-          src="https://avatars.dicebear.com/api/micah/1.svg?background=%23510400"
-          className="inline object-cover w-8 h-8 rounded-full"
-        />
-        <div className="self-center">
-          {option.firstname} {option.middlename} {option.lastname}
-        </div>
-      </div>
-    );
-  };
-
   useEffect(() => {
     async function fetchData() {
       try {
@@ -101,7 +64,7 @@ const AddAppointment = () => {
     }
 
     fetchData();
-  }, [dispatch]);
+  }, []);
 
   return (
     <div>
@@ -112,31 +75,26 @@ const AddAppointment = () => {
               <label className="form-label inline-block mb-2 text-gray-700 font-bold">
                 Applicant
               </label>
-
-              <Dropdown
-                id="applicant_id"
-                value={formik.values.applicant_id}
-                options={applicantInfo.map((el) => {
-                  return el.firstname + " " + el.middlename + " " + el.lastname;
-                })}
-                placeholder="Select Applicant"
-                filter={true}
-                filterBy="id,firstname,middlename,lastname"
-                onChange={formik.handleChange}
-                showClear
-                className={
-                  isFieldValid("applicant_id") ? "border-2 border-red-600" : ""
-                }
-              />
-              {getErrorMessage("applicant_id")}
-              {/* <Dropdown
-                value={formik.values.applicant_id}
-                options={applicantInfo}
-                id="applicant_id"
-                onChange={formik.handleChange}
-                optionLabel="id"
-                placeholder="Select a City"
-              /> */}
+              <div className="relative">
+                <input
+                  list="applicants"
+                  id="applicant_id"
+                  value={formik.values.applicant_id}
+                  onChange={formik.handleChange}
+                  className="select-decorator"
+                />
+                <datalist id="applicants">
+                  {applicantInfo.map((element) => {
+                    return (
+                      <option key={element.id} value={element.id}>
+                        {element.firstname} {element.middlename}{" "}
+                        {element.lastname}
+                      </option>
+                    );
+                  })}
+                </datalist>
+                {getErrorMessage("applicant_id")}
+              </div>
             </div>
           </div>
           <div className="flex flex-wrap -mx-3 mt-2 mb-2 gap-y-2">
@@ -245,6 +203,7 @@ const AddAppointment = () => {
           </button>
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 };

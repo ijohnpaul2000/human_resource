@@ -4,26 +4,19 @@ import { DataTable } from "primereact/datatable";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { useDispatch, useSelector } from "react-redux";
-import { IS_MODAL_OPENED } from "../../redux/features/appoinmentReducer";
-import { getApplicantsInfo } from "../../redux/features/appoinmentReducer";
+import {
+  getAppoinmentsInfo,
+  IS_MODAL_OPENED,
+  getApplicantsInfo,
+} from "../../redux/features/appoinmentReducer";
 import AddAppointment from "../../components/AddAppointment";
 
 const Appointment = () => {
   const dispatch = useDispatch();
-  const { isModalOpened, applicantInfo } = useSelector(
+  const { isModalOpened, appointmentInfo, applicantInfo } = useSelector(
     (store) => store.appointment
   );
-
-  const data = [
-    {
-      applicant_id: "b6f79a17-9056-4b05-9086-b32366de9939",
-      appointment_date: "2023-01-23",
-      appointment_time: "05:23:00",
-      appointment_location: "Dyan lang",
-      appointment_description: "basta",
-      appointment_type: "1st Interview",
-    },
-  ];
+  let extractedData = [];
 
   const columns = [
     { field: "applicant_id", header: "Applicant ID" },
@@ -65,11 +58,29 @@ const Appointment = () => {
     />
   ));
 
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const fetchedData = await dispatch(getAppoinmentsInfo()).unwrap();
+        console.log(fetchedData);
+        console.log(appointmentInfo);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    fetchData();
+  }, [isModalOpened]);
+
   return (
     <div>
       <div className="header">Applicant Screening</div>
 
-      <DataTable value={data} responsiveLayout="scroll" header={renderHeader}>
+      <DataTable
+        value={appointmentInfo}
+        responsiveLayout="scroll"
+        header={renderHeader}
+      >
         {columnComponent}
       </DataTable>
       <Dialog

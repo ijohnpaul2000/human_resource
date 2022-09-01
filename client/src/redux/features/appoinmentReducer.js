@@ -6,6 +6,7 @@ const initialState = {
   applicantInfo: [],
   isModalOpened: false,
   selectedApplicant: "",
+  appointmentInfo: [],
 };
 
 export const getApplicantsInfo = createAsyncThunk(
@@ -14,6 +15,18 @@ export const getApplicantsInfo = createAsyncThunk(
   async () => {
     try {
       const res = await axios.get("http://localhost:5000/api/applicants");
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const getAppoinmentsInfo = createAsyncThunk(
+  "get/appointments",
+  async () => {
+    try {
+      const res = await axios.get("http://localhost:5000/api/appointments");
       return res.data;
     } catch (error) {
       console.log(error);
@@ -38,6 +51,9 @@ const appointmentSlice = createSlice({
       state.selectedApplicant = action.payload;
       console.log(state.selectedApplicant);
     },
+    SET_APPOINTMENT_INFO: (state, action) => {
+      state.appointmentInfo = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -50,6 +66,16 @@ const appointmentSlice = createSlice({
       })
       .addCase(getApplicantsInfo.rejected, (state) => {
         state.isLoading = false;
+      })
+      .addCase(getAppoinmentsInfo.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAppoinmentsInfo.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.appointmentInfo = action.payload;
+      })
+      .addCase(getAppoinmentsInfo.rejected, (state) => {
+        state.isLoading = false;
       });
   },
 });
@@ -59,5 +85,6 @@ export const {
   APPLICATION_INFO,
   IS_MODAL_OPENED,
   SET_SELECTED_APPLICANT,
+  SET_APPOINTMENT_INFO,
 } = appointmentSlice.actions;
 export default appointmentSlice.reducer;

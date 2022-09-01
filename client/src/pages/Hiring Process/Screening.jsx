@@ -223,7 +223,14 @@ const Screening = () => {
                         : "formFields"
                     }
                     value={formik.values.birthdate}
-                    onChange={formik.handleChange}
+                    onChange={(e) => {
+                      formik.handleChange(e);
+                      formik.setFieldValue(
+                        "age",
+                        new Date().getFullYear() -
+                          new Date(e.target.value).getFullYear()
+                      );
+                    }}
                   />
                   {getErrorMessage("birthdate")}
                 </div>
@@ -234,6 +241,7 @@ const Screening = () => {
                   <input
                     type="number"
                     id="age"
+                    min={18}
                     placeholder="Age"
                     className={
                       isFieldValid("age")
