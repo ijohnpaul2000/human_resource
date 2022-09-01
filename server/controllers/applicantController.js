@@ -66,7 +66,7 @@ const POSTapplicant = expressAsyncHandler(async (req, res) => {
     };
 
     await Applicant.create(newApplicant);
-    res.status(200).json({ message: "Applicant created successfully" });
+    res.status(200).json({ message: "Applicant created successfully", id: newApplicant.id });
   } catch (error) {
     res
       .status(500)

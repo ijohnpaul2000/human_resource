@@ -21,10 +21,42 @@ const Screening = () => {
         );
         console.log(response);
         notifyToast("Applicant Added", "success");
+        if (values.isRequirementComplete === 1) {
+          let data = {
+            applicant_id: response.data.id,
+            pic2x2: 1,
+            licenseCard: 1,
+            neuroExam: 1,
+            trainingCertificate: 1,
+            openingClosingRep: 1,
+            transcriptRecord: 1,
+            firingCertificate: 1,
+            drugTestResult: 1,
+            brgyClearance: 1,
+            policeClearance: 1,
+            nbiClearance: 1,
+            dilgClearance: 1,
+            hsCollegeCertificate: 1,
+            gkeResult: 1,
+            nsoCerfiticate: 1,
+            otherGovId: 1,
+            completionStatus: 1,
+          };
+
+          try {
+            const response = await axios.post(
+              "http://localhost:5000/api/requirements/",
+              data
+            );
+            console.log(response);
+          } catch (error) {
+            console.log(error);
+          }
+        }
+        resetForm();
       } catch (error) {
         notifyToast(error, "error");
       }
-      resetForm();
     },
   });
 
