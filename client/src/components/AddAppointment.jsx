@@ -1,40 +1,85 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getApplicantsInfo } from "../redux/features/appoinmentReducer";
+import {
+  getApplicantsInfo,
+  IS_MODAL_OPENED,
+  SET_SELECTED_APPOINTMENT,
+} from "../redux/features/appoinmentReducer";
 import { useFormik } from "formik";
 import { notifyToast } from "../helpers/notifyToast";
 import { ToastContainer } from "react-toastify";
 import axios from "axios";
+import { validationSchema } from "../yupUtils/comp/AppointmentYup";
 
-import {
-  initialValues,
-  validationSchema,
-} from "../yupUtils/comp/AppointmentYup";
+const dayjs = require("dayjs");
 
 const AddAppointment = () => {
   const dispatch = useDispatch();
-  const { isModalOpened, applicantInfo, selectedApplicant } = useSelector(
-    (store) => store.appointment
-  );
+  const {
+    isModalOpened,
+    applicantInfo,
+    selectedApplicant,
+    selectedAppointment,
+  } = useSelector((store) => store.appointment);
+
+  const initialValues = {
+    applicant_id: selectedAppointment ? selectedAppointment?.applicant_id : "",
+    appointment_date: selectedAppointment
+      ? selectedAppointment?.appointment_date
+      : "",
+    appointment_time: selectedAppointment
+      ? selectedAppointment?.appointment_time
+      : "",
+    appointment_location: selectedAppointment
+      ? selectedAppointment?.appointment_location
+      : "",
+    appointment_description: selectedAppointment
+      ? selectedAppointment?.appointment_description
+      : "",
+    appointment_type: selectedAppointment
+      ? selectedAppointment?.appointment_type
+      : "1st Interview",
+  };
 
   const formik = useFormik({
     initialValues,
     validationSchema,
+    enableReinitialize: true,
     onSubmit: async (values, { resetForm }) => {
       // alert(JSON.stringify(values, null, 2));
       try {
-        const response = await axios.post(
-          "http://localhost:5000/api/appointments",
-          values
-        );
+        const response = await axios({
+          method: selectedAppointment ? "PUT" : "POST",
+          url: selectedAppointment
+            ? `http://localhost:5000/api/appointments/${selectedAppointment.id}`
+            : "http://localhost:5000/api/appointments",
+          data: values,
+        });
         resetForm();
         console.log(response);
-        notifyToast("Applicant Added", "success");
+        notifyToast(
+          selectedAppointment ? "Applicant Updated" : "Applicant Added",
+          "success"
+        );
+        dispatch(SET_SELECTED_APPOINTMENT(""));
+        reCloseModal();
       } catch (error) {
         notifyToast(error.response.data.message, "error");
       }
     },
   });
+
+  /* 
+    Reopen Modal:
+    1. To avoid initialValues problem in Formik. 
+  */
+  const reCloseModal = () => {
+    setTimeout(() => {
+      selectedAppointment
+        ? dispatch(IS_MODAL_OPENED(false))
+        : dispatch(IS_MODAL_OPENED(true));
+    }, 1000);
+  };
 
   const isFieldValid = (fieldName) =>
     formik.touched[fieldName] && formik.errors[fieldName];
@@ -104,6 +149,7 @@ const AddAppointment = () => {
               </label>
               <input
                 type="date"
+                min={dayjs().format("YYYY-MM-DD")}
                 id="appointment_date"
                 className={
                   isFieldValid("appointment_date")

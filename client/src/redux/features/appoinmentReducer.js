@@ -6,6 +6,7 @@ const initialState = {
   applicantInfo: [],
   isModalOpened: false,
   selectedApplicant: "",
+  selectedAppointment: "", //Single Appointment Information
   appointmentInfo: [],
 };
 
@@ -54,6 +55,9 @@ const appointmentSlice = createSlice({
     SET_APPOINTMENT_INFO: (state, action) => {
       state.appointmentInfo = action.payload;
     },
+    SET_SELECTED_APPOINTMENT: (state, action) => {
+      state.selectedAppointment = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -86,5 +90,6 @@ export const {
   IS_MODAL_OPENED,
   SET_SELECTED_APPLICANT,
   SET_APPOINTMENT_INFO,
+  SET_SELECTED_APPOINTMENT,
 } = appointmentSlice.actions;
 export default appointmentSlice.reducer;
