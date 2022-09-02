@@ -1,14 +1,5 @@
 import * as Yup from "yup";
 
-export const initialValues = {
-  applicant_id: "",
-  appointment_date: "",
-  appointment_time: "",
-  appointment_location: "",
-  appointment_description: "",
-  appointment_type: "1st Interview",
-};
-
 export const validationSchema = Yup.object().shape({
   applicant_id: Yup.string().required("New Applicant is required"),
   appointment_date: Yup.string().required("Appointment Date is required"),
