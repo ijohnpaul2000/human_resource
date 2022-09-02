@@ -1,116 +1,139 @@
-import React from "react";
-import { BsArrowRight } from "react-icons/bs";
+import React, { useEffect } from "react";
+import DashboardCard from "../components/DashboardCard";
+
+import { useDispatch, useSelector } from "react-redux";
+
+import { DataTable } from "primereact/datatable";
+
+import { getApplicantsData } from "../redux/features/Entities/ApplicantsThunk";
+import { getAppointments } from "../redux/features/Entities/AppointmentsThunk";
+import {
+  getEmployeesData,
+  GET_DEPLOYED_EMPLOYEES,
+} from "../redux/features/Entities/EmployeesThunk";
+import { getRegisteredNo } from "../redux/features/Entities/OnlineApplicantsThunk";
+import { Column } from "primereact/column";
+import { Row } from "primereact/row";
+import { ColumnGroup } from "primereact/columngroup";
 
 const Dashboard = () => {
+  const dispatch = useDispatch();
+
+  const applicants = useSelector((state) => state.applicants.applicantsData);
+
+  const applicantsCount = useSelector(
+    (state) => state.applicants.applicantsData.length
+  );
+
+  const appointmentsCount = useSelector(
+    (state) => state.appointments.appointmentsData.length
+  );
+
+  const deployedEmployeesCount = useSelector(
+    (state) => state.employees.deployedEmployeesData.length
+  );
+
+  const employees = useSelector((state) => state.employees.employeesData);
+
+  useEffect(() => {
+    const deployedEmployees = employees.filter(
+      (employee) => employee.isEmployeeDeployed === true
+    );
+    dispatch(GET_DEPLOYED_EMPLOYEES(deployedEmployees));
+  }, []);
+
+  useEffect(() => {
+    dispatch(getApplicantsData());
+    dispatch(getAppointments());
+    dispatch(getEmployeesData());
+    dispatch(getRegisteredNo());
+  }, []);
+
+  const dashboardCardData = [
+    {
+      id: "applicantsNo",
+      bgColor: "bg-[#005892]",
+      accentColor: "bg-[#033c61]",
+      count: applicantsCount,
+      cardTitle: "Total Applicants",
+    },
+    {
+      id: "appointmentsNo",
+      bgColor: "bg-[#086E2D]",
+      accentColor: "bg-[#006316]",
+      count: appointmentsCount,
+      cardTitle: "Appointments No.",
+    },
+    {
+      id: "registeredOnline",
+      bgColor: "bg-[#B87E01]",
+      accentColor: "bg-[#AC7A01]",
+      count: 0,
+      cardTitle: "Total of Applicants Registered Online",
+    },
+    {
+      id: "deployedEmployeeNo",
+      bgColor: "bg-[#901412]",
+      accentColor: "bg-[#640f15]",
+      count: deployedEmployeesCount,
+      cardTitle: "Total of Deployed Employee",
+    },
+  ];
+
+  let headerGroup = (
+    <ColumnGroup>
+      <Row>
+        <Column
+          header="Full Name"
+          rowSpan={1}
+          colSpan={3}
+          style={{ textAlign: "center" }}
+        />
+        <Column header="Email" rowSpan={2} />
+        <Column header="Status" rowSpan={2} />
+      </Row>
+      <Row>
+        <Column header="First Name" colSpan={1} field="firstname" />
+        <Column header="Middle Name" colSpan={1} field="middlename" />
+        <Column header="Last Name" colSpan={1} field="lastname" />
+      </Row>
+    </ColumnGroup>
+  );
+
   return (
-    <div className="">
-      <div className="header">Dashboard</div>
-      <div className="flex flex-wrap ">
-        <div className="m-4 w-80">
-          <div className="after:opacity-95 after:bg-gradient-to-tl after:from-cyan-900 after:to-cyan-800 relative flex min-w-0 flex-col items-center break-words rounded-2xl border-0 border-solid border-blue-900 bg-white bg-clip-border shadow-none after:absolute after:top-0 after:bottom-0 after:left-0 after:z-10 after:block after:h-full after:w-full after:rounded-2xl after:content-['']">
-            <div className="mb-7.5 absolute h-full w-full rounded-2xl bg-cover bg-center"></div>
-            <div className="relative z-20 flex-auto w-full p-4 text-left text-white">
-              <div className="flex items-center justify-center w-8 h-8 mb-4 text-center bg-white bg-center rounded-lg icon shadow-soft-2xl">
-                <i
-                  className="top-0 z-10 text-transparent ni leading-none ni-diamond text-lg bg-gradient-to-tl from-slate-900 to-slate-800 bg-clip-text opacity-100"
-                  aria-hidden="true"
-                >
-                  <div className="font-bold text-2xl">0</div>
-                </i>
-              </div>
-              <div className="transition-all duration-200 ease-nav-brand">
-                <h6 className="mb-4 font-bold text-white">Total Applicants</h6>
-                <a
-                  href="https://www.creative-tim.com/learning-lab/tailwind/html/quick-start/soft-ui-dashboard/"
-                  className="inline-block w-full px-8 py-2 mb-0 font-bold text-center text-black uppercase transition-all ease-in bg-white border-0 border-white rounded-lg shadow-soft-md bg-150 leading-pro text-xs hover:shadow-soft-2xl hover:scale-102"
-                >
-                  More Info
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="m-4 w-80">
-          <div className="after:opacity-95 after:bg-gradient-to-tl after:from-emerald-900 after:to-emerald-800 relative flex min-w-0 flex-col items-center break-words rounded-2xl border-0 border-solid border-blue-900 bg-white bg-clip-border shadow-none after:absolute after:top-0 after:bottom-0 after:left-0 after:z-10 after:block after:h-full after:w-full after:rounded-2xl after:content-['']">
-            <div className="mb-7.5 absolute h-full w-full rounded-2xl bg-cover bg-center"></div>
-            <div className="relative z-20 flex-auto w-full p-4 text-left text-white">
-              <div className="flex items-center justify-center w-8 h-8 mb-4 text-center bg-white bg-center rounded-lg icon shadow-soft-2xl">
-                <i
-                  className="top-0 z-10 text-transparent ni leading-none ni-diamond text-lg bg-gradient-to-tl from-slate-900 to-slate-800 bg-clip-text opacity-100"
-                  aria-hidden="true"
-                >
-                  <div className="font-bold text-2xl">0</div>
-                </i>
-              </div>
-              <div className="transition-all duration-200 ease-nav-brand">
-                <h6 className="mb-4 font-bold text-white">
-                  Employee with Employments
-                </h6>
-                <a
-                  href="https://www.creative-tim.com/learning-lab/tailwind/html/quick-start/soft-ui-dashboard/"
-                  className="inline-block w-full px-8 py-2 mb-0 font-bold text-center text-black uppercase transition-all ease-in bg-white border-0 border-white rounded-lg shadow-soft-md bg-150 leading-pro text-xs hover:shadow-soft-2xl hover:scale-102"
-                >
-                  More Info
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="m-4 w-80">
-          <div className="after:opacity-95 after:bg-gradient-to-tl after:from-yellow-900 after:to-yellow-800 relative flex min-w-0 flex-col items-center break-words rounded-2xl border-0 border-solid border-blue-900 bg-white bg-clip-border shadow-none after:absolute after:top-0 after:bottom-0 after:left-0 after:z-10 after:block after:h-full after:w-full after:rounded-2xl after:content-['']">
-            <div className="mb-7.5 absolute h-full w-full rounded-2xl bg-cover bg-center"></div>
-            <div className="relative z-20 flex-auto w-full p-4 text-left text-white">
-              <div className="flex items-center justify-center w-8 h-8 mb-4 text-center bg-white bg-center rounded-lg icon shadow-soft-2xl">
-                <i
-                  className="top-0 z-10 text-transparent ni leading-none ni-diamond text-lg bg-gradient-to-tl from-slate-900 to-slate-800 bg-clip-text opacity-100"
-                  aria-hidden="true"
-                >
-                  <div className="font-bold text-2xl">0</div>
-                </i>
-              </div>
-              <div className="transition-all duration-200 ease-nav-brand">
-                <h6 className="mb-4 font-bold text-white">User Registration</h6>
-                <a
-                  href="https://www.creative-tim.com/learning-lab/tailwind/html/quick-start/soft-ui-dashboard/"
-                  className="inline-block w-full px-8 py-2 mb-0 font-bold text-center text-black uppercase transition-all ease-in bg-white border-0 border-white rounded-lg shadow-soft-md bg-150 leading-pro text-xs hover:shadow-soft-2xl hover:scale-102"
-                >
-                  More Info
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="m-4 w-80">
-          <div className="after:opacity-95 after:bg-gradient-to-tl after:from-red-900 after:to-red-800 relative flex min-w-0 flex-col items-center break-words rounded-2xl border-0 border-solid border-blue-900 bg-white bg-clip-border shadow-none after:absolute after:top-0 after:bottom-0 after:left-0 after:z-10 after:block after:h-full after:w-full after:rounded-2xl after:content-['']">
-            <div className="mb-7.5 absolute h-full w-full rounded-2xl bg-cover bg-center"></div>
-            <div className="relative z-20 flex-auto w-full p-4 text-left text-white">
-              <div className="flex items-center justify-center w-8 h-8 mb-4 text-center bg-white bg-center rounded-lg icon shadow-soft-2xl">
-                <i
-                  className="top-0 z-10 text-transparent ni leading-none ni-diamond text-lg bg-gradient-to-tl from-slate-900 to-slate-800 bg-clip-text opacity-100"
-                  aria-hidden="true"
-                >
-                  <div className="font-bold text-2xl">0</div>
-                </i>
-              </div>
-              <div className="transition-all duration-200 ease-nav-brand">
-                <h6 className="mb-4 font-bold text-white">
-                  Total Deployed Employee
-                </h6>
-                <a
-                  href="https://www.creative-tim.com/learning-lab/tailwind/html/quick-start/soft-ui-dashboard/"
-                  className="inline-block w-full px-8 py-2 mb-0 font-bold text-center text-black uppercase transition-all ease-in bg-white border-0 border-white rounded-lg shadow-soft-md bg-150 leading-pro text-xs hover:shadow-soft-2xl hover:scale-102"
-                >
-                  More Info
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
+    <>
+      <h1 className="text-3xl font-poppins font-semibold mb-4">Dashboard</h1>
+      <div className="w-full grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">
+        {dashboardCardData.map((card) => (
+          <DashboardCard
+            accentColor={card.accentColor}
+            bgColor={card.bgColor}
+            count={card.count}
+            key={card.id}
+            cardTitle={card.cardTitle}
+          />
+        ))}
       </div>
-    </div>
+
+      <div className="my-10">
+        <h1 className="my-5 font-poppins text-2xl font-semibold">
+          Applicants for Screening
+        </h1>
+        <DataTable
+          value={applicants}
+          responsiveLayout="scroll"
+          showGridlines
+          size="small"
+          headerColumnGroup={headerGroup}
+        >
+          <Column field="firstname" header="First Name" />
+          <Column field="middlename" header="Middle Name" />
+          <Column field="lastname" header="Last Name" />
+          <Column field="email" header="Email" />
+          <Column field="applicant_status" header="Status" />
+        </DataTable>
+      </div>
+    </>
   );
 };
 

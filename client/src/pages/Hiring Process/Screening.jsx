@@ -22,7 +22,7 @@ const Screening = () => {
         console.log(response);
         notifyToast("Applicant Added", "success");
 
-        //Requirements Checker
+        //Requirements Checker. rap ulit
         checkRequirements(values.isRequirementComplete, response.data.id);
 
         resetForm();
@@ -32,7 +32,7 @@ const Screening = () => {
     },
   });
 
-  // If applicant's requirement is complete. run this function to mark all requirements as complete.
+  // If applicant's requirement is complete. run this function to mark all requirements as complete. rap
   const checkRequirements = async (requirement, applicant) => {
     if (requirement === 1) {
       let data = {
