@@ -11,6 +11,7 @@ import sidebarReducer from "./features/sidebarReducer";
 import appoinmentReducer from "./features/appoinmentReducer";
 import modalReducer from "./features/modalReducer";
 import dashboardReducer from "./features/DashboardThunk";
+import requirementReducer from "./features/requirementReducer";
 
 //ENTITIES
 import ApplicantsThunk from "./features/Entities/ApplicantsThunk";
@@ -30,6 +31,7 @@ const rootReducer = combineReducers({
   appointment: appoinmentReducer,
   modal: modalReducer,
   dashboard: dashboardReducer,
+  requirements: requirementReducer,
   //ENTITIES
   applicants: ApplicantsThunk,
   appointments: AppointmentsThunk,
