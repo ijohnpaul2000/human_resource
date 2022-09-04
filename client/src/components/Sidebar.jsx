@@ -22,6 +22,8 @@ import { SET_MODAL } from "../redux/features/modalReducer";
 import { renderDialog } from "../helpers/renderDialog";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import useAvatar from "../hooks/useAvatar";
+import { SET_SELECTED_APPOINTMENT } from "../redux/features/appoinmentReducer";
+import { SET_SELECTED_REQUIREMENT } from "../redux/features/requirementReducer";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -40,6 +42,11 @@ const Sidebar = () => {
     navigate("/");
     dispatch(LOGOUT());
   };
+
+  useEffect(() => {
+    dispatch(SET_SELECTED_APPOINTMENT(""));
+    dispatch(SET_SELECTED_REQUIREMENT(""));
+  }, [isSidebarOpen, linkActive]);
 
   return (
     <header
