@@ -6,9 +6,9 @@ const Footer = () => {
   const dateNextYear = new Date().getFullYear() + 1;
 
   return (
-    <div className="bg-white border-t-2 border-gray-100 font-poppins text-base  text-center py-4 fixed bottom-0 right-0 left-0">
+    <div className="bg-white border-t-2 border-gray-100 font-poppins text-sm  text-right py-2 fixed bottom-0 right-0 left-0">
       <p>
-        Copyright &copy; {date} - {dateNextYear}.{" "}
+        Copyright &copy; {date}.{" "}
         <span className="inline-block font-bold mx-1 text-blue-500">
           Human Resource Management
         </span>

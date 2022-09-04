@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
       user_level: {
         type: DataTypes.STRING,
         allowNull: false,
-        defaultValue: "user",
+        defaultValue: "applicant",
       },
       date_added: {
         type: DataTypes.DATEONLY,

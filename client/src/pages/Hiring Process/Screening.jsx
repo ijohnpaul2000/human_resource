@@ -13,11 +13,13 @@ const Screening = () => {
     initialValues,
     validationSchema,
     onSubmit: async (values, { resetForm }) => {
-      //alert(JSON.stringify(values, null, 2));
+      let data = {};
+      data = { ...values, applicationType: "Office" };
+
       try {
         const response = await axios.post(
           "http://localhost:5000/api/applicants/",
-          values
+          data
         );
         console.log(response);
         notifyToast("Applicant Added", "success");
@@ -27,7 +29,7 @@ const Screening = () => {
 
         resetForm();
       } catch (error) {
-        notifyToast(error, "error");
+        notifyToast(error.response.data.message, "error");
       }
     },
   });
@@ -85,9 +87,7 @@ const Screening = () => {
         data
       );
       console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   // Error Checker
@@ -413,8 +413,8 @@ const Screening = () => {
                   value={formik.values.sex}
                   onChange={formik.handleChange}
                 >
-                  <option value={"male"}>Male</option>
-                  <option value={"female"}>Female</option>
+                  <option value={"Male"}>Male</option>
+                  <option value={"Female"}>Female</option>
                 </select>
                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
                   <BsChevronRight />
@@ -471,10 +471,11 @@ const Screening = () => {
                   value={formik.values.civil_status}
                   onChange={formik.handleChange}
                 >
-                  <option value={"single"}>Single</option>
-                  <option value={"married"}>Married</option>
-                  <option value={"widowed"}>Widowed</option>
-                  <option value={"divorced"}>Divorced</option>
+                  <option value="Single">Single</option>
+                  <option value="Married">Married</option>
+                  <option value="Widowed">Widowed</option>
+                  <option value="Separated">Separated</option>
+                  <option value="Divorced">Divorced</option>
                 </select>
                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
                   <BsChevronRight />

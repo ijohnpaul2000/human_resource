@@ -64,6 +64,7 @@ const POSTRequirement = expressAsyncHandler(async (req, res) => {
     });
     res.status(201).json(requirement);
   } catch (error) {
+    console.log(error);
     res
       .status(500)
       .json({ message: "Something went wrong! Please try again later." });
@@ -80,7 +81,7 @@ const GETRequirements = expressAsyncHandler(async (req, res) => {
         {
           model: Applicant,
           as: "Applicant",
-          attributes: ["id", "firstname", "middlename", "lastName"],
+          attributes: ["id", "firstname", "middlename", "lastname"],
         },
       ],
     });

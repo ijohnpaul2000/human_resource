@@ -8,6 +8,7 @@ const bcrypt = require("bcryptjs");
 //@access Public
 const POSTuser = expressAsyncHandler(async (req, res) => {
   const {
+    id,
     firstname,
     middlename,
     lastname,
@@ -28,7 +29,7 @@ const POSTuser = expressAsyncHandler(async (req, res) => {
 
   try {
     const newUser = {
-      id: v4(),
+      id,
       firstname,
       middlename,
       lastname,
@@ -39,8 +40,10 @@ const POSTuser = expressAsyncHandler(async (req, res) => {
     };
 
     await User.create(newUser);
+    console.log(newUser);
     res.status(200).json(newUser);
   } catch (err) {
+    console.log(err);
     res
       .status(500)
       .json({ message: "Something went wrong! Please try again later." });

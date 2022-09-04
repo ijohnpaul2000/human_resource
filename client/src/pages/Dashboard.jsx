@@ -12,6 +12,7 @@ import {
 import { getRegisteredNo } from "../redux/features/Entities/OnlineApplicantsThunk";
 import ApplicantsScreening from "../components/ApplicantsScreening";
 import DeployedEmployee from "../components/charts/DeployedEmployee";
+import RegisterApplicant from "./RegisterApplicant";
 
 const Dashboard = () => {
   const dispatch = useDispatch();

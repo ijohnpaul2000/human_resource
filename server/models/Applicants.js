@@ -73,20 +73,24 @@ module.exports = (sequelize, DataTypes) => {
       applicant_status: {
         type: DataTypes.STRING,
         allowNull: false,
+        defaultValue: "To be checked by HR",
       },
       application_status: {
         type: DataTypes.STRING,
         allowNull: false,
+        defaultValue: "Screening",
       },
       application_notes: {
         type: DataTypes.STRING,
-        allowNull: false,
       },
       isRequirementComplete: {
         type: DataTypes.BOOLEAN,
-        allowNull: false,
       },
       religion: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      applicationType: {
         type: DataTypes.STRING,
         allowNull: false,
       },

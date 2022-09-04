@@ -75,7 +75,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
       },
       completionStatus: {
-        type: DataTypes.STRING,
+        type: DataTypes.BOOLEAN,
         allowNull: false,
       },
     },

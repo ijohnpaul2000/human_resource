@@ -10,6 +10,7 @@ const validateField = require("../utils/validateField");
 // @access Public
 const POSTapplicant = expressAsyncHandler(async (req, res) => {
   const {
+    id,
     firstname,
     middlename,
     lastname,
@@ -30,6 +31,7 @@ const POSTapplicant = expressAsyncHandler(async (req, res) => {
     application_notes,
     isRequirementComplete,
     religion,
+    applicationType,
   } = req.body;
 
   const existingApplicant = await Applicant.findOne({ where: { email } });
@@ -42,7 +44,7 @@ const POSTapplicant = expressAsyncHandler(async (req, res) => {
 
   try {
     const newApplicant = {
-      id: v4(),
+      id,
       firstname,
       middlename,
       lastname,
@@ -63,11 +65,13 @@ const POSTapplicant = expressAsyncHandler(async (req, res) => {
       application_notes,
       isRequirementComplete,
       religion,
+      applicationType,
     };
 
     await Applicant.create(newApplicant);
-    res.status(200).json({ message: "Applicant created successfully", id: newApplicant.id });
+    res.status(200).json({ message: "Applicant created successfully" });
   } catch (error) {
+    console.log(error);
     res
       .status(500)
       .json({ message: "Something went wrong! Please try again later." });

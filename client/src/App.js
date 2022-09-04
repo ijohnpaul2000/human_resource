@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SharedLayout from "./layouts/SharedLayout";
 import Dashboard from "./pages/Dashboard";
 import Error404 from "./pages/Error404";
-import ManageUsers from "./pages/ManageUsers";
+import MonitorStatus from "./pages/MonitorStatus";
 
 import {
   Appointment,
@@ -13,6 +13,7 @@ import {
 } from "./pages/Hiring Process/index";
 
 import Login from "./pages/Login";
+import RegisterApplicant from "./pages/RegisterApplicant";
 
 function App() {
   return (
@@ -26,7 +27,8 @@ function App() {
           <Route path="/applicant/appointment" element={<Appointment />} />
           <Route path="/applicant/status" element={<Status />} />
           <Route path="/applicant/examination" element={<Examination />} />
-          <Route path="/manageUsers" element={<ManageUsers />} />
+          <Route path="/monitor-status" element={<MonitorStatus />} />
+          <Route path="/register-applicant" element={<RegisterApplicant />} />
         </Route>
         <Route path="*" element={<Error404 />} />
       </Routes>

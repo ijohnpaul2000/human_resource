@@ -32,9 +32,11 @@ import { useFormik } from "formik";
 //* TOAST IMPORTS
 import { notifyToast } from "../helpers/notifyToast";
 import { ToastContainer } from "react-toastify";
+import { v4 } from "uuid";
 
 const Login = () => {
   const dispatch = useDispatch();
+
   const isAppLoading = useSelector((state) => state.app.isAppLoading);
   const appAuthState = useSelector((state) => state.app.appAuthState);
 
@@ -50,14 +52,22 @@ const Login = () => {
         appAuthState === "Login" ? "auth" : "users"
       }`;
 
+      let data = {};
+      data = { id: v4(), ...values };
+
+      const dataToSend =
+        appAuthState === "Register" ? data : { id: v4(), ...values };
+
+      console.log(appAuthState, dataToSend);
+
       dispatch(SET_APP_LOADING(true));
 
       try {
-        const response = await axios.post(authURL, values);
+        const response = await axios.post(authURL, dataToSend);
         const data = await response.data;
-        await dispatch(LOGIN(data));
-        console.log(values);
-
+        {
+          appAuthState === "Login" && (await dispatch(LOGIN(data)));
+        }
         notifyToast(
           appAuthState === "Login"
             ? "Login Succesful! Redirecting..."
@@ -131,7 +141,7 @@ const Login = () => {
 
               {/* FULL NAME COLUMN FOR REGISTRATION */}
               {appAuthState === "Register" && (
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 xl:grid-cols-3 gap-3">
                   <div className="grid mb-7">
                     <label htmlFor="firstname">First Name</label>
                     <input
@@ -193,7 +203,9 @@ const Login = () => {
 
               <div
                 className={`${
-                  appAuthState === "Login" ? "" : "grid grid-cols-2 gap-3"
+                  appAuthState === "Login"
+                    ? ""
+                    : "grid grid-cols-1 xl:grid-cols-2 gap-3"
                 }`}
               >
                 <div className="grid mb-7">
@@ -233,7 +245,9 @@ const Login = () => {
               </div>
               <div
                 className={`${
-                  appAuthState === "Login" ? "" : "grid grid-cols-2 gap-3"
+                  appAuthState === "Login"
+                    ? ""
+                    : "grid grid-cols-1 xl:grid-cols-2 gap-3"
                 }`}
               >
                 {/* PASSWORD */}
@@ -308,7 +322,7 @@ const Login = () => {
               </button>
             </form>
 
-            <div className="flex justify-between">
+            <div className="flex justify-between mb-4">
               {appAuthState === "Login" ? (
                 <>
                   <p>Don't have an account?</p>
