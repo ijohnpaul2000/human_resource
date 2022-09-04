@@ -55,7 +55,7 @@ const Screening = () => {
         hsCollegeCertificate: 1,
         gkeResult: 1,
         nsoCerfiticate: 1,
-        otherGovId: 1,
+        otherGovId: "",
         completionStatus: 1,
       };
     } else {
@@ -76,7 +76,7 @@ const Screening = () => {
         hsCollegeCertificate: 0,
         gkeResult: 0,
         nsoCerfiticate: 0,
-        otherGovId: 0,
+        otherGovId: "",
         completionStatus: 0,
       };
     }
