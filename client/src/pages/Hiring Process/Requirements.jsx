@@ -137,8 +137,10 @@ const Requirements = () => {
     <div>
       <div className="header">Applicant Requirements</div>
       <DataTable
+        size="small"
         value={requirementInfo}
         responsiveLayout="scroll"
+        showGridlines
         header={renderHeader}
         selection={selectedRequirement}
         selectionMode="radiobutton"

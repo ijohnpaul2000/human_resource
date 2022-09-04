@@ -34,8 +34,9 @@ const Screening = () => {
 
   // If applicant's requirement is complete. run this function to mark all requirements as complete. rap
   const checkRequirements = async (requirement, applicant) => {
+    let data = {};
     if (requirement === 1) {
-      let data = {
+      data = {
         applicant_id: applicant,
         pic2x2: 1,
         licenseCard: 1,
@@ -55,16 +56,37 @@ const Screening = () => {
         otherGovId: 1,
         completionStatus: 1,
       };
+    } else {
+      data = {
+        applicant_id: applicant,
+        pic2x2: 0,
+        licenseCard: 0,
+        neuroExam: 0,
+        trainingCertificate: 0,
+        openingClosingRep: 0,
+        transcriptRecord: 0,
+        firingCertificate: 0,
+        drugTestResult: 0,
+        brgyClearance: 0,
+        policeClearance: 0,
+        nbiClearance: 0,
+        dilgClearance: 0,
+        hsCollegeCertificate: 0,
+        gkeResult: 0,
+        nsoCerfiticate: 0,
+        otherGovId: 0,
+        completionStatus: 0,
+      };
+    }
 
-      try {
-        const response = await axios.post(
-          "http://localhost:5000/api/requirements/",
-          data
-        );
-        console.log(response);
-      } catch (error) {
-        console.log(error);
-      }
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/requirements/",
+        data
+      );
+      console.log(response);
+    } catch (error) {
+      console.log(error);
     }
   };
 
