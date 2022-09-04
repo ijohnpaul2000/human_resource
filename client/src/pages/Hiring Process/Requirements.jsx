@@ -55,7 +55,7 @@ const Requirements = () => {
   };
 
   const columns = [
-    { field: "applicant_id", header: "Applicant ID" },
+    { field: "Applicant", header: "Applicant" },
     { field: "pic2x2", header: "Picture (2x2)" },
     { field: "licenseCard", header: "License Card" },
     { field: "neuroExam", header: "Neuro Exam" },
@@ -76,6 +76,7 @@ const Requirements = () => {
   ];
 
   const booleanChecker = (rowData, item) => {
+    //console.log(rowData["Applicant"].lastName);
     if (typeof rowData[item.field] === "boolean") {
       return (
         <span
@@ -87,7 +88,11 @@ const Requirements = () => {
         </span>
       );
     } else {
-      if (item.field === "applicant_id") {
+      if (item.field === "Applicant") {
+        return (
+          rowData["Applicant"].firstname + " " + rowData["Applicant"].lastname
+        );
+      } else if (item.field === "otherGovId") {
         return rowData[item.field];
       } else {
         return (
@@ -153,7 +158,7 @@ const Requirements = () => {
       </DataTable>
       <Dialog
         visible={isOpened}
-        header="Requirements"
+        header="Update Requirements"
         style={{ width: "700px" }}
         className="p-fluid"
         modal

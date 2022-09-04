@@ -62,7 +62,15 @@ const POSTappointment = expressAsyncHandler(async (req, res) => {
 // @access Public
 const GETappointments = expressAsyncHandler(async (req, res) => {
   try {
-    const appointments = await Appointment.findAll();
+    const appointments = await Appointment.findAll({
+      include: [
+        {
+          model: Applicant,
+          as: "Applicant",
+          attributes: ["id", "firstname", "middlename", "lastName"],
+        },
+      ],
+    });
     res.status(200).json(appointments);
   } catch (error) {
     res

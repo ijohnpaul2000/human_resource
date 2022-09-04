@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { BsChevronRight } from "react-icons/bs";
 import {
   getApplicantsInfo,
   IS_MODAL_OPENED,
@@ -203,24 +204,28 @@ const AddAppointment = () => {
               <label className="form-label inline-block mb-2 text-gray-700 font-bold">
                 Type
               </label>
-              <select
-                type="text"
-                id="appointment_type"
-                placeholder="Enter type"
-                className={
-                  isFieldValid("appointment_type")
-                    ? "border-2 border-red-600 formFields"
-                    : "formFields"
-                }
-                value={formik.values.appointment_type}
-                onChange={formik.handleChange}
-              >
-                <option value="Screening">Screening</option>
-                <option value="2nd Interview">2nd Interview</option>
-                <option value="Examination">Examination</option>
-                <option value="Orientation">Orientation</option>
-                <option value="Contract Signing">Contract Signing</option>
-              </select>
+
+              <div className="relative">
+                <select
+                  id="appointment_type"
+                  className={
+                    isFieldValid("appointment_type")
+                      ? "border-2 border-red-600 select-decorator"
+                      : "select-decorator"
+                  }
+                  value={formik.values.appointment_type}
+                  onChange={formik.handleChange}
+                >
+                  <option value="Screening">Screening</option>
+                  <option value="2nd Interview">2nd Interview</option>
+                  <option value="Examination">Examination</option>
+                  <option value="Orientation">Orientation</option>
+                  <option value="Contract Signing">Contract Signing</option>
+                </select>
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
+                  <BsChevronRight />
+                </div>
+              </div>
               {getErrorMessage("appointment_type")}
             </div>
           </div>

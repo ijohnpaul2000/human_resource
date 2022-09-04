@@ -24,13 +24,23 @@ const Appointment = () => {
   let extractedData = [];
 
   const columns = [
-    { field: "applicant_id", header: "Applicant ID" },
+    { field: "Applicant", header: "Applicant" },
     { field: "appointment_date", header: "Appointment Date" },
     { field: "appointment_time", header: "Appointment Time" },
     { field: "appointment_location", header: "Appointment Location" },
     { field: "appointment_description", header: "Appointment Description" },
     { field: "appointment_type", header: "Appointment Type" },
   ];
+
+  const renderName = (rowData, item) => {
+    if (item.field === "Applicant") {
+      return (
+        rowData["Applicant"].firstname + " " + rowData["Applicant"].lastname
+      );
+    } else {
+      return rowData[item.field];
+    }
+  };
 
   const renderHeader = () => {
     return (
@@ -98,6 +108,7 @@ const Appointment = () => {
         wordBreak: "normal",
         color: "#000",
       }}
+      body={renderName}
       sortable
       filter
     />
@@ -138,6 +149,7 @@ const Appointment = () => {
       </DataTable>
       <Dialog
         visible={isModalOpened}
+        resizable={true}
         header={selectedAppointment ? "Update Appointment" : "New Appointment"}
         style={{ width: "700px" }}
         className="p-fluid"
