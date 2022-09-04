@@ -203,7 +203,7 @@ const AddAppointment = () => {
               <label className="form-label inline-block mb-2 text-gray-700 font-bold">
                 Type
               </label>
-              <input
+              <select
                 type="text"
                 id="appointment_type"
                 placeholder="Enter type"
@@ -214,7 +214,13 @@ const AddAppointment = () => {
                 }
                 value={formik.values.appointment_type}
                 onChange={formik.handleChange}
-              />
+              >
+                <option value="Screening">Screening</option>
+                <option value="2nd Interview">2nd Interview</option>
+                <option value="Examination">Examination</option>
+                <option value="Orientation">Orientation</option>
+                <option value="Contract Signing">Contract Signing</option>
+              </select>
               {getErrorMessage("appointment_type")}
             </div>
           </div>

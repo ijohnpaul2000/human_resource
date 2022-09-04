@@ -7,6 +7,7 @@ import { FaBars } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { TOGGLE_SIDEBAR } from "../redux/features/sidebarReducer";
 import NotAuthenticated from "../pages/NotAuthenticated";
+import Footer from "../components/Footer";
 
 const SharedLayout = () => {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ const SharedLayout = () => {
     <>
       <Sidebar />
       <div
-        className={`relative block p-4  ${
+        className={`relative block p-4   ${
           isSidebarOpen
             ? " left-[250px] h-screen  w-[calc(100%-250px)] "
             : "w-full "
@@ -33,6 +34,7 @@ const SharedLayout = () => {
           size={20}
         />
         <Outlet />
+        <Footer />
       </div>
     </>
   );

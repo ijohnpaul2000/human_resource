@@ -124,15 +124,15 @@ const Sidebar = () => {
           </div>
 
           <Link
-            to="/reports"
-            onClick={() => dispatch(SET_LINK_ACTIVE("Reports"))}
+            to="/manageUsers"
+            onClick={() => dispatch(SET_LINK_ACTIVE("Manage Users"))}
           >
             <li
               className={`${
-                linkActive === "Reports" && "bg-gray-700 text-white"
+                linkActive === "Manage Users" && "bg-gray-700 text-white"
               } `}
             >
-              <IoStatsChartSharp /> Reports
+              <IoStatsChartSharp /> Manage Users
             </li>
           </Link>
 

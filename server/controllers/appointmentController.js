@@ -29,7 +29,7 @@ const POSTappointment = expressAsyncHandler(async (req, res) => {
   if (existingAppointment) {
     return res.status(400).json({
       message:
-        "This applicant has existing appointment. Either Update or Delete the requirements record.",
+        "This applicant has existing appointment. Either Update or Delete the appointment record.",
     });
   }
 

@@ -122,8 +122,10 @@ const Appointment = () => {
       <div className="header">Applicant Appointment</div>
 
       <DataTable
+        size="small"
         value={appointmentInfo}
         responsiveLayout="scroll"
+        showGridlines
         header={renderHeader}
         selection={selectedAppointment}
         selectionMode="radiobutton"
