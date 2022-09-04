@@ -32,6 +32,7 @@ const DeployedEmployee = () => {
       title: {
         display: true,
         text: "Deployed Security Guard of Orion",
+        color: "black",
       },
     },
   };

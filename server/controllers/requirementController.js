@@ -75,9 +75,18 @@ const POSTRequirement = expressAsyncHandler(async (req, res) => {
 //@access Public
 const GETRequirements = expressAsyncHandler(async (req, res) => {
   try {
-    const requirements = await Requirement.findAll();
+    const requirements = await Requirement.findAll({
+      include: [
+        {
+          model: Applicant,
+          as: "Applicant",
+          attributes: ["id", "firstname", "middlename", "lastName"],
+        },
+      ],
+    });
     res.status(200).json(requirements);
   } catch (error) {
+    console.log(error);
     res
       .status(500)
       .json({ message: "Something went wrong! Please try again later." });

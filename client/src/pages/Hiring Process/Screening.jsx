@@ -194,7 +194,7 @@ const Screening = () => {
           <div className="flex flex-wrap -mx-3 mt-2 mb-2 gap-y-2">
             <div className="form-group w-full px-3 md:w-1/3">
               <label className="form-label inline-block mb-2 text-gray-700 font-bold">
-                Contact
+                Contact Number
               </label>
               <input
                 type="text"
@@ -364,7 +364,7 @@ const Screening = () => {
               <label className="form-label inline-block mb-2 text-gray-700 font-bold">
                 Educational Background
               </label>
-              <input
+              <select
                 type="text"
                 id="educational_background"
                 placeholder="Enter education"
@@ -375,7 +375,11 @@ const Screening = () => {
                 }
                 value={formik.values.educational_background}
                 onChange={formik.handleChange}
-              />
+              >
+                <option value="Elementary">Elementary</option>
+                <option value="High School">High School</option>
+                <option value="College">College</option>
+              </select>
               {getErrorMessage("educational_background")}
             </div>
 
@@ -488,9 +492,9 @@ const Screening = () => {
                   value={formik.values.applicant_status}
                   onChange={formik.handleChange}
                 >
-                  <option value={"qualified"}>Qualified</option>
-                  <option value={"not qualified"}>Not Qualified</option>
-                  <option value={"incomplete requirements"}>
+                  <option value={"Qualified"}>Qualified</option>
+                  <option value={"Not Qualified"}>Not Qualified</option>
+                  <option value={"Incomplete Requirements"}>
                     Incomplete Requirements
                   </option>
                 </select>
@@ -499,7 +503,7 @@ const Screening = () => {
                 </div>
               </div>
             </div>
-            <div className="form-group w-full px-3 md:w-1/4">
+            {/* <div className="form-group w-full px-3 md:w-1/4">
               <label className="form-label inline-block mb-2 text-gray-700 font-bold">
                 Application Status
               </label>
@@ -518,7 +522,7 @@ const Screening = () => {
                   <BsChevronRight />
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
 
           <button
