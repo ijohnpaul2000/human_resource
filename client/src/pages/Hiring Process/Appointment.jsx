@@ -21,7 +21,6 @@ const Appointment = () => {
   const dispatch = useDispatch();
   const { isModalOpened, appointmentInfo, applicantInfo, selectedAppointment } =
     useSelector((store) => store.appointment);
-  let extractedData = [];
 
   const columns = [
     { field: "Applicant", header: "Applicant" },

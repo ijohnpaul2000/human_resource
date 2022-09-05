@@ -9,6 +9,7 @@ import { TOGGLE_SIDEBAR } from "../redux/features/sidebarReducer";
 import NotAuthenticated from "../pages/NotAuthenticated";
 import Footer from "../components/Footer";
 import RegisterApplicant from "../pages/RegisterApplicant";
+import Appointment from "../pages/Hiring Process/Appointment";
 
 const SharedLayout = () => {
   const dispatch = useDispatch();
@@ -22,9 +23,14 @@ const SharedLayout = () => {
     return <NotAuthenticated />;
   }
 
-  if (userLevel === "applicant" || !userLevel) {
-    return <RegisterApplicant />;
-  }
+  // Uncomment ko muna boss ahaha
+  // if (userLevel === "applicant" || !userLevel) {
+  //   return <RegisterApplicant />;
+  // }
+
+  // if (userLevel === "applicant" || !userLevel) {
+  //   return <Appointment className="p-4" />;
+  // }
 
   return (
     <>

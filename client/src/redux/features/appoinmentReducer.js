@@ -8,6 +8,7 @@ const initialState = {
   selectedApplicant: "",
   selectedAppointment: "", //Single Appointment Information
   appointmentInfo: [],
+  singleAppointmentInfo: "",
 };
 
 export const getApplicantsInfo = createAsyncThunk(
@@ -58,6 +59,9 @@ const appointmentSlice = createSlice({
     SET_SELECTED_APPOINTMENT: (state, action) => {
       state.selectedAppointment = action.payload;
     },
+    GET_SINGLE_APPOINTMENT: (state, action) => {
+      state.singleAppointmentInfo = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -91,5 +95,6 @@ export const {
   SET_SELECTED_APPLICANT,
   SET_APPOINTMENT_INFO,
   SET_SELECTED_APPOINTMENT,
+  GET_SINGLE_APPOINTMENT,
 } = appointmentSlice.actions;
 export default appointmentSlice.reducer;

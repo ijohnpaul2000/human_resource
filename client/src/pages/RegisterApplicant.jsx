@@ -56,6 +56,7 @@ const RegisterApplicant = () => {
   if (!isAuthenticated) {
     return <NotAuthenticated />;
   }
+
   return (
     <div className="max-w-[1000px] mx-auto min-h-screen px-4 py-8 bg-gray-100">
       <h1 className="font-bold text-4xl text-center mb-4">

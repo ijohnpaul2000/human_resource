@@ -13,9 +13,11 @@ import { getRegisteredNo } from "../redux/features/Entities/OnlineApplicantsThun
 import ApplicantsScreening from "../components/ApplicantsScreening";
 import DeployedEmployee from "../components/charts/DeployedEmployee";
 import RegisterApplicant from "./RegisterApplicant";
+import ListAppointment from "./Hiring Process/ListAppointment";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
+  const userLevel = useSelector((store) => store.auth.user?.user_level);
 
   const applicantsCount = useSelector(
     (state) => state.applicants.applicantsData.length
@@ -78,21 +80,28 @@ const Dashboard = () => {
 
   return (
     <>
-      <h1 className="text-3xl font-poppins font-semibold mb-4">Dashboard</h1>
-      <div className="w-full grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">
-        {dashboardCardData.map((card) => (
-          <DashboardCard
-            accentColor={card.accentColor}
-            bgColor={card.bgColor}
-            count={card.count}
-            key={card.id}
-            cardTitle={card.cardTitle}
-          />
-        ))}
-      </div>
-
-      <ApplicantsScreening />
-      <DeployedEmployee />
+      {userLevel === "applicant" ? (
+        <ListAppointment />
+      ) : (
+        <>
+          <h1 className="text-3xl font-poppins font-semibold mb-4">
+            Dashboard
+          </h1>
+          <div className="w-full grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">
+            {dashboardCardData.map((card) => (
+              <DashboardCard
+                accentColor={card.accentColor}
+                bgColor={card.bgColor}
+                count={card.count}
+                key={card.id}
+                cardTitle={card.cardTitle}
+              />
+            ))}
+          </div>
+          <ApplicantsScreening />
+          <DeployedEmployee />
+        </>
+      )}
     </>
   );
 };

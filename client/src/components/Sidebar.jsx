@@ -90,7 +90,7 @@ const Sidebar = () => {
               <AiOutlineHome /> Dashboard
             </li>
           </Link>
-          <div className="">
+          <div className={`${curretUserLevel === "applicant" ? "hidden" : ""}`}>
             <li onClick={() => dispatch(TOGGLE_SUBMENU())}>
               <AiOutlineDatabase />
               Hiring Process Menu{" "}
@@ -122,18 +122,20 @@ const Sidebar = () => {
             </div>
           </div>
 
-          <Link
-            to="/monitor-status"
-            onClick={() => dispatch(SET_LINK_ACTIVE("Monitor Status"))}
-          >
-            <li
-              className={`${
-                linkActive === "Monitor Status" && "bg-gray-700 text-white"
-              } `}
+          <div className={`${curretUserLevel === "applicant" ? "hidden" : ""}`}>
+            <Link
+              to="/monitor-status"
+              onClick={() => dispatch(SET_LINK_ACTIVE("Monitor Status"))}
             >
-              <IoStatsChartSharp /> Monitor Status
-            </li>
-          </Link>
+              <li
+                className={`${
+                  linkActive === "Monitor Status" && "bg-gray-700 text-white"
+                } `}
+              >
+                <IoStatsChartSharp /> Monitor Status
+              </li>
+            </Link>
+          </div>
 
           {/* //TODO: ADD DIALOG FOR PREFERENCES NO NEED TO SET LINK ACTIVE BECAUSE IT'S A DIALOG*/}
           <li>

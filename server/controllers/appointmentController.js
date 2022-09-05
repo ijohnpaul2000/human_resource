@@ -67,7 +67,7 @@ const GETappointments = expressAsyncHandler(async (req, res) => {
         {
           model: Applicant,
           as: "Applicant",
-          attributes: ["id", "firstname", "middlename", "lastName"],
+          attributes: ["id", "firstname", "middlename", "lastname"],
         },
       ],
     });
