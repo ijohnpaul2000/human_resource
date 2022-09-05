@@ -14,6 +14,7 @@ import {
   SET_SELECTED_REQUIREMENT,
 } from "../../redux/features/requirementReducer";
 import UpdateRequirement from "../../components/UpdateRequirement";
+import { SET_MODAL } from "../../redux/features/modalReducer";
 
 const Requirements = () => {
   const dispatch = useDispatch();
@@ -37,21 +38,34 @@ const Requirements = () => {
           type="button"
           icon="pi pi-trash"
           className="p-button-danger"
-          // onClick={() => {
-          //   renderDialog(
-          //     "Do you want to delete this?",
-          //     "Delete Data",
-          //     "pi pi-exclamation-triangle",
-          //     "DANGER",
-          //     deleteAppointment,
-          //     dispatch(SET_MODAL({ isOpen: false }))
-          //   );
-          // }}
-          // disabled={!selectedAppointment}
+          onClick={() => {
+            renderDialog(
+              "Do you want to delete this?",
+              "Delete Data",
+              "pi pi-exclamation-triangle",
+              "DANGER",
+              deleteRequirement,
+              dispatch(SET_MODAL({ isOpen: false }))
+            );
+          }}
+          disabled={!selectedRequirement}
           tooltipOptions={{ position: "bottom" }}
         />
       </div>
     );
+  };
+
+  const deleteRequirement = async () => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:5000/api/requirements/${selectedRequirement.applicant_id}`
+      );
+      console.log(response);
+      dispatch(SET_SELECTED_REQUIREMENT(""));
+      notifyToast("Data Deleted", "success");
+    } catch (error) {
+      notifyToast(error.response.data.message, "error");
+    }
   };
 
   const columns = [

@@ -14,7 +14,7 @@ export const initialValues = {
   birthplace: "",
   sex: "male",
   citizenship: "",
-  educational_background: "",
+  educational_background: "Elementary",
   civil_status: "single",
   applicant_status: "qualified",
   application_status: "screening",

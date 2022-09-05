@@ -8,13 +8,16 @@ import {
   initialValues,
   validationSchema,
 } from "../../yupUtils/comp/ScreeningYup";
+const { v4 } = require("uuid");
+
 const Screening = () => {
   const formik = useFormik({
     initialValues,
     validationSchema,
     onSubmit: async (values, { resetForm }) => {
       let data = {};
-      data = { ...values, applicationType: "Office" };
+      let uuid = v4();
+      data = { ...values, applicationType: "Office", id: uuid };
 
       try {
         const response = await axios.post(
@@ -25,7 +28,14 @@ const Screening = () => {
         notifyToast("Applicant Added", "success");
 
         //Requirements Checker. rap ulit
-        checkRequirements(values.isRequirementComplete, response.data.id);
+        checkRequirements(values.isRequirementComplete, uuid);
+        createAccount(
+          uuid,
+          values.firstname,
+          values.middlename,
+          values.lastname,
+          values.email
+        );
 
         resetForm();
       } catch (error) {
@@ -33,6 +43,29 @@ const Screening = () => {
       }
     },
   });
+
+  const createAccount = async (id, firstname, middlename, lastname, email) => {
+    const data = {
+      id: id,
+      firstname: firstname,
+      middlename: middlename,
+      lastname: lastname,
+      username: firstname,
+      password: firstname + lastname,
+      user_level: "applicant",
+      email: email,
+    };
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/users/",
+        data
+      );
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // If applicant's requirement is complete. run this function to mark all requirements as complete. rap
   const checkRequirements = async (requirement, applicant) => {
@@ -87,7 +120,9 @@ const Screening = () => {
         data
       );
       console.log(response);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // Error Checker
@@ -364,22 +399,28 @@ const Screening = () => {
               <label className="form-label inline-block mb-2 text-gray-700 font-bold">
                 Educational Background
               </label>
-              <select
-                type="text"
-                id="educational_background"
-                placeholder="Enter education"
-                className={
-                  isFieldValid("educational_background")
-                    ? "border-2 border-red-600 formFields"
-                    : "formFields"
-                }
-                value={formik.values.educational_background}
-                onChange={formik.handleChange}
-              >
-                <option value="Elementary">Elementary</option>
-                <option value="High School">High School</option>
-                <option value="College">College</option>
-              </select>
+
+              <div className="relative">
+                <select
+                  type="text"
+                  id="educational_background"
+                  placeholder="Enter education"
+                  className={
+                    isFieldValid("educational_background")
+                      ? "border-2 border-red-600 select-decorator"
+                      : "select-decorator"
+                  }
+                  value={formik.values.educational_background}
+                  onChange={formik.handleChange}
+                >
+                  <option value="Elementary">Elementary</option>
+                  <option value="High School">High School</option>
+                  <option value="College">College</option>
+                </select>
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
+                  <BsChevronRight />
+                </div>
+              </div>
               {getErrorMessage("educational_background")}
             </div>
 
