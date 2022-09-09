@@ -12,11 +12,7 @@ export const sidebarData = [
     path: "/applicant/appointment",
   },
   {
-    title: "Applicant Status",
-    path: "/applicant/status",
-  },
-  {
-    title: "Applicant Examination",
-    path: "/applicant/examination",
+    title: "Contract Signing",
+    path: "/applicant/contract",
   },
 ];

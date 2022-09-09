@@ -8,7 +8,7 @@ import {
   Appointment,
   Requirements,
   Screening,
-  Status,
+  Contract,
   Examination,
 } from "./pages/Hiring Process/index";
 
@@ -25,7 +25,7 @@ function App() {
           <Route path="/applicant/screening" element={<Screening />} />
           <Route path="/applicant/requirements" element={<Requirements />} />
           <Route path="/applicant/appointment" element={<Appointment />} />
-          <Route path="/applicant/status" element={<Status />} />
+          <Route path="/applicant/contract" element={<Contract />} />
           <Route path="/applicant/examination" element={<Examination />} />
           <Route path="/monitor-status" element={<MonitorStatus />} />
           <Route path="/register-applicant" element={<RegisterApplicant />} />
