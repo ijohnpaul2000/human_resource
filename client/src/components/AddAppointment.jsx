@@ -14,8 +14,17 @@ import { validationSchema } from "../yupUtils/comp/AppointmentYup";
 
 const dayjs = require("dayjs");
 
+/* 
+* * ADD AND UPDATING APPOINTMENT
+* * THE COMPONENT HAVE TWO FUNCTIONALITIES THAT CAN BE CHOSEN BY THE USER
+* * TO ADD AN APPOINTMENT OR EDIT IT
+ */
 const AddAppointment = () => {
   const dispatch = useDispatch();
+
+  /*
+    This object will handle the Applicants Info and the behavior of modals and alerts.
+  */
   const {
     isModalOpened,
     applicantInfo,
@@ -23,6 +32,12 @@ const AddAppointment = () => {
     selectedAppointment,
   } = useSelector((store) => store.appointment);
 
+  /* 
+    The following blocks of code have two functionalities based sa mapipili ng user:
+    1. Update Appointment: It will display the selected appointment na need iupdate.
+    2. Add Appointment: Walang laman ang mga initial values dahil ang user ay mag aadd
+      pa lang ng new appointment.
+  */
   const initialValues = {
     applicant_id: selectedAppointment ? selectedAppointment?.applicant_id : "",
     appointment_date: selectedAppointment
@@ -42,6 +57,9 @@ const AddAppointment = () => {
       : "1st Interview",
   };
 
+  /* 
+    Ang bubuo ng form at maghahandle ng data papunta sa database
+  */
   const formik = useFormik({
     initialValues,
     validationSchema,
@@ -98,6 +116,9 @@ const AddAppointment = () => {
     );
   };
 
+  /* 
+    In every change na nangyayari sa site (addition ng data, updating ng data) lagi tong magrurun.
+  */
   useEffect(() => {
     async function fetchData() {
       try {
@@ -112,6 +133,9 @@ const AddAppointment = () => {
     fetchData();
   }, []);
 
+  /* 
+    The rendered user interface na makikita ng user.
+  */
   return (
     <div>
       <div className="block p-6 rounded-lg shadow-lg bg-white">

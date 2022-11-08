@@ -6,7 +6,17 @@ import { ColumnGroup } from "primereact/columngroup";
 
 import { useSelector } from "react-redux";
 
+
+/* 
+* * APPLICANTS REQUIREMENTS
+* * IT CHECKS IF THE APPLICANTS HAVE COMPLETED THE REQUIREMENTS OR NOT
+*/
 const ApplicantsRequirementsStatus = () => {
+
+  /* 
+    It will get the current state of the list of Requirements
+    In short kukunin lang nito yung most updated data ng Users Table.
+  */
   const requirements = useSelector(
     (state) => state.requirements.requirementInfo
   );
@@ -18,6 +28,9 @@ const ApplicantsRequirementsStatus = () => {
     }
   };
 
+  /* 
+    It will rendered the header of the table.
+  */
   let headerGroup = (
     <ColumnGroup>
       <Row>
@@ -32,6 +45,10 @@ const ApplicantsRequirementsStatus = () => {
     </ColumnGroup>
   );
 
+  /* 
+    It will rendered the user interface and the table for the status of the requirements and the
+    information about the user.
+  */
   return (
     <DataTable
       value={requirements}

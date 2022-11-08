@@ -5,9 +5,21 @@ import { Row } from "primereact/row";
 import { ColumnGroup } from "primereact/columngroup";
 import { useSelector } from "react-redux";
 
+
+/* 
+* * APPLICANT SCREENING WILL CHECK 
+* * THE APPLICANTS STATUS (INTERVIEW, CONTRACT SIGNAGE, DEPLOYMENT)
+*/
 const ApplicantsScreening = () => {
+
+  /* 
+    It will retrived the updated data of the applicants.
+  */
   const applicants = useSelector((state) => state.applicants.applicantsData);
 
+  /* 
+    Renders the columns of the table.
+  */
   let headerGroup = (
     <ColumnGroup>
       <Row>
@@ -23,6 +35,9 @@ const ApplicantsScreening = () => {
     </ColumnGroup>
   );
 
+  /* 
+    It will rendered the table of the Applicants including their status.
+  */
   return (
     <>
       <h1 className="my-5 font-poppins text-2xl font-semibold">
