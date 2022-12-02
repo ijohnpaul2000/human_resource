@@ -3,6 +3,11 @@ import { Link } from "react-router-dom";
 
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
 
+
+/* 
+  We separated the UI for the colors of the Card because we can reuse it in other codes.
+  This is just HTML code for setting the color of our system.
+*/
 const DashboardCard = ({ bgColor, accentColor, count, cardTitle }) => {
   return (
     <div

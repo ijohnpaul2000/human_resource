@@ -16,30 +16,63 @@ import RegisterApplicant from "./RegisterApplicant";
 import ListAppointment from "./Hiring Process/ListAppointment";
 
 const Dashboard = () => {
+
+  /* 
+    DISPATCH - the handler of actions
+    so we can call the different methods in different places in the application
+  */
   const dispatch = useDispatch();
   const userLevel = useSelector((store) => store.auth.user?.user_level);
 
+  /* 
+    Declaration of the variable to get the number of Applicants
+  */
   const applicantsCount = useSelector(
     (state) => state.applicants.applicantsData.length
   );
 
+
+   /* 
+    Declaration of the variable to get the number of appointments.
+  */
   const appointmentsCount = useSelector(
     (state) => state.appointments.appointmentsData.length
   );
 
+
+   /* 
+    Declaration of the variable to get the number of Deployed Employee
+  */
   const deployedEmployeesCount = useSelector(
     (state) => state.employees.deployedEmployeesData.length
   );
 
+
+   /* 
+    Declaration of the variable to get the number of Total employees
+  */
   const employees = useSelector((state) => state.employees.employeesData);
 
+
+  /* 
+    It will rerendered the page if detects new data or updated data.
+  */
   useEffect(() => {
+
+    /* 
+      We must filter the employees if that employee is already deployed, 
+      this is used to only shows the Deployed Employees.
+    */
     const deployedEmployees = employees.filter(
       (employee) => employee.isEmployeeDeployed === true
     );
     dispatch(GET_DEPLOYED_EMPLOYEES(deployedEmployees));
   }, []);
 
+
+   /* 
+    It will rerendered the page if detects new data or updated data.
+  */
   useEffect(() => {
     dispatch(getApplicantsData());
     dispatch(getAppointments());
@@ -47,6 +80,11 @@ const Dashboard = () => {
     dispatch(getRegisteredNo());
   }, []);
 
+
+  /* 
+    An array of HTML and CSS properties that will be passed in DashboardCard component
+    to avoid redundant codes in HTML and CSS. 
+  */
   const dashboardCardData = [
     {
       id: "applicantsNo",
@@ -78,6 +116,10 @@ const Dashboard = () => {
     },
   ];
 
+
+  /* 
+    It will render the no. of Applicants and Employees in the UI
+  */
   return (
     <>
       {userLevel === "applicant" ? (

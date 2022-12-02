@@ -6,8 +6,19 @@ import { ColumnGroup } from "primereact/columngroup";
 
 import { useSelector } from "react-redux";
 const ApplicantsStatus = () => {
-  const applicants = useSelector((state) => state.applicants.applicantsData);
 
+  /* 
+    Simple declaring of variable to retrieve all the applicants data.
+  */
+  const applicants = useSelector((state) => state.applicants.applicantsData); 
+
+
+  /* 
+    For dynamic rendering of the headers for the UI.
+
+    DYNAMIC - reusability of code that can be done by using LOOPS.
+            - it will avoid hard coding of unneccesary data.
+  */
   let headerGroup = (
     <ColumnGroup>
       <Row>
@@ -23,6 +34,11 @@ const ApplicantsStatus = () => {
     </ColumnGroup>
   );
 
+
+  /* 
+    It will rendered the table in the browser.
+    HTML of the code in short.
+  */
   return (
     <DataTable
       value={applicants}

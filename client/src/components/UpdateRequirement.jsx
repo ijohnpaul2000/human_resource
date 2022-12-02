@@ -36,7 +36,7 @@ const UpdateRequirement = () => {
     gkeResult: selectedRequirement?.gkeResult,
     nsoCerfiticate: selectedRequirement?.nsoCerfiticate,
     otherGovId: selectedRequirement?.otherGovId,
-    completionStatus: selectedRequirement?.completionStatus,
+    completionStatus: selectedRequirement?.completionStatus
   };
 
   const formik = useFormik({
@@ -190,7 +190,30 @@ const UpdateRequirement = () => {
                 value={formik.values.completionStatus}
                 checked={formik.values.completionStatus ? true : false}
                 id="completionStatus"
-                onChange={formik.handleChange}
+                onChange={(e) => {
+                  formik.handleChange(e);
+
+                  let checkAll;
+
+                  /* 
+                    If user check the Complete Status, all the Requirements will be check also.
+                  */
+                  formik.values.completionStatus == false 
+                  ? checkAll = true 
+                  : checkAll = false;
+
+
+                  /* 
+                    We loop the checkbox box fields of the form and set it according to
+                    the Complete Status Value.
+
+                    IF Complete Status is CHECKED then check all the checkboxes
+                    IF Complete Status is UNCHECKED then uncheck all the checkboxes.
+                  */
+                  for (const iterator of requirementCategories) {
+                    formik.values[iterator.key] = checkAll;
+                  }
+                }}
               />
               <label
                 className="inline-block text-gray-800"
@@ -219,10 +242,11 @@ const UpdateRequirement = () => {
         </div>
         <button
           type="submit"
-          className="form-btn disabled:opacity-50 enabled:hover:bg-pink-400"
+          className="form-btn disabled:opacity-50 enabled:hover:bg-pink-400 mr-4"
         >
           Submit
         </button>
+
       </form>
       <ToastContainer />
     </div>
