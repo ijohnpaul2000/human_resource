@@ -36,7 +36,7 @@ const UpdateRequirement = () => {
     gkeResult: selectedRequirement?.gkeResult,
     nsoCerfiticate: selectedRequirement?.nsoCerfiticate,
     otherGovId: selectedRequirement?.otherGovId,
-    completionStatus: selectedRequirement?.completionStatus
+    completionStatus: selectedRequirement?.completionStatus,
   };
 
   const formik = useFormik({
@@ -47,7 +47,7 @@ const UpdateRequirement = () => {
       try {
         const response = await axios({
           method: "PUT",
-          url: `http://localhost:5000/api/requirements/${selectedRequirement.applicant_id}`,
+          url: `http://157.245.146.115:5000/api/requirements/${selectedRequirement.applicant_id}`,
           data: values,
         });
         resetForm();
@@ -198,10 +198,9 @@ const UpdateRequirement = () => {
                   /* 
                     If user check the Complete Status, all the Requirements will be check also.
                   */
-                  formik.values.completionStatus == false 
-                  ? checkAll = true 
-                  : checkAll = false;
-
+                  formik.values.completionStatus == false
+                    ? (checkAll = true)
+                    : (checkAll = false);
 
                   /* 
                     We loop the checkbox box fields of the form and set it according to
@@ -246,7 +245,6 @@ const UpdateRequirement = () => {
         >
           Submit
         </button>
-
       </form>
       <ToastContainer />
     </div>

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-let url = `http://localhost:5000/api/`;
+let url = `http://157.245.146.115:5000/api/`;
 const initialState = {
   isLoading: false,
   onlineApplicantsData: [],

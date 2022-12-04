@@ -86,7 +86,7 @@ const Appointment = () => {
   const deleteAppointment = async () => {
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/appointments/${selectedAppointment.id}`
+        `http://157.245.146.115:5000/api/appointments/${selectedAppointment.id}`
       );
       console.log(response);
       dispatch(SET_SELECTED_APPOINTMENT(""));

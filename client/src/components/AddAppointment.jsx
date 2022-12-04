@@ -14,10 +14,10 @@ import { validationSchema } from "../yupUtils/comp/AppointmentYup";
 
 const dayjs = require("dayjs");
 
-/* 
-* * ADD AND UPDATING APPOINTMENT
-* * THE COMPONENT HAVE TWO FUNCTIONALITIES THAT CAN BE CHOSEN BY THE USER
-* * TO ADD AN APPOINTMENT OR EDIT IT
+/*
+ * * ADD AND UPDATING APPOINTMENT
+ * * THE COMPONENT HAVE TWO FUNCTIONALITIES THAT CAN BE CHOSEN BY THE USER
+ * * TO ADD AN APPOINTMENT OR EDIT IT
  */
 const AddAppointment = () => {
   const dispatch = useDispatch();
@@ -70,8 +70,8 @@ const AddAppointment = () => {
         const response = await axios({
           method: selectedAppointment ? "PUT" : "POST",
           url: selectedAppointment
-            ? `http://localhost:5000/api/appointments/${selectedAppointment.id}`
-            : "http://localhost:5000/api/appointments",
+            ? `http://157.245.146.115:5000/api/appointments/${selectedAppointment.id}`
+            : "http://157.245.146.115:5000/api/appointments",
           data: values,
         });
         resetForm();

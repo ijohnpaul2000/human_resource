@@ -13,7 +13,9 @@ export const getRequirementsInfo = createAsyncThunk(
   "get/requirements",
   async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/requirements");
+      const res = await axios.get(
+        "http://157.245.146.115:5000/api/requirements"
+      );
       return res.data;
     } catch (error) {
       console.log(error);

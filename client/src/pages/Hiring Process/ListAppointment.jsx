@@ -12,7 +12,7 @@ const ListAppointment = () => {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/appointments/${userId}`
+          `http://157.245.146.115:5000/api/appointments/${userId}`
         );
         dispatch(GET_SINGLE_APPOINTMENT(res.data.appointment));
         console.log(res.data.appointment);
