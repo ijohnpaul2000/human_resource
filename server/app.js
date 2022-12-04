@@ -39,7 +39,12 @@ var _corsOptions = {
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
-app.use(cors(_corsOptions));
+app.use(
+  cors({
+    origin: "http://157.245.146.115:3000",
+    credentials: true,
+  })
+);
 
 //* Routers
 app.use("/api/users", userRoutes);
@@ -51,6 +56,7 @@ app.use("/api/employees", employeeRoutes);
 
 //* Database
 const db = require("./models");
+const { options } = require("./routes/userRoutes");
 
 //* App Middleware
 app.use(errorHandler);
