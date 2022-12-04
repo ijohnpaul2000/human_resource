@@ -18,6 +18,7 @@
     "password": "AVNS_b3uOPgssQTs0BTXfOpJ",
     "database": "db_human_resource",
     "host": "157.245.146.115",
+    "port": "25060",
     "dialect": "mysql"
   }
 }
