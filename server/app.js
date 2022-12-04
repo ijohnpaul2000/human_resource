@@ -41,7 +41,7 @@ var _corsOptions = {
 
 app.use(
   cors({
-    origin: "http://157.245.146.115:3000",
+    origin: "*",
     credentials: true,
   })
 );
