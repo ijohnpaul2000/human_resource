@@ -18,7 +18,28 @@ const PORT = process.env.PORT || 5000;
 //* Express Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({ origin: "*" }));
+
+//* CORS
+
+let _CORSWHITELIST = ["http://157.245.146.115:3000/"];
+
+var _corsOptions = {
+  origin: function (origin, callback) {
+    if (_CORSWHITELIST.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  optionsSuccessStatus: 200,
+};
+
+var _corsOptions = {
+  origin: "*",
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+
+app.use(cors(_corsOptions));
 
 //* Routers
 app.use("/api/users", userRoutes);
