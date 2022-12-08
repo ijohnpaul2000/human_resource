@@ -23,7 +23,7 @@ const RegisterApplicant = () => {
     initialValues: onlineRegistrationInitialValues,
     validationSchema: onlineRegistrationvalidationSchema,
     onSubmit: async (values) => {
-      let url = "http://157.245.146.115:5000/api/applicants/";
+      let url = "hhttp://178.128.114.212/api/applicants/";
       let data = {};
       data = { id: userId, ...values, applicationType: "Online" };
 
@@ -40,7 +40,7 @@ const RegisterApplicant = () => {
 
   useEffect(() => {
     const fetchCurrentApplicant = async () => {
-      let url = `http://157.245.146.115:5000/api/users/${userId}`;
+      let url = `hhttp://178.128.114.212/api/users/${userId}`;
       try {
         const response = await axios.get(url);
         const responseData = await response.data;

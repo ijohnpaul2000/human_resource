@@ -5,7 +5,7 @@ const initialState = {
   applicantsData: [],
 };
 
-let url = `http://157.245.146.115:5000/api/`;
+let url = `hhttp://178.128.114.212/api/`;
 export const getApplicantsData = createAsyncThunk(
   "applicant/getApplicantsData",
   async (thunkAPI) => {

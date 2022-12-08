@@ -70,8 +70,8 @@ const AddAppointment = () => {
         const response = await axios({
           method: selectedAppointment ? "PUT" : "POST",
           url: selectedAppointment
-            ? `http://157.245.146.115:5000/api/appointments/${selectedAppointment.id}`
-            : "http://157.245.146.115:5000/api/appointments",
+            ? `hhttp://178.128.114.212/api/appointments/${selectedAppointment.id}`
+            : "hhttp://178.128.114.212/api/appointments",
           data: values,
         });
         resetForm();

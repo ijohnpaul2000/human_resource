@@ -47,7 +47,7 @@ const UpdateRequirement = () => {
       try {
         const response = await axios({
           method: "PUT",
-          url: `http://157.245.146.115:5000/api/requirements/${selectedRequirement.applicant_id}`,
+          url: `hhttp://178.128.114.212/api/requirements/${selectedRequirement.applicant_id}`,
           data: values,
         });
         resetForm();

@@ -16,7 +16,7 @@ export const getApplicantsInfo = createAsyncThunk(
 
   async () => {
     try {
-      const res = await axios.get("http://157.245.146.115:5000/api/applicants");
+      const res = await axios.get("hhttp://178.128.114.212/api/applicants");
       return res.data;
     } catch (error) {
       console.log(error);
@@ -28,9 +28,7 @@ export const getAppoinmentsInfo = createAsyncThunk(
   "get/appointments",
   async () => {
     try {
-      const res = await axios.get(
-        "http://157.245.146.115:5000/api/appointments"
-      );
+      const res = await axios.get("hhttp://178.128.114.212/api/appointments");
       return res.data;
     } catch (error) {
       console.log(error);

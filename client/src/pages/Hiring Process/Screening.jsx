@@ -21,7 +21,7 @@ const Screening = () => {
 
       try {
         const response = await axios.post(
-          "http://157.245.146.115:5000/api/applicants/",
+          "hhttp://178.128.114.212/api/applicants/",
           data
         );
         console.log(response);
@@ -58,7 +58,7 @@ const Screening = () => {
 
     try {
       const response = await axios.post(
-        "http://157.245.146.115:5000/api/users/",
+        "hhttp://178.128.114.212/api/users/",
         data
       );
       console.log(response);
@@ -116,7 +116,7 @@ const Screening = () => {
 
     try {
       const response = await axios.post(
-        "http://157.245.146.115:5000/api/requirements/",
+        "hhttp://178.128.114.212/api/requirements/",
         data
       );
       console.log(response);
