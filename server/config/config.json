@@ -15,9 +15,9 @@
   },
   "production": {
     "username": "doadmin",
-    "password": "AVNS_b3uOPgssQTs0BTXfOpJ",
+    "password": "AVNS_bFxtReY_XOdnz60iOCO",
     "database": "db_human_resource",
-    "host": "db-mysql-sgp1-82461-do-user-12967976-0.b.db.ondigitalocean.com",
+    "host": "db-mysql-sgp1-12851-do-user-12967976-0.b.db.ondigitalocean.com",
     "port": "25060",
     "dialect": "mysql"
   }
