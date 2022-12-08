@@ -14,7 +14,7 @@ export const getRequirementsInfo = createAsyncThunk(
   async () => {
     try {
       const res = await axios.get(
-        "hhttp://api.orionhumanresource.gq/requirements"
+        "http://api.orionhumanresource.gq/requirements"
       );
       return res.data;
     } catch (error) {

@@ -21,7 +21,7 @@ const Screening = () => {
 
       try {
         const response = await axios.post(
-          "hhttp://api.orionhumanresource.gq/applicants/",
+          "http://api.orionhumanresource.gq/applicants/",
           data
         );
         console.log(response);
@@ -58,7 +58,7 @@ const Screening = () => {
 
     try {
       const response = await axios.post(
-        "hhttp://api.orionhumanresource.gq/users/",
+        "http://api.orionhumanresource.gq/users/",
         data
       );
       console.log(response);
@@ -116,7 +116,7 @@ const Screening = () => {
 
     try {
       const response = await axios.post(
-        "hhttp://api.orionhumanresource.gq/requirements/",
+        "http://api.orionhumanresource.gq/requirements/",
         data
       );
       console.log(response);

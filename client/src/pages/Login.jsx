@@ -50,7 +50,7 @@ const Login = () => {
     validationSchema:
       appAuthState === "Login" ? LoginValidation : RegistrationValidation,
     onSubmit: async (values) => {
-      let authURL = `hhttp://api.orionhumanresource.gq/${
+      let authURL = `http://api.orionhumanresource.gq/${
         appAuthState === "Login" ? "auth" : "users"
       }`;
 

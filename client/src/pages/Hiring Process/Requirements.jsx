@@ -58,7 +58,7 @@ const Requirements = () => {
   const deleteRequirement = async () => {
     try {
       const response = await axios.delete(
-        `hhttp://api.orionhumanresource.gq/requirements/${selectedRequirement.applicant_id}`
+        `http://api.orionhumanresource.gq/requirements/${selectedRequirement.applicant_id}`
       );
       console.log(response);
       dispatch(SET_SELECTED_REQUIREMENT(""));
