@@ -47,7 +47,7 @@ const UpdateRequirement = () => {
       try {
         const response = await axios({
           method: "PUT",
-          url: `http://178.128.114.212/api/requirements/${selectedRequirement.applicant_id}`,
+          url: `http://api.orionhumanresource.gq//requirements/${selectedRequirement.applicant_id}`,
           data: values,
         });
         resetForm();

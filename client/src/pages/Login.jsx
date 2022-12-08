@@ -35,6 +35,8 @@ import { ToastContainer } from "react-toastify";
 import { v4 } from "uuid";
 
 const Login = () => {
+  console.log(process.env.NODE_ENV);
+
   const dispatch = useDispatch();
 
   const isAppLoading = useSelector((state) => state.app.isAppLoading);
@@ -48,7 +50,7 @@ const Login = () => {
     validationSchema:
       appAuthState === "Login" ? LoginValidation : RegistrationValidation,
     onSubmit: async (values) => {
-      let authURL = `http://178.128.114.212/api/${
+      let authURL = `http://api.orionhumanresource.gq//${
         appAuthState === "Login" ? "auth" : "users"
       }`;
 

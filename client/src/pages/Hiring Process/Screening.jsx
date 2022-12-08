@@ -21,7 +21,7 @@ const Screening = () => {
 
       try {
         const response = await axios.post(
-          "http://178.128.114.212/api/applicants/",
+          "http://api.orionhumanresource.gq//applicants/",
           data
         );
         console.log(response);
@@ -58,7 +58,7 @@ const Screening = () => {
 
     try {
       const response = await axios.post(
-        "http://178.128.114.212/api/users/",
+        "http://api.orionhumanresource.gq//users/",
         data
       );
       console.log(response);
@@ -116,7 +116,7 @@ const Screening = () => {
 
     try {
       const response = await axios.post(
-        "http://178.128.114.212/api/requirements/",
+        "http://api.orionhumanresource.gq//requirements/",
         data
       );
       console.log(response);

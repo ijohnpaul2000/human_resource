@@ -5,7 +5,7 @@ const initialState = {
   applicantsData: [],
 };
 
-let url = `http://178.128.114.212/api/`;
+let url = `http://api.orionhumanresource.gq//`;
 export const getApplicantsData = createAsyncThunk(
   "applicant/getApplicantsData",
   async (thunkAPI) => {
