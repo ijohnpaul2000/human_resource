@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-let url = `hhttp://178.128.114.212/api/`;
+let url = `http://178.128.114.212/api/`;
 
 const initialState = {
   isLoading: false,

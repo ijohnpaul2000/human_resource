@@ -58,7 +58,7 @@ const Requirements = () => {
   const deleteRequirement = async () => {
     try {
       const response = await axios.delete(
-        `hhttp://178.128.114.212/api/requirements/${selectedRequirement.applicant_id}`
+        `http://178.128.114.212/api/requirements/${selectedRequirement.applicant_id}`
       );
       console.log(response);
       dispatch(SET_SELECTED_REQUIREMENT(""));

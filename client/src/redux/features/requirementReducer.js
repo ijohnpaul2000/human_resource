@@ -13,7 +13,7 @@ export const getRequirementsInfo = createAsyncThunk(
   "get/requirements",
   async () => {
     try {
-      const res = await axios.get("hhttp://178.128.114.212/api/requirements");
+      const res = await axios.get("http://178.128.114.212/api/requirements");
       return res.data;
     } catch (error) {
       console.log(error);

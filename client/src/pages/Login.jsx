@@ -48,7 +48,7 @@ const Login = () => {
     validationSchema:
       appAuthState === "Login" ? LoginValidation : RegistrationValidation,
     onSubmit: async (values) => {
-      let authURL = `hhttp://178.128.114.212/api/${
+      let authURL = `http://178.128.114.212/api/${
         appAuthState === "Login" ? "auth" : "users"
       }`;
 
