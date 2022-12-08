@@ -14,7 +14,7 @@ export const getAppointmentsInfo = createAsyncThunk(
   async () => {
     try {
       const res = await axios.get(
-        "http://api.orionhumanresource.gq/appointments"
+        "hhttp://api.orionhumanresource.gq/appointments"
       );
       return res.data.filter((element) => {
         return element.appointment_type === "Contract Signing";
@@ -30,7 +30,7 @@ export const getApplicantsInfo = createAsyncThunk(
   async () => {
     try {
       const res = await axios.get(
-        "http://api.orionhumanresource.gq/applicants"
+        "hhttp://api.orionhumanresource.gq/applicants"
       );
       return res.data;
     } catch (error) {

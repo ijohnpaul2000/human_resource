@@ -12,7 +12,7 @@ const ListAppointment = () => {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          `http://api.orionhumanresource.gq/appointments/${userId}`
+          `hhttp://api.orionhumanresource.gq/appointments/${userId}`
         );
         dispatch(GET_SINGLE_APPOINTMENT(res.data.appointment));
         console.log(res.data.appointment);

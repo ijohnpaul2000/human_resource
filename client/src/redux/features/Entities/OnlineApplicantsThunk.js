@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-let url = `http://api.orionhumanresource.gq/`;
+let url = `hhttp://api.orionhumanresource.gq/`;
 const initialState = {
   isLoading: false,
   onlineApplicantsData: [],

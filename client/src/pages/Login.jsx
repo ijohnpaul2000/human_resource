@@ -50,7 +50,7 @@ const Login = () => {
     validationSchema:
       appAuthState === "Login" ? LoginValidation : RegistrationValidation,
     onSubmit: async (values) => {
-      let authURL = `http://api.orionhumanresource.gq/${
+      let authURL = `hhttp://api.orionhumanresource.gq/${
         appAuthState === "Login" ? "auth" : "users"
       }`;
 
@@ -68,7 +68,7 @@ const Login = () => {
         const response = await axios.post(authURL, dataToSend);
         const data = await response.data;
         {
-          appAuthState === "Login" && (await dispatch(LOGIN(data)));
+          appAuthState === "Login" && dispatch(LOGIN(data));
         }
         notifyToast(
           appAuthState === "Login"

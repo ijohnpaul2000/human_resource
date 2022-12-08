@@ -86,7 +86,7 @@ const Appointment = () => {
   const deleteAppointment = async () => {
     try {
       const response = await axios.delete(
-        `http://api.orionhumanresource.gq/appointments/${selectedAppointment.id}`
+        `hhttp://api.orionhumanresource.gq/appointments/${selectedAppointment.id}`
       );
       console.log(response);
       dispatch(SET_SELECTED_APPOINTMENT(""));

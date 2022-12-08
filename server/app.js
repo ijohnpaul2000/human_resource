@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 
 //* CORS
 
-let _CORSWHITELIST = ["http://157.245.146.115:3000/"];
+let _CORSWHITELIST = ["http://178.128.114.212:3000/"];
 
 var _corsOptions = {
   origin: function (origin, callback) {
@@ -47,12 +47,12 @@ app.use(
 );
 
 //* Routers
-app.use("/api/users", userRoutes);
-app.use("/api/auth", authRoutes);
-app.use("/api/applicants", applicantRoutes);
-app.use("/api/appointments", appointmentRoutes);
-app.use("/api/requirements", requirementRoutes);
-app.use("/api/employees", employeeRoutes);
+app.use("/users", userRoutes);
+app.use("/auth", authRoutes);
+app.use("/applicants", applicantRoutes);
+app.use("/appointments", appointmentRoutes);
+app.use("/requirements", requirementRoutes);
+app.use("/employees", employeeRoutes);
 
 //* Database
 const db = require("./models");
