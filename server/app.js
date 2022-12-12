@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 
 //* CORS
 
-let _CORSWHITELIST = ["http://157.245.146.115:3000/"];
+let _CORSWHITELIST = ["http://157.245.146.115:3000/", "http://localhost:3000"];
 
 var _corsOptions = {
   origin: function (origin, callback) {
@@ -39,12 +39,7 @@ var _corsOptions = {
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
-app.use(
-  cors({
-    origin: "*",
-    credentials: true,
-  })
-);
+app.use(cors(_corsOptions));
 
 //* Routers
 app.use("/api/users", userRoutes);
