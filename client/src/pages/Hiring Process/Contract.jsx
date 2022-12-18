@@ -11,13 +11,13 @@ import axios from "axios";
 import {
   getAppointmentsInfo,
   SET_MODAL_STATE,
-  SET_SELECTED_APPLICANT,
+  SET_SELECTED_APPLICANT
 } from "../../redux/features/contractReducer";
 import ViewContractSigning from "../../components/ViewContractSigning";
 
 const Contract = () => {
   const dispatch = useDispatch();
-  const { isOpened, appointmentInfo, applicantsInfo, selectedApplicant } =
+  const { isOpened, appointmentInfo, applicantsInfo, selectedApplicant, selectedAppointment } =
     useSelector((store) => store.contract);
 
   const columns = [
@@ -109,7 +109,8 @@ const Contract = () => {
         selection={selectedApplicant}
         selectionMode="radiobutton"
         onSelectionChange={(e) => {
-          dispatch(SET_SELECTED_APPLICANT(e.value));
+          dispatch(SET_SELECTED_APPLICANT(e.value)); //TODO: to be implemented later
+          console.log(e.value.Applicant);
         }}
       >
         <Column selectionMode="single" headerStyle={{ width: "3em" }}></Column>
@@ -122,7 +123,8 @@ const Contract = () => {
         style={{ width: "900px" }}
         className="p-fluid"
         modal
-        onHide={() => dispatch(SET_MODAL_STATE(false))}
+        onHide={() =>
+           dispatch(SET_MODAL_STATE(false))}
       >
         <ViewContractSigning />
       </Dialog>
