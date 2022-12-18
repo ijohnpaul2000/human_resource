@@ -90,7 +90,6 @@ const ViewContractSigning = () => {
                 value={selectedApplicant["Applicant"].firstname}
                 onChange={formik.handleChange}
               />
-              {getErrorMessage("firstname")}
             </div>
 
             <div className="form-group w-full px-3 md:w-1/3">
@@ -106,7 +105,6 @@ const ViewContractSigning = () => {
                 value={selectedApplicant["Applicant"].middlename}
                 onChange={formik.handleChange}
               />
-              {getErrorMessage("middlename")}
             </div>
 
             <div className="form-group w-full px-3 md:w-1/3">
@@ -124,7 +122,6 @@ const ViewContractSigning = () => {
                     value={selectedApplicant["Applicant"].lastname}
                     onChange={formik.handleChange}
                   />
-                  {getErrorMessage("lastname")}
                 </div>
                 <div className="w-full pr-0 px-3 w-2/6">
                   <label className="form-label inline-block mb-2 text-gray-700 font-bold">
