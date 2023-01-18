@@ -100,4 +100,15 @@
     font-size: 12px;
     letter-spacing: 0.3px;
   }
+
+}
+
+.p-tabview .p-tabview-nav .p-tabview-ink-bar {
+  display: none !important;
+}
+
+.p-tabview-title {
+  line-height: 1;
+  white-space: nowrap;
+  margin-left: 0;
 }

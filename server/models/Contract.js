@@ -19,6 +19,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false
       },
+      contactDate: {
+        type: DataTypes.DATEONLY,
+        allowNull: false,
+      },
       signature: {
         type: DataTypes.STRING,
         allowNull: false
