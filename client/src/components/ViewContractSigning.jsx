@@ -13,9 +13,11 @@ const ViewContractSigning = () => {
   const dispatch = useDispatch();
   const { selectedApplicant } = useSelector((store) => store.contract);
 
-  //TODO: will be updated if JOHN PAUL created a model and relationship.
   const initialValues = {
-    applicant_id: selectedApplicant?.applicant_id
+    applicant_id: selectedApplicant?.applicant_id,
+    salary: "",
+    contactDate: "",
+    signature: ""
   }
 
   const formik = useFormik({
