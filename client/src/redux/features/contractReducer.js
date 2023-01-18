@@ -47,7 +47,7 @@ const contractSlice = createSlice({
     },
     SET_SELECTED_APPLICANT: (state, action) => {
       state.selectedApplicant = action.payload;
-    },
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -74,6 +74,6 @@ const contractSlice = createSlice({
   },
 });
 
-export const { SET_MODAL_STATE, IS_LOADING, SET_SELECTED_APPLICANT } =
+export const { SET_MODAL_STATE, IS_LOADING, SET_SELECTED_APPLICANT} =
   contractSlice.actions;
 export default contractSlice.reducer;

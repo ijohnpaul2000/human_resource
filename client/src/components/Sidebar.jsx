@@ -24,6 +24,7 @@ import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import useAvatar from "../hooks/useAvatar";
 import { SET_SELECTED_APPOINTMENT } from "../redux/features/appoinmentReducer";
 import { SET_SELECTED_REQUIREMENT } from "../redux/features/requirementReducer";
+import { SET_SELECTED_APPLICANT } from "../redux/features/contractReducer";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -46,6 +47,7 @@ const Sidebar = () => {
   useEffect(() => {
     dispatch(SET_SELECTED_APPOINTMENT(""));
     dispatch(SET_SELECTED_REQUIREMENT(""));
+    dispatch(SET_SELECTED_APPLICANT(""));
   }, [isSidebarOpen, linkActive]);
 
   return (

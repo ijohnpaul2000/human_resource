@@ -1,15 +1,81 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { BsChevronRight } from "react-icons/bs";
 import { useFormik } from "formik";
 import axios from "axios";
 import { ToastContainer } from "react-toastify";
 import { notifyToast } from "../helpers/notifyToast";
+import { validationSchema } from "../yupUtils/comp/ContractYup";
+
 
 const ViewContractSigning = () => {
+
+  const dispatch = useDispatch();
+  const { selectedApplicant } = useSelector((store) => store.contract);
+
+  //TODO: will be updated if JOHN PAUL created a model and relationship.
+  const initialValues = {
+    applicant_id: selectedApplicant?.applicant_id
+  }
+
+  const formik = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit: async (values, { resetForm }) => {
+      //alert(JSON.stringify(values, null, 2));
+      try {
+        const response = await axios({
+          method: "PUT",
+          //url: `http://localhost:5000/api/requirements/${selectedRequirement.applicant_id}`,
+          data: values,
+        });
+        resetForm();
+        notifyToast("Contract Updated", "success");
+        console.log(response);
+        // dispatch(SET_SELECTED_REQUIREMENT("")); //TODO: will be implemented
+        // reCloseModal();
+      } catch (error) {
+        notifyToast(error.response.data.message, "error");
+      }
+    },
+  });
+
+  const isFieldValid = (fieldName) =>
+    formik.touched[fieldName] && formik.errors[fieldName];
+
+  const getErrorMessage = (error) => {
+    return (
+      isFieldValid(error) && (
+        <small
+          id="emailHelp"
+          className="block mt-1 text-red-500 text-xs italic"
+        >
+          {formik.errors[error]}
+        </small>
+      )
+    );
+  };
+
   return (
     <div>
       <div className="block p-6 rounded-lg shadow-lg bg-white">
         <form className="w-full">
+
+          <div className="flex flex-wrap -mx-3 mt-2 mb-2 gap-y-2">
+            <div className="form-group w-full px-3 md:w-1/3">
+            <label className="form-label inline-block mb-2 text-gray-700 font-bold">
+                Applicant ID
+              </label>
+              <input
+                type="text"
+                id="applicant_id"
+                className="formFields"
+                disabled
+                value={formik.values.applicant_id}
+                onChange={formik.handleChange}
+              />
+            </div>
+          </div>
           <div className="flex flex-wrap -mx-3 mt-2 mb-2 gap-y-2">
             <div className="form-group w-full px-3 md:w-1/3">
               <label className="form-label inline-block mb-2 text-gray-700 font-bold">
@@ -20,15 +86,10 @@ const ViewContractSigning = () => {
                 id="firstname"
                 placeholder="Enter first name"
                 className="formFields"
-                // className={
-                //   isFieldValid("firstname")
-                //     ? "border-2 border-red-600 formFields"
-                //     : "formFields"
-                // }
-                // value={formik.values.firstname}
-                // onChange={formik.handleChange}
+                disabled
+                value={selectedApplicant["Applicant"].firstname}
+                onChange={formik.handleChange}
               />
-              {/* {getErrorMessage("firstname")} */}
             </div>
 
             <div className="form-group w-full px-3 md:w-1/3">
@@ -40,15 +101,10 @@ const ViewContractSigning = () => {
                 id="middlename"
                 placeholder="Enter middle name"
                 className="formFields"
-                // className={
-                //   isFieldValid("middlename")
-                //     ? "border-2 border-red-600 formFields"
-                //     : "formFields"
-                // }
-                // value={formik.values.middlename}
-                // onChange={formik.handleChange}
+                disabled
+                value={selectedApplicant["Applicant"].middlename}
+                onChange={formik.handleChange}
               />
-              {/* {getErrorMessage("middlename")} */}
             </div>
 
             <div className="form-group w-full px-3 md:w-1/3">
@@ -62,15 +118,10 @@ const ViewContractSigning = () => {
                     id="lastname"
                     placeholder="Enter lastname"
                     className="formFields"
-                    // className={
-                    //   isFieldValid("lastname")
-                    //     ? "border-2 border-red-600 formFields"
-                    //     : "formFields"
-                    // }
-                    // value={formik.values.lastname}
-                    // onChange={formik.handleChange}
+                    disabled
+                    value={selectedApplicant["Applicant"].lastname}
+                    onChange={formik.handleChange}
                   />
-                  {/* {getErrorMessage("lastname")} */}
                 </div>
                 <div className="w-full pr-0 px-3 w-2/6">
                   <label className="form-label inline-block mb-2 text-gray-700 font-bold">
@@ -79,10 +130,11 @@ const ViewContractSigning = () => {
                   <input
                     type="text"
                     className="formFields"
+                    disabled
                     id="suffix"
                     placeholder="Suff."
-                    // value={formik.values.suffix}
-                    // onChange={formik.handleChange}
+                    value={selectedApplicant["Applicant"].suffix}
+                    onChange={formik.handleChange}
                   />
                 </div>
               </div>
@@ -90,57 +142,18 @@ const ViewContractSigning = () => {
           </div>
 
           <div className="flex flex-wrap -mx-3 mt-2 mb-2 gap-y-2">
+           
             <div className="form-group w-full px-3 md:w-1/3">
               <label className="form-label inline-block mb-2 text-gray-700 font-bold">
-                Contact Number
+                Salary
               </label>
               <input
-                type="text"
-                id="contact"
-                placeholder="Enter contact"
-                className="formFields"
-                // className={
-                //   isFieldValid("contact")
-                //     ? "border-2 border-red-600 formFields"
-                //     : "formFields"
-                // }
-                // value={formik.values.contact}
-                // onChange={formik.handleChange}
-              />
-              {/* {getErrorMessage("contact")} */}
-            </div>
-
-            <div className="form-group w-full px-3 md:w-1/3">
-              <label className="form-label inline-block mb-2 text-gray-700 font-bold">
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                placeholder="Enter email"
-                className="formFields"
-                // className={
-                //   isFieldValid("email")
-                //     ? "border-2 border-red-600 formFields"
-                //     : "formFields"
-                // }
-                // value={formik.values.email}
-                // onChange={formik.handleChange}
-              />
-              {/* {getErrorMessage("email")} */}
-            </div>
-
-            <div className="form-group w-full px-3 md:w-1/3">
-              <label className="form-label inline-block mb-2 text-gray-700 font-bold">
-                Address
-              </label>
-              <input
-                type="text"
+                type="number"
                 id="address"
-                placeholder="Enter address"
+                placeholder="Enter salary"
                 className="formFields"
                 // className={
-                //   isFieldValid("address")
+                //   isFieldValid("")
                 //     ? "border-2 border-red-600 formFields"
                 //     : "formFields"
                 // }
@@ -149,17 +162,15 @@ const ViewContractSigning = () => {
               />
               {/* {getErrorMessage("address")} */}
             </div>
-          </div>
 
-          <div className="flex flex-wrap -mx-3 mt-2 mb-2 gap-y-2">
-            <div className="form-group w-full px-3 md:w-1/2">
+            <div className="form-group w-full px-3 md:w-1/3">
               <label className="form-label inline-block mb-2 text-gray-700 font-bold">
-                Contact Number
+                Contact Date
               </label>
               <input
                 type="date"
                 id="contact"
-                placeholder="Enter contact"
+                placeholder="Enter date"
                 className="formFields"
                 // className={
                 //   isFieldValid("contact")
@@ -169,15 +180,15 @@ const ViewContractSigning = () => {
                 // value={formik.values.contact}
                 // onChange={formik.handleChange}
               />
-              {/* {getErrorMessage("contact")} */}
+              {/* {getErrorMessage("address")} */}
             </div>
 
-            <div className="form-group w-full px-3 md:w-1/2">
+            <div className="form-group w-full px-3 md:w-1/3">
               <label className="form-label inline-block mb-2 text-gray-700 font-bold">
-                Appointment Location
+                Signature
               </label>
               <input
-                type="text"
+                type="file"
                 id="address"
                 placeholder="Enter location"
                 className="formFields"
