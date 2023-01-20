@@ -23,7 +23,7 @@ const ListAppointment = () => {
     };
 
     fetchData();
-  }, []);
+  }, [dispatch, userId]);
 
   return (
     <div>

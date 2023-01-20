@@ -14,6 +14,7 @@ import {
 
 import Login from "./pages/Login";
 import RegisterApplicant from "./pages/RegisterApplicant";
+import ManageUsers from "./pages/ManageUsers";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/" element={<SharedLayout />}>
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/manage-users" element={<ManageUsers />} />
           <Route path="/applicant/screening" element={<Screening />} />
           <Route path="/applicant/requirements" element={<Requirements />} />
           <Route path="/applicant/appointment" element={<Appointment />} />

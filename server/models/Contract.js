@@ -1,6 +1,6 @@
 /*
-* sorry boss, recheck mo na lng
-*/
+ * sorry boss, recheck mo na lng
+ */
 
 module.exports = (sequelize, DataTypes) => {
   const Contract = sequelize.define(
@@ -17,16 +17,16 @@ module.exports = (sequelize, DataTypes) => {
       },
       salary: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
       },
-      contactDate: {
+      contract_date: {
         type: DataTypes.DATEONLY,
         allowNull: false,
       },
-      signature: {
+      contract_image: {
         type: DataTypes.STRING,
-        allowNull: false
-      }
+        allowNull: false,
+      },
     },
     {
       timestamps: false,
@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "applicant_id",
       onUpdate: "CASCADE",
       onDelete: "CASCADE",
-    })
+    });
   };
   return Contract;
-}
+};

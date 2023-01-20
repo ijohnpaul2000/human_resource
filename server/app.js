@@ -3,6 +3,9 @@ const app = express();
 const cors = require("cors");
 require("dotenv").config({ path: "../.env" });
 const { errorHandler } = require("./middlewares/errorMiddleware");
+const { initializeDirectory } = require("./utils/initializeDirectory");
+
+initializeDirectory();
 
 //* ROUTES IMPORTS
 const userRoutes = require("./routes/userRoutes");
@@ -11,6 +14,7 @@ const applicantRoutes = require("./routes/applicantRoutes");
 const appointmentRoutes = require("./routes/appointmentRoutes");
 const requirementRoutes = require("./routes/RequirementRoutes");
 const employeeRoutes = require("./routes/employeeRoutes");
+const contractRoutes = require("./routes/contractRoutes");
 
 //* ENV Variables
 const PORT = process.env.PORT || 5000;
@@ -48,10 +52,10 @@ app.use("/api/applicants", applicantRoutes);
 app.use("/api/appointments", appointmentRoutes);
 app.use("/api/requirements", requirementRoutes);
 app.use("/api/employees", employeeRoutes);
+app.use("/api/contract", contractRoutes);
 
 //* Database
 const db = require("./models");
-const { options } = require("./routes/userRoutes");
 
 //* App Middleware
 app.use(errorHandler);

@@ -35,6 +35,21 @@ export const getApplicantsInfo = createAsyncThunk(
   }
 );
 
+export const signContract = createAsyncThunk(
+  "api/contract",
+  async (post, { rejectWithValue }) => {
+    try {
+      const result = await axios.post(
+        "http://localhost:5000/api/contract",
+        post
+      );
+      return result.data;
+    } catch (error) {
+      rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
 const contractSlice = createSlice({
   name: "contract",
   initialState,
@@ -47,33 +62,41 @@ const contractSlice = createSlice({
     },
     SET_SELECTED_APPLICANT: (state, action) => {
       state.selectedApplicant = action.payload;
-    }
+    },
   },
-  extraReducers: (builder) => {
-    builder
-      .addCase(getAppointmentsInfo.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(getAppointmentsInfo.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.appointmentInfo = action.payload;
-      })
-      .addCase(getAppointmentsInfo.rejected, (state) => {
-        state.isLoading = false;
-      })
-      .addCase(getApplicantsInfo.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(getApplicantsInfo.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.applicantsInfo = action.payload;
-      })
-      .addCase(getApplicantsInfo.rejected, (state) => {
-        state.isLoading = false;
-      });
+  extraReducers: {
+    [signContract.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [signContract.fulfilled]: (state, action) => {
+      state.isLoading = false;
+    },
+    [signContract.rejected]: (state) => {
+      state.isLoading = false;
+    },
+    [getAppointmentsInfo.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [getAppointmentsInfo.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.appointmentInfo = action.payload;
+    },
+    [getAppointmentsInfo.rejected]: (state) => {
+      state.isLoading = false;
+    },
+    [getApplicantsInfo.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [getApplicantsInfo.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.applicantsInfo = action.payload;
+    },
+    [getApplicantsInfo.rejected]: (state) => {
+      state.isLoading = false;
+    },
   },
 });
 
-export const { SET_MODAL_STATE, IS_LOADING, SET_SELECTED_APPLICANT} =
+export const { SET_MODAL_STATE, IS_LOADING, SET_SELECTED_APPLICANT } =
   contractSlice.actions;
 export default contractSlice.reducer;

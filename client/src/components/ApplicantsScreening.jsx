@@ -5,13 +5,11 @@ import { Row } from "primereact/row";
 import { ColumnGroup } from "primereact/columngroup";
 import { useSelector } from "react-redux";
 
-
-/* 
-* * APPLICANT SCREENING WILL CHECK 
-* * THE APPLICANTS STATUS (INTERVIEW, CONTRACT SIGNAGE, DEPLOYMENT)
-*/
+/*
+ * * APPLICANT SCREENING WILL CHECK
+ * * THE APPLICANTS STATUS (INTERVIEW, CONTRACT SIGNAGE, DEPLOYMENT)
+ */
 const ApplicantsScreening = () => {
-
   /* 
     It will retrived the updated data of the applicants.
   */
@@ -43,11 +41,14 @@ const ApplicantsScreening = () => {
       <h1 className="my-5 font-poppins text-2xl font-semibold">
         Applicants for Screening
       </h1>
+      <span>TODO: Filter out applicant for screening only.</span>
       <DataTable
         value={applicants}
         responsiveLayout="scroll"
         showGridlines
         size="small"
+        rows={10}
+        paginator
         headerColumnGroup={headerGroup}
       >
         <Column field="firstname" header="First Name" />

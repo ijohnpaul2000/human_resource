@@ -12,6 +12,8 @@ const login = expressAsyncHandler(async (req, res) => {
     return res.status(404).json({ message: "User not found" });
   }
 
+  console.log(user.password);
+
   const isPasswordMatch = bcrypt.compareSync(password, user.password);
 
   if (!isPasswordMatch) {

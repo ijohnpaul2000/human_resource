@@ -6,7 +6,6 @@ import { persistStore, persistReducer } from "redux-persist";
 import thunk from "redux-thunk";
 
 import authReducer from "./features/authReducer";
-import appReducer from "./features/appReducer";
 import sidebarReducer from "./features/sidebarReducer";
 import appoinmentReducer from "./features/appoinmentReducer";
 import modalReducer from "./features/modalReducer";
@@ -27,7 +26,6 @@ const persisConfig = {
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  app: appReducer,
   sidebar: sidebarReducer,
   appointment: appoinmentReducer,
   modal: modalReducer,

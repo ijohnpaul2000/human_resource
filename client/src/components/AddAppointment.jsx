@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { BsChevronRight } from "react-icons/bs";
 import {
   getApplicantsInfo,
+  getAppoinmentsInfo,
   IS_MODAL_OPENED,
   SET_SELECTED_APPOINTMENT,
 } from "../redux/features/appoinmentReducer";
@@ -11,6 +12,7 @@ import { notifyToast } from "../helpers/notifyToast";
 import { ToastContainer } from "react-toastify";
 import axios from "axios";
 import { validationSchema } from "../yupUtils/comp/AppointmentYup";
+import { getAppointments } from "../redux/features/Entities/AppointmentsThunk";
 
 const dayjs = require("dayjs");
 
@@ -75,6 +77,7 @@ const AddAppointment = () => {
           data: values,
         });
         resetForm();
+        dispatch(getAppointments());
         console.log(response);
         notifyToast(
           selectedAppointment ? "Applicant Updated" : "Applicant Added",
@@ -120,18 +123,8 @@ const AddAppointment = () => {
     In every change na nangyayari sa site (addition ng data, updating ng data) lagi tong magrurun.
   */
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const fetchedData = await dispatch(getApplicantsInfo()).unwrap();
-        console.log(fetchedData);
-        console.log(applicantInfo);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
-    fetchData();
-  }, []);
+    dispatch(getApplicantsInfo());
+  }, [dispatch]);
 
   /* 
     The rendered user interface na makikita ng user.

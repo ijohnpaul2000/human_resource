@@ -36,7 +36,7 @@ const Contract = () => {
     { field: "salary", header: "Salary" },
     { field: "contactDate", header: "Contact Date" },
     { field: "signature", header: "Signature" },
-  ]
+  ];
 
   const renderName = (rowData, item) => {
     if (item.field === "Applicant") {
@@ -126,18 +126,8 @@ const Contract = () => {
   ));
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const fetchedData = await dispatch(getAppointmentsInfo()).unwrap();
-        console.log(fetchedData);
-        console.log(appointmentInfo);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
-    fetchData();
-  }, [isOpened, selectedApplicant]);
+    dispatch(getAppointmentsInfo());
+  }, [dispatch]);
   return (
     <div>
       <div className="header">Contract Signing</div>
@@ -155,8 +145,8 @@ const Contract = () => {
               selectionMode="radiobutton"
               onSelectionChange={(e) => {
                 dispatch(SET_SELECTED_APPLICANT(e.value)); //TODO: to be implemented later
-                console.log(e.value.Applicant);
               }}
+              onEmptied={() => dispatch(SET_SELECTED_APPLICANT(null))}
             >
               <Column
                 selectionMode="single"
@@ -179,23 +169,23 @@ const Contract = () => {
           {/* Signed Employee */}
           <TabPanel header="Signed">
             <DataTable
-                size="small"
-                value={appointmentInfo} //TODO: To be checked
-                responsiveLayout="scroll"
-                showGridlines
-                selection={selectedApplicant}
-                selectionMode="radiobutton"
-                // onSelectionChange={(e) => {
-                //   dispatch(SET_SELECTED_APPLICANT(e.value)); //TODO: to be implemented later
-                //   console.log(e.value.Applicant);
-                // }}
-              >
-                <Column
-                  selectionMode="single"
-                  headerStyle={{ width: "3em" }}
-                ></Column>
-                {signedColumnComponent}
-              </DataTable>
+              size="small"
+              value={appointmentInfo} //TODO: To be checked
+              responsiveLayout="scroll"
+              showGridlines
+              selection={selectedApplicant}
+              selectionMode="radiobutton"
+              // onSelectionChange={(e) => {
+              //   dispatch(SET_SELECTED_APPLICANT(e.value)); //TODO: to be implemented later
+              //   console.log(e.value.Applicant);
+              // }}
+            >
+              <Column
+                selectionMode="single"
+                headerStyle={{ width: "3em" }}
+              ></Column>
+              {signedColumnComponent}
+            </DataTable>
           </TabPanel>
         </TabView>
       </div>

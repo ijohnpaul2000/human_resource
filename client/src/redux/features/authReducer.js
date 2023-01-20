@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const initialState = {
   isAuthenticated: false,
@@ -6,30 +7,44 @@ const initialState = {
   isLoading: false,
 };
 
+export const LOGIN = createAsyncThunk(
+  "auth/login",
+  async (data, { rejectWithValue }) => {
+    try {
+      const result = await axios.post("http://localhost:5000/api/auth", data);
+      return result.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    LOGIN: (state, action) => {
-      state.user = action.payload;
-      state.isAuthenticated = true;
-      state.isLoading = false;
-      sessionStorage.setItem("user_token", action.payload.token);
-    },
     LOGOUT: (state) => {
-      state.user = null;
       state.isAuthenticated = false;
-      state.isLoading = false;
-      sessionStorage.removeItem("user_token");
+      state.user = null;
     },
-    RESET_STATE: (state) => {
-      state.user = null;
-      state.isAuthenticated = false;
+  },
+  extraReducers: {
+    [LOGIN.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [LOGIN.fulfilled]: (state, action) => {
       state.isLoading = false;
-      sessionStorage.removeItem("user_token");
+      state.isAuthenticated = true;
+      state.user = action.payload;
+    },
+    [LOGIN.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.isAuthenticated = false;
+      state.user = null;
     },
   },
 });
 
-export const { LOGIN, LOGOUT, RESET_STATE } = authSlice.actions;
+export const { LOGOUT } = authSlice.actions;
+
 export default authSlice.reducer;

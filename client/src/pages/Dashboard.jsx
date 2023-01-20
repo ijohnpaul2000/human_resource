@@ -16,7 +16,6 @@ import RegisterApplicant from "./RegisterApplicant";
 import ListAppointment from "./Hiring Process/ListAppointment";
 
 const Dashboard = () => {
-
   /* 
     DISPATCH - the handler of actions
     so we can call the different methods in different places in the application
@@ -31,34 +30,29 @@ const Dashboard = () => {
     (state) => state.applicants.applicantsData.length
   );
 
-
-   /* 
+  /* 
     Declaration of the variable to get the number of appointments.
   */
   const appointmentsCount = useSelector(
     (state) => state.appointments.appointmentsData.length
   );
 
-
-   /* 
+  /* 
     Declaration of the variable to get the number of Deployed Employee
   */
   const deployedEmployeesCount = useSelector(
     (state) => state.employees.deployedEmployeesData.length
   );
 
-
-   /* 
+  /* 
     Declaration of the variable to get the number of Total employees
   */
   const employees = useSelector((state) => state.employees.employeesData);
-
 
   /* 
     It will rerendered the page if detects new data or updated data.
   */
   useEffect(() => {
-
     /* 
       We must filter the employees if that employee is already deployed, 
       this is used to only shows the Deployed Employees.
@@ -67,10 +61,9 @@ const Dashboard = () => {
       (employee) => employee.isEmployeeDeployed === true
     );
     dispatch(GET_DEPLOYED_EMPLOYEES(deployedEmployees));
-  }, []);
+  }, [dispatch, employees]);
 
-
-   /* 
+  /* 
     It will rerendered the page if detects new data or updated data.
   */
   useEffect(() => {
@@ -78,8 +71,7 @@ const Dashboard = () => {
     dispatch(getAppointments());
     dispatch(getEmployeesData());
     dispatch(getRegisteredNo());
-  }, []);
-
+  }, [dispatch]);
 
   /* 
     An array of HTML and CSS properties that will be passed in DashboardCard component
@@ -115,7 +107,6 @@ const Dashboard = () => {
       cardTitle: "Total of Deployed Employee",
     },
   ];
-
 
   /* 
     It will render the no. of Applicants and Employees in the UI

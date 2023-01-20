@@ -38,5 +38,4 @@ const applicantSlice = createSlice({
   },
 });
 
-export const {} = applicantSlice.actions;
 export default applicantSlice.reducer;

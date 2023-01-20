@@ -51,7 +51,7 @@ const RegisterApplicant = () => {
     };
     fetchCurrentApplicant();
     navigate("/register-applicant");
-  }, []);
+  }, [navigate, userId]);
 
   if (!isAuthenticated) {
     return <NotAuthenticated />;
@@ -59,15 +59,15 @@ const RegisterApplicant = () => {
 
   return (
     <div className="max-w-[1000px] mx-auto min-h-screen px-4 py-8 bg-gray-100">
-      <h1 className="font-bold text-4xl text-center mb-4">
+      <h1 className="mb-4 text-4xl font-bold text-center">
         Orion Task Force Security Agency Co.,{" "}
       </h1>
-      <h1 className="font-poppins text-xl font-semibold">
+      <h1 className="text-xl font-semibold font-poppins">
         Online Applicant Registration
       </h1>
 
       <form onSubmit={formik.handleSubmit} className="mt-10 ">
-        <h1 className="font-poppins text-md font-semibold">
+        <h1 className="font-semibold font-poppins text-md">
           Applicant Information:{" "}
         </h1>
         <div className="grid grid-cols-2 xl:grid-cols-[1fr,1fr,1fr,70px] gap-4">
@@ -78,7 +78,7 @@ const RegisterApplicant = () => {
               id="firstname"
               name="firstname"
               type="text"
-              className="border-gray-400 border-2 rounded-lg p-2"
+              className="p-2 border-2 border-gray-400 rounded-lg"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.firstname}
@@ -95,7 +95,7 @@ const RegisterApplicant = () => {
               id="middlename"
               name="middlename"
               type="text"
-              className="border-gray-400 border-2 rounded-lg p-2"
+              className="p-2 border-2 border-gray-400 rounded-lg"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.middlename}
@@ -113,7 +113,7 @@ const RegisterApplicant = () => {
               id="lastname"
               name="lastname"
               type="text"
-              className="border-gray-400 border-2 rounded-lg p-2"
+              className="p-2 border-2 border-gray-400 rounded-lg"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.lastname}
@@ -131,7 +131,7 @@ const RegisterApplicant = () => {
               id="suffix"
               name="suffix"
               type="text"
-              className="border-gray-400 border-2 rounded-lg p-2 w-full"
+              className="w-full p-2 border-2 border-gray-400 rounded-lg"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.suffix}
@@ -150,7 +150,7 @@ const RegisterApplicant = () => {
               id="age"
               name="age"
               type="number"
-              className="border-gray-400 border-2 rounded-lg p-2 w-full"
+              className="w-full p-2 border-2 border-gray-400 rounded-lg"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.age}
@@ -166,7 +166,7 @@ const RegisterApplicant = () => {
               id="contact"
               name="contact"
               type="text"
-              className="border-gray-400 border-2 rounded-lg p-2"
+              className="p-2 border-2 border-gray-400 rounded-lg"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.contact}
@@ -182,7 +182,7 @@ const RegisterApplicant = () => {
               id="email"
               name="email"
               type="text"
-              className="border-gray-400 border-2 rounded-lg p-2"
+              className="p-2 border-2 border-gray-400 rounded-lg"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.email}
@@ -204,7 +204,7 @@ const RegisterApplicant = () => {
               id="address"
               name="address"
               type="text"
-              className="border-gray-400 border-2 rounded-lg p-2 w-full"
+              className="w-full p-2 border-2 border-gray-400 rounded-lg"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.address}
@@ -220,7 +220,7 @@ const RegisterApplicant = () => {
               id="city"
               name="city"
               type="text"
-              className="border-gray-400 border-2 rounded-lg p-2 w-full"
+              className="w-full p-2 border-2 border-gray-400 rounded-lg"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.city}
@@ -232,7 +232,7 @@ const RegisterApplicant = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 xl:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 gap-4 xl:grid-cols-4">
           <div className="grid mb-4 ">
             <label htmlFor="birthdate">Birthdate</label>
             <input
@@ -240,7 +240,7 @@ const RegisterApplicant = () => {
               name="birthdate"
               type="date"
               max={new Date().toISOString().split("T")[0]}
-              className="border-gray-400 border-2 rounded-lg p-2 w-full"
+              className="w-full p-2 border-2 border-gray-400 rounded-lg"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.birthdate}
@@ -256,7 +256,7 @@ const RegisterApplicant = () => {
               id="birthplace"
               name="birthplace"
               type="text"
-              className="border-gray-400 border-2 rounded-lg p-2 w-full"
+              className="w-full p-2 border-2 border-gray-400 rounded-lg"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.birthplace}
@@ -272,7 +272,7 @@ const RegisterApplicant = () => {
               id="sex"
               name="sex"
               type="text"
-              className="border-gray-400 border-2 rounded-lg p-2 w-full"
+              className="w-full p-2 border-2 border-gray-400 rounded-lg"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.sex}
@@ -291,7 +291,7 @@ const RegisterApplicant = () => {
               id="religion"
               name="religion"
               type="text"
-              className="border-gray-400 border-2 rounded-lg p-2 w-full"
+              className="w-full p-2 border-2 border-gray-400 rounded-lg"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.religion}
@@ -305,14 +305,14 @@ const RegisterApplicant = () => {
 
         <div className="w-full h-[2px] my-4 bg-gray-400"></div>
 
-        <div className="grid  grid-cols-2 xl:grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 gap-4 xl:grid-cols-3">
           <div className="grid mb-4 ">
             <label htmlFor="citizenship">Citizenship</label>
             <input
               id="citizenship"
               name="citizenship"
               type="text"
-              className="border-gray-400 border-2 rounded-lg p-2 w-full"
+              className="w-full p-2 border-2 border-gray-400 rounded-lg"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.citizenship}
@@ -330,7 +330,7 @@ const RegisterApplicant = () => {
               id="educational_background"
               name="educational_background"
               type="text"
-              className="border-gray-400 border-2 rounded-lg p-2 w-full"
+              className="w-full p-2 border-2 border-gray-400 rounded-lg"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.educational_background}
@@ -349,7 +349,7 @@ const RegisterApplicant = () => {
               id="civil_status"
               name="civil_status"
               type="text"
-              className="border-gray-400 border-2 rounded-lg p-2 w-full"
+              className="w-full p-2 border-2 border-gray-400 rounded-lg"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.civil_status}

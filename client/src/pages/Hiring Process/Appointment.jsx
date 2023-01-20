@@ -22,6 +22,8 @@ const Appointment = () => {
   const { isModalOpened, appointmentInfo, applicantInfo, selectedAppointment } =
     useSelector((store) => store.appointment);
 
+  const { appointmentsData } = useSelector((store) => store.appointments);
+
   const columns = [
     { field: "Applicant", header: "Applicant" },
     { field: "appointment_date", header: "Appointment Date" },
@@ -113,27 +115,28 @@ const Appointment = () => {
     />
   ));
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const fetchedData = await dispatch(getAppoinmentsInfo()).unwrap();
-        console.log(fetchedData);
-        console.log(appointmentInfo);
-      } catch (error) {
-        console.log(error);
-      }
-    }
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
+  //       const fetchedData = await dispatch(getAppoinmentsInfo()).unwrap();
+  //       console.log(fetchedData);
+  //       console.log(appointmentInfo);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
 
-    fetchData();
-  }, [isModalOpened, selectedAppointment]);
+  //   fetchData();
+  // }, [isModalOpened, selectedAppointment]);
 
+  console.log({ appointmentsData });
   return (
     <div>
       <div className="header">Applicant Appointment</div>
 
       <DataTable
         size="small"
-        value={appointmentInfo}
+        value={appointmentsData}
         responsiveLayout="scroll"
         showGridlines
         header={renderHeader}

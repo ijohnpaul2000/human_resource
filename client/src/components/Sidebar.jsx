@@ -44,12 +44,6 @@ const Sidebar = () => {
     dispatch(LOGOUT());
   };
 
-  useEffect(() => {
-    dispatch(SET_SELECTED_APPOINTMENT(""));
-    dispatch(SET_SELECTED_REQUIREMENT(""));
-    dispatch(SET_SELECTED_APPLICANT(""));
-  }, [isSidebarOpen, linkActive]);
-
   return (
     /*
       THE FOLLOWING LINE OF CODES (COMMENTED) ARE FUNCTIONING AND UPDATED
@@ -67,13 +61,13 @@ const Sidebar = () => {
           }}
         />
 
-        <h1 className="text-center font-bold text-xl m-2">
+        <h1 className="m-2 text-xl font-bold text-center">
           Orion Task Force Security Agency Co.,
         </h1>
       </div>
 
       {/*  ACCOUNT INFO */}
-      <div className="p-4 font-medium flex  border-t-2 border-gray-400">
+      <div className="flex p-4 font-medium border-t-2 border-gray-400">
         <img src={avatar} alt="" className="max-w-[50px]" />
         <div className="pl-4">
           <p className="">{currentUser}</p>
@@ -93,6 +87,18 @@ const Sidebar = () => {
               }`}
             >
               <AiOutlineHome /> Dashboard
+            </li>
+          </Link>
+          <Link
+            to="/manage-users"
+            onClick={() => dispatch(SET_LINK_ACTIVE("ManageUsers"))}
+          >
+            <li
+              className={`${
+                linkActive === "ManageUsers" && "bg-gray-700 text-white"
+              }`}
+            >
+              <AiOutlineHome /> Manage Users
             </li>
           </Link>
           <div className={`${curretUserLevel === "applicant" ? "hidden" : ""}`}>
@@ -181,13 +187,13 @@ const Sidebar = () => {
     //       }}
     //     />
 
-    //     <h1 className="text-center font-bold text-xl m-2">
+    //     <h1 className="m-2 text-xl font-bold text-center">
     //       Orion Task Force Security Agency Co.,
     //     </h1>
     //   </div>
 
     //   {/*  ACCOUNT INFO */}
-    //   <div className="p-4 font-medium flex  border-t-2 border-gray-400">
+    //   <div className="flex p-4 font-medium border-t-2 border-gray-400">
     //     <img src={avatar} alt="" className="max-w-[50px]" />
     //     <div className="pl-4">
     //       <p className="">{currentUser}</p>
