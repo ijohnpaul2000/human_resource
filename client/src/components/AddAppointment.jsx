@@ -145,6 +145,7 @@ const AddAppointment = () => {
                   value={formik.values.applicant_id}
                   onChange={formik.handleChange}
                   className="select-decorator"
+                  autoComplete="off"
                 />
                 <datalist id="applicants">
                   {applicantInfo.map((element) => {
