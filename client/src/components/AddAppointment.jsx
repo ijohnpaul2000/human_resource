@@ -78,6 +78,7 @@ const AddAppointment = () => {
         });
         resetForm();
         dispatch(getAppointments());
+        dispatch(getApplicantsInfo());
         console.log(response);
         notifyToast(
           selectedAppointment ? "Applicant Updated" : "Applicant Added",
@@ -120,7 +121,7 @@ const AddAppointment = () => {
   };
 
   /* 
-    In every change na nangyayari sa site (addition ng data, updating ng data) lagi tong magrurun.
+    In every change na nangyayari sa site (addition ng data, updating ng data) lagi tong magrurun. okay lang naman boss kasfksdfka
   */
   useEffect(() => {
     dispatch(getApplicantsInfo());

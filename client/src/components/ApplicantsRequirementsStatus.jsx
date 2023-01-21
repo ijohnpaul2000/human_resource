@@ -6,13 +6,11 @@ import { ColumnGroup } from "primereact/columngroup";
 
 import { useSelector } from "react-redux";
 
-
-/* 
-* * APPLICANTS REQUIREMENTS
-* * IT CHECKS IF THE APPLICANTS HAVE COMPLETED THE REQUIREMENTS OR NOT
-*/
+/*
+ * * APPLICANTS REQUIREMENTS
+ * * IT CHECKS IF THE APPLICANTS HAVE COMPLETED THE REQUIREMENTS OR NOT
+ */
 const ApplicantsRequirementsStatus = () => {
-
   /* 
     It will get the current state of the list of Requirements
     In short kukunin lang nito yung most updated data ng Users Table.

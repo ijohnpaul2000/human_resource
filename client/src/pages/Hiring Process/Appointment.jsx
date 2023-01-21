@@ -16,6 +16,7 @@ import {
 } from "../../redux/features/appoinmentReducer";
 import AddAppointment from "../../components/AddAppointment";
 import { SET_MODAL } from "../../redux/features/modalReducer";
+import { getAppointments } from "../../redux/features/Entities/AppointmentsThunk";
 
 const Appointment = () => {
   const dispatch = useDispatch();
@@ -77,6 +78,7 @@ const Appointment = () => {
               deleteAppointment,
               dispatch(SET_MODAL({ isOpen: false }))
             );
+            dispatch(getAppointments());
           }}
           disabled={!selectedAppointment}
           tooltipOptions={{ position: "bottom" }}
@@ -126,7 +128,7 @@ const Appointment = () => {
 
       <DataTable
         size="small"
-        value={appointmentInfo}
+        value={appointmentsData}
         responsiveLayout="scroll"
         showGridlines
         header={renderHeader}

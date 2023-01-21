@@ -1,13 +1,15 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { BsChevronRight } from "react-icons/bs";
 import { useFormik } from "formik";
-import axios from "axios";
 import { ToastContainer } from "react-toastify";
 import { notifyToast } from "../helpers/notifyToast";
 import { validationSchema } from "../yupUtils/comp/ContractYup";
 import { useRef } from "react";
-import { signContract } from "../redux/features/contractReducer";
+import {
+  getAppointmentsInfo,
+  signContract,
+} from "../redux/features/contractReducer";
+import moment from "moment";
 
 const ViewContractSigning = () => {
   const dispatch = useDispatch();
@@ -15,9 +17,8 @@ const ViewContractSigning = () => {
 
   const initialValues = {
     applicant_id: selectedApplicant?.applicant_id,
-    salary: "",
+    salary: 0,
     contract_date: "",
-    contract_image: "",
   };
 
   const contractRef = useRef(null);
@@ -28,17 +29,22 @@ const ViewContractSigning = () => {
     onSubmit: async (values, { resetForm }) => {
       //alert(JSON.stringify(values, null, 2));
 
-      var formData = new FormData();
+      const contractImage = contractRef.current.files[0];
+
+      let formData = new FormData();
       formData.append("applicant_id", values.applicant_id);
-      formData.append("contract_date", values.contract_date);
-      formData.append("contract_image", values.contract_image);
+      formData.append(
+        "contract_date",
+        moment(values.contract_date).format("YYYY-MM-DD")
+      );
       formData.append("salary", values.salary);
+      formData.append("contract_image", contractImage);
 
       console.log(formData);
       try {
         dispatch(signContract(formData));
         resetForm();
-        notifyToast("Contract Updated", "success");
+        dispatch(getAppointmentsInfo());
         // dispatch(SET_SELECTED_REQUIREMENT("")); //TODO: will be implemented
         // reCloseModal();
       } catch (error) {
@@ -146,7 +152,10 @@ const ViewContractSigning = () => {
       </div>
       <div className="flex flex-wrap -mx-3 mt-2 mb-2 gap-y-2">
         <div className="form-group w-full px-3 md:w-1/3">
-          <label className="form-label inline-block mb-2 text-gray-700 font-bold">
+          <label
+            className="form-label inline-block mb-2 text-gray-700 font-bold"
+            htmlFor="salary"
+          >
             Salary
           </label>
           <input
@@ -160,7 +169,7 @@ const ViewContractSigning = () => {
                 ? "border-2 border-red-600 formFields"
                 : "formFields"
             }
-            value={formik.values.address}
+            value={formik.values.salary}
             onChange={formik.handleChange}
           />
           {/* {getErrorMessage("address")} */}
@@ -181,7 +190,7 @@ const ViewContractSigning = () => {
                 ? "border-2 border-red-600 formFields"
                 : "formFields"
             }
-            value={formik.values.contact}
+            value={formik.values.contract_date}
             onChange={formik.handleChange}
           />
           {/* {getErrorMessage("address")} */}
@@ -193,8 +202,6 @@ const ViewContractSigning = () => {
           </label>
           <input
             type="file"
-            id="contract_image"
-            name="contract_image"
             placeholder="Enter location"
             ref={contractRef}
             className={
@@ -202,8 +209,6 @@ const ViewContractSigning = () => {
                 ? "border-2 border-red-600 formFields"
                 : "formFields"
             }
-            value={formik.values.contract_address}
-            onChange={formik.handleChange}
           />
           {getErrorMessage("address")}
         </div>

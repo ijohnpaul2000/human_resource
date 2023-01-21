@@ -33,6 +33,7 @@ const Login = () => {
       dispatch(LOGIN(values))
         .unwrap()
         .then((res) => {
+          localStorage.setItem("userToken", res.token);
           notifyToast("Login Successful", "success");
           setTimeout(() => {
             navigate("/dashboard");

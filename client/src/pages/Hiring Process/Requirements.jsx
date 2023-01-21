@@ -140,18 +140,8 @@ const Requirements = () => {
   ));
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const fetchedData = await dispatch(getRequirementsInfo()).unwrap();
-        console.log(fetchedData);
-        console.log(requirementInfo);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
-    fetchData();
-  }, [isOpened]);
+    dispatch(getRequirementsInfo());
+  }, [dispatch]);
   return (
     <div>
       <div className="header">Applicant Requirements</div>

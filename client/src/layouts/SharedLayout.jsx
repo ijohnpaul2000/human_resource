@@ -17,7 +17,9 @@ const SharedLayout = () => {
 
   const userLevel = useSelector((store) => store.auth.user?.user_level);
   const isSidebarOpen = useSelector((state) => state.sidebar.isSidebarOpen);
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const isAuthenticated =
+    useSelector((state) => state.auth.isAuthenticated) ||
+    localStorage.getItem("userToken");
 
   if (!isAuthenticated) {
     return <NotAuthenticated />;
