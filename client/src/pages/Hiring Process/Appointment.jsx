@@ -115,19 +115,9 @@ const Appointment = () => {
     />
   ));
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     try {
-  //       const fetchedData = await dispatch(getAppoinmentsInfo()).unwrap();
-  //       console.log(fetchedData);
-  //       console.log(appointmentInfo);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-
-  //   fetchData();
-  // }, [isModalOpened, selectedAppointment]);
+  useEffect(() => {
+    dispatch(getAppoinmentsInfo());
+  }, [dispatch]);
 
   console.log({ appointmentsData });
   return (
@@ -136,7 +126,7 @@ const Appointment = () => {
 
       <DataTable
         size="small"
-        value={appointmentsData}
+        value={appointmentInfo}
         responsiveLayout="scroll"
         showGridlines
         header={renderHeader}
