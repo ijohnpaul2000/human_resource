@@ -35,25 +35,25 @@ const POSTappointment = expressAsyncHandler(async (req, res) => {
 
   if (!existingApplicant) {
     return res.status(400).json({ message: "Applicant does not exist" });
-  }
 
-  try {
-    const newAppointment = {
-      id: v4(),
-      applicant_id,
-      appointment_date,
-      appointment_time,
-      appointment_location,
-      appointment_description,
-      appointment_type,
-    };
+    try {
+      const newAppointment = {
+        id: v4(),
+        applicant_id,
+        appointment_date,
+        appointment_time,
+        appointment_location,
+        appointment_description,
+        appointment_type,
+      };
 
-    const createdAppointment = await Appointment.create(newAppointment);
-    res.status(200).json(createdAppointment);
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Something went wrong! Please try again later." });
+      const createdAppointment = await Appointment.create(newAppointment);
+      res.status(200).json(createdAppointment);
+    } catch (error) {
+      res
+        .status(500)
+        .json({ message: "Something went wrong! Please try again later." });
+    }
   }
 });
 

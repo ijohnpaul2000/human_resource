@@ -31,6 +31,7 @@ const Login = () => {
     validationSchema: LoginValidation,
     onSubmit: async (values) => {
       dispatch(LOGIN(values))
+        .unwrap()
         .then((res) => {
           notifyToast("Login Successful", "success");
           setTimeout(() => {
@@ -38,7 +39,7 @@ const Login = () => {
           }, 2000);
         })
         .catch((err) => {
-          notifyToast(err, "error");
+          notifyToast(err.message, "error");
         });
     },
   });
