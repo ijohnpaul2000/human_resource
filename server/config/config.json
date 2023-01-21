@@ -1,10 +1,10 @@
 {
   "development": {
-    "username": "root",
+    "username": "postgres",
     "password": "password",
     "database": "db_human_resource",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "postgres"
   },
   "test": {
     "username": "postgres",

@@ -27,7 +27,6 @@ const ViewContractSigning = () => {
     initialValues,
     validationSchema,
     onSubmit: async (values, { resetForm }) => {
-      //alert(JSON.stringify(values, null, 2));
 
       const contractImage = contractRef.current.files[0];
 
@@ -45,8 +44,6 @@ const ViewContractSigning = () => {
         dispatch(signContract(formData));
         resetForm();
         dispatch(getAppointmentsInfo());
-        // dispatch(SET_SELECTED_REQUIREMENT("")); //TODO: will be implemented
-        // reCloseModal();
       } catch (error) {
         notifyToast(error, "error");
       }
