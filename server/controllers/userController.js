@@ -88,20 +88,30 @@ const GETuser = expressAsyncHandler(async (req, res) => {
 const PUTuser = expressAsyncHandler(async (req, res) => {
   const { id } = req.params;
   const { password, user_level } = req.body;
+  let updatedUser;
 
   const existingUser = await User.findOne({ where: { id } });
-
+  
   if (!existingUser) {
     return res.status(404).json({ message: "User not found" });
   }
 
-  const gensalt = 10;
-  const hashedPassword = bcrypt.hashSync(password, gensalt);
+  console.log(existingUser.password);
 
-  const updatedUser = {
-    password: hashedPassword,
-    user_level,
-  };
+  // If password is empty ignore that.
+  if (password === "") {
+    updatedUser = {
+      user_level,
+    };
+  } else {
+    const gensalt = 10;
+    const hashedPassword = bcrypt.hashSync(password, gensalt);
+  
+    updatedUser = {
+      password: hashedPassword,
+      user_level,
+    };
+  }
 
   try {
     await User.update(updatedUser, { where: { id } });
