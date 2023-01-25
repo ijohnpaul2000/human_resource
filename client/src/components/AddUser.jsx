@@ -19,6 +19,8 @@ const AddUser = () => {
   // useState for Checkbox
   const [checked, setChecked] = useState(false);
 
+  const passwordValidatorMsg = "Password can only contain at least one numeric digit, one uppercase and one lowercase letter.";
+
   //Redux
   const dispatch = useDispatch();
   const { isModalOpened, userInfo, selectedUser } = useSelector(
@@ -32,18 +34,24 @@ const AddUser = () => {
     middlename: selectedUser ? selectedUser?.middlename : "",
     lastname: selectedUser ? selectedUser?.lastname : "",
     username: selectedUser ? selectedUser?.username : "",
-    password: selectedUser ? selectedUser?.password : "",
+    password:  "",
+    cpassword: "",
     user_level: selectedUser ? selectedUser?.user_level : "user",
     email: selectedUser ? selectedUser?.email : "",
   };
 
-  // Validations
+  // From: https://stackoverflow.com/a/72975771/13848366
   const validationSchema = Yup.object().shape({
     firstname: Yup.string().required("First Name is required"),
     middlename: Yup.string().required("Middle Name is required"),
     lastname: Yup.string().required("Last Name is required"),
     username: Yup.string().required("Username is required"),
-    password: checked == true ? Yup.string().required("Password is required") : Yup.string().notRequired(),
+    password: 
+      selectedUser ? Yup.string().notRequired() : 
+      Yup.string().required("Password is required")
+                  .min(6, "Password is too short")
+                  .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/, passwordValidatorMsg),
+    cpassword: Yup.string().oneOf([Yup.ref('password'), null], "Password must match"),
     user_level: Yup.string().required("User Level is required"),
     email: Yup.string().required("Email is required"),
   });
@@ -293,45 +301,67 @@ const AddUser = () => {
             </div>
 
             {/* For updating password */}
-            <div
-              className="field-checkbox"
-              style={selectedUser ? { display: "block" } : { display: "none" }}
-            >
-              <Checkbox
-                inputId="binary"
-                className="mr-2 ml-3"
-                checked={checked}
-                onChange={(e) => setChecked(e.checked)}
-              />
-              <label htmlFor="binary">Change Password</label>
-            </div>
+            
+              <div
+                className="field-checkbox"
+                style={selectedUser ? { display: "block" } : { display: "none" }}
+              >
+                <Checkbox
+                  inputId="binary"
+                  className="mr-2 ml-3"
+                  checked={checked}
+                  onChange={(e) => setChecked(e.checked)}
+                />
+                <label htmlFor="binary">Change Password</label>
+              </div>
 
-            <div
-              className="form-group w-full px-3"
-              style={checked ? { display: "block" } : { display: "none" }}
-            >
-              <label className="form-label inline-block mb-2 text-gray-700 font-bold">
-                Password
-              </label>
-              <input
-                type="password"
-                id="password"
-                placeholder="Enter password"
-                className={
-                  isFieldValid("password")
-                    ? "border-2 border-red-600 formFields"
-                    : "formFields"
-                }
-                value={formik.values.password}
-                onChange={formik.handleChange}
-              />
-              {getErrorMessage("password")}
-            </div>
+              <div
+                className="form-group w-full px-3"
+                style={checked ? { display: "block" } : { display: "none" }}
+              >
+                <label className="form-label inline-block mb-2 text-gray-700 font-bold">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  id="password"
+                  placeholder="Enter password"
+                  className={
+                    isFieldValid("password")
+                      ? "border-2 border-red-600 formFields"
+                      : "formFields"
+                  }
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                />
+                {getErrorMessage("password")}
+              </div>
+              <div
+                className="form-group w-full px-3"
+                style={checked ? { display: "block" } : { display: "none" }}
+              >
+                <label className="form-label inline-block mb-2 text-gray-700 font-bold">
+                  Confirm Password
+                </label>
+                <input
+                  type="password"
+                  id="cpassword"
+                  placeholder="Confirm password"
+                  className={
+                    isFieldValid("cpassword")
+                      ? "border-2 border-red-600 formFields"
+                      : "formFields"
+                  }
+                  value={formik.values.cpassword}
+                  onChange={formik.handleChange}
+                />
+                {getErrorMessage("cpassword")}
+              </div>
           </div>
           <button
             type="submit"
             className="form-btn disabled:opacity-50 enabled:hover:bg-pink-400"
-            disabled={!(formik.dirty && formik.isValid)}
+            // disabled={!(formik.dirty && formik.isValid)}
           >
             Submit
           </button>
