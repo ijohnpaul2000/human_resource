@@ -86,7 +86,7 @@ const DeployedEmployee = () => {
         return prevMonthData;
       });
     });
-  }, []);
+  }, [employeesData]);
 
   return (
     <div className="max-w-[500px] pb-20 mt-8">

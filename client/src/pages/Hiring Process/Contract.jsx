@@ -249,7 +249,10 @@ const Contract = () => {
           }}
         >
           <ContractImage
-            imageLink={`http://localhost:5000/api/contract-image/${selectedContract.contract_image}`}
+            imageLink={
+              selectedContract &&
+              `http://localhost:5000/api/contract-image/${selectedContract.contract_image}`
+            }
           />
         </Dialog>
       </div>
