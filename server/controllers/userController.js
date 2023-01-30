@@ -91,7 +91,7 @@ const PUTuser = expressAsyncHandler(async (req, res) => {
   let updatedUser;
 
   const existingUser = await User.findOne({ where: { id } });
-  
+
   if (!existingUser) {
     return res.status(404).json({ message: "User not found" });
   }
@@ -106,7 +106,7 @@ const PUTuser = expressAsyncHandler(async (req, res) => {
   } else {
     const gensalt = 10;
     const hashedPassword = bcrypt.hashSync(password, gensalt);
-  
+
     updatedUser = {
       password: hashedPassword,
       user_level,

@@ -127,6 +127,30 @@ const POSTcontract = expressAsyncHandler(async (req, res) => {
   }
 });
 
+const GETContracts = expressAsyncHandler(async (req, res) => {
+  const contracts = await Contract.findAll({
+    include: [
+      {
+        model: Employee,
+        as: "Employee",
+        attributes: ["firstname", "middlename", "lastname"],
+      },
+    ],
+  });
+
+  if (!contracts) {
+    return res.status(404).json({
+      message: "Contracts not found",
+    });
+  }
+
+  res.status(200).json({
+    contracts,
+    status: "success",
+  });
+});
+
 module.exports = {
   POSTcontract,
+  GETContracts,
 };

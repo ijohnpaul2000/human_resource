@@ -107,7 +107,7 @@ const ViewContractSigning = () => {
               placeholder="Enter first name"
               className="formFields"
               disabled
-              value={selectedApplicant["Applicant"].firstname}
+              value={selectedApplicant["Applicant"]?.firstname}
             />
           </div>
 
@@ -122,7 +122,7 @@ const ViewContractSigning = () => {
               placeholder="Enter middle name"
               className="formFields"
               disabled
-              value={selectedApplicant["Applicant"].middlename}
+              value={selectedApplicant["Applicant"]?.middlename}
             />
           </div>
 
@@ -139,7 +139,7 @@ const ViewContractSigning = () => {
                   placeholder="Enter lastname"
                   className="formFields"
                   disabled
-                  value={selectedApplicant["Applicant"].lastname}
+                  value={selectedApplicant["Applicant"]?.lastname}
                 />
               </div>
               <div className="w-2/6 w-full px-3 pr-0">
@@ -153,7 +153,7 @@ const ViewContractSigning = () => {
                   id="suffix"
                   name="suffix"
                   placeholder="Suff."
-                  value={selectedApplicant["Applicant"].suffix}
+                  value={selectedApplicant["Applicant"]?.suffix}
                 />
               </div>
             </div>

@@ -19,7 +19,8 @@ const AddUser = () => {
   // useState for Checkbox
   const [checked, setChecked] = useState(false);
 
-  const passwordValidatorMsg = "Password can only contain at least one numeric digit, one uppercase and one lowercase letter.";
+  const passwordValidatorMsg =
+    "Password can only contain at least one numeric digit, one uppercase and one lowercase letter.";
 
   //Redux
   const dispatch = useDispatch();
@@ -34,7 +35,7 @@ const AddUser = () => {
     middlename: selectedUser ? selectedUser?.middlename : "",
     lastname: selectedUser ? selectedUser?.lastname : "",
     username: selectedUser ? selectedUser?.username : "",
-    password:  "",
+    password: "",
     cpassword: "",
     user_level: selectedUser ? selectedUser?.user_level : "user",
     email: selectedUser ? selectedUser?.email : "",
@@ -46,12 +47,19 @@ const AddUser = () => {
     middlename: Yup.string().required("Middle Name is required"),
     lastname: Yup.string().required("Last Name is required"),
     username: Yup.string().required("Username is required"),
-    password: 
-      selectedUser ? Yup.string().notRequired() : 
-      Yup.string().required("Password is required")
-                  .min(6, "Password is too short")
-                  .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/, passwordValidatorMsg),
-    cpassword: Yup.string().oneOf([Yup.ref('password'), null], "Password must match"),
+    password: selectedUser
+      ? Yup.string().notRequired()
+      : Yup.string()
+          .required("Password is required")
+          .min(6, "Password is too short")
+          .matches(
+            /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/,
+            passwordValidatorMsg
+          ),
+    cpassword: Yup.string().oneOf(
+      [Yup.ref("password"), null],
+      "Password must match"
+    ),
     user_level: Yup.string().required("User Level is required"),
     email: Yup.string().required("Email is required"),
   });
@@ -126,11 +134,14 @@ const AddUser = () => {
   return (
     <div>
       <div className="block p-6 rounded-lg shadow-lg bg-white">
-        <div className="text-center" style={
-          !selectedUser
-            ? { visibility: "hidden", display: "none" }
-            : { visibility: "visible" }
-        }>
+        <div
+          className="text-center"
+          style={
+            !selectedUser
+              ? { visibility: "hidden", display: "none" }
+              : { visibility: "visible" }
+          }
+        >
           <img
             src={`https://api.multiavatar.com/${selectedUser.firstname}.svg`}
             className="rounded-full w-32 mb-4 mx-auto"
@@ -165,7 +176,8 @@ const AddUser = () => {
               selectedUser
                 ? { visibility: "hidden", display: "none" }
                 : { visibility: "visible" }
-            }>
+            }
+          >
             <div className="form-group w-full px-3 md:w-1/3">
               <label className="form-label inline-block mb-2 text-gray-700 font-bold">
                 First Name
@@ -225,11 +237,14 @@ const AddUser = () => {
           </div>
 
           {/* Username to Email */}
-          <div className="flex flex-wrap -mx-3 mt-2 mb-2 gap-y-2" style={
-            selectedUser
-              ? { visibility: "hidden", display: "none" }
-              : { visibility: "visible" }
-          }>
+          <div
+            className="flex flex-wrap -mx-3 mt-2 mb-2 gap-y-2"
+            style={
+              selectedUser
+                ? { visibility: "hidden", display: "none" }
+                : { visibility: "visible" }
+            }
+          >
             <div className="form-group w-full px-3 md:w-1/2">
               <label className="form-label inline-block mb-2 text-gray-700 font-bold">
                 User Name
@@ -270,7 +285,6 @@ const AddUser = () => {
           </div>
 
           <div className="flex flex-wrap -mx-3 mt-2 mb-2 gap-y-2">
-
             <div className="form-group w-full px-3">
               <label className="form-label inline-block mb-2 text-gray-700 font-bold">
                 User Role
@@ -287,7 +301,8 @@ const AddUser = () => {
                       : "select-decorator"
                   }
                   value={formik.values.user_level}
-                  onChange={formik.handleChange}>
+                  onChange={formik.handleChange}
+                >
                   <option value="admin">Admin</option>
                   <option value="super_user">Super User</option>
                   <option value="user">Staff</option>
@@ -301,62 +316,62 @@ const AddUser = () => {
             </div>
 
             {/* For updating password */}
-            
-              <div
-                className="field-checkbox"
-                style={selectedUser ? { display: "block" } : { display: "none" }}
-              >
-                <Checkbox
-                  inputId="binary"
-                  className="mr-2 ml-3"
-                  checked={checked}
-                  onChange={(e) => setChecked(e.checked)}
-                />
-                <label htmlFor="binary">Change Password</label>
-              </div>
 
-              <div
-                className="form-group w-full px-3"
-                style={checked ? { display: "block" } : { display: "none" }}
-              >
-                <label className="form-label inline-block mb-2 text-gray-700 font-bold">
-                  Password
-                </label>
-                <input
-                  type="password"
-                  id="password"
-                  placeholder="Enter password"
-                  className={
-                    isFieldValid("password")
-                      ? "border-2 border-red-600 formFields"
-                      : "formFields"
-                  }
-                  value={formik.values.password}
-                  onChange={formik.handleChange}
-                />
-                {getErrorMessage("password")}
-              </div>
-              <div
-                className="form-group w-full px-3"
-                style={checked ? { display: "block" } : { display: "none" }}
-              >
-                <label className="form-label inline-block mb-2 text-gray-700 font-bold">
-                  Confirm Password
-                </label>
-                <input
-                  type="password"
-                  id="cpassword"
-                  placeholder="Confirm password"
-                  className={
-                    isFieldValid("cpassword")
-                      ? "border-2 border-red-600 formFields"
-                      : "formFields"
-                  }
-                  value={formik.values.cpassword}
-                  onChange={formik.handleChange}
-                />
-                {getErrorMessage("cpassword")}
-              </div>
+            <div
+              className="field-checkbox"
+              style={selectedUser ? { display: "block" } : { display: "none" }}
+            >
+              <Checkbox
+                inputId="binary"
+                className="mr-2 ml-3"
+                checked={checked}
+                onChange={(e) => setChecked(e.checked)}
+              />
+              <label htmlFor="binary">Change Password</label>
+            </div>
+
+            <div
+              className="form-group w-full px-3"
+              style={checked ? { display: "block" } : { display: "none" }}
+            >
+              <label className="form-label inline-block mb-2 text-gray-700 font-bold">
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                placeholder="Enter password"
+                className={
+                  isFieldValid("password")
+                    ? "border-2 border-red-600 formFields"
+                    : "formFields"
+                }
+                value={formik.values.password}
+                onChange={formik.handleChange}
+              />
+              {getErrorMessage("password")}
+            </div>
+            <div
+              className="form-group w-full px-3"
+              style={checked ? { display: "block" } : { display: "none" }}
+            >
+              <label className="form-label inline-block mb-2 text-gray-700 font-bold">
+                Confirm Password
+              </label>
+              <input
+                type="password"
+                id="cpassword"
+                placeholder="Confirm password"
+                className={
+                  isFieldValid("cpassword")
+                    ? "border-2 border-red-600 formFields"
+                    : "formFields"
+                }
+                value={formik.values.cpassword}
+                onChange={formik.handleChange}
+              />
+              {getErrorMessage("cpassword")}
+            </div>
           </div>
           <button
             type="submit"

@@ -3,9 +3,14 @@ import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
-import { SET_SELECTED_USER, USER_INFO, getUsersInfo, IS_MODAL_OPENED } from "../redux/features/userReducer";
+import {
+  SET_SELECTED_USER,
+  USER_INFO,
+  getUsersInfo,
+  IS_MODAL_OPENED,
+} from "../redux/features/userReducer";
 import { useDispatch, useSelector } from "react-redux";
-import AddUser from "../components/AddUser"
+import AddUser from "../components/AddUser";
 import { renderDialog } from "../helpers/renderDialog";
 import { notifyToast } from "../helpers/notifyToast";
 import { ToastContainer } from "react-toastify";
@@ -13,13 +18,12 @@ import { SET_MODAL } from "../redux/features/modalReducer";
 
 import axios from "axios";
 
-
 const ManageUsers = () => {
-
   //Redux
   const dispatch = useDispatch();
-  const { isModalOpened, userInfo, selectedUser } =
-    useSelector((store) => store.users);
+  const { isModalOpened, userInfo, selectedUser } = useSelector(
+    (store) => store.users
+  );
 
   // Columns for the table
   const columns = [
@@ -33,9 +37,7 @@ const ManageUsers = () => {
   // To join multiple columns
   const renderName = (rowData, item) => {
     if (item.field === "name") {
-      return (
-        `${rowData.firstname} ${rowData.middlename} ${rowData.lastname}`
-      );
+      return `${rowData.firstname} ${rowData.middlename} ${rowData.lastname}`;
     } else {
       return rowData[item.field];
     }
@@ -118,14 +120,14 @@ const ManageUsers = () => {
   };
 
   useEffect(() => {
-    dispatch(getUsersInfo())
+    dispatch(getUsersInfo());
   }, [dispatch]);
-  
+
   // Actual UI Renderer
   return (
-  <div>
-    <div className="header">Manage Users</div>
-    <DataTable
+    <div>
+      <div className="header">Manage Users</div>
+      <DataTable
         size="small"
         value={userInfo}
         responsiveLayout="scroll"
@@ -152,7 +154,7 @@ const ManageUsers = () => {
         <AddUser />
       </Dialog>
       <ToastContainer />
-  </div>
+    </div>
   );
 };
 

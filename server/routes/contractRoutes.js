@@ -16,7 +16,11 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-const { POSTcontract } = require("../controllers/contractController");
+const {
+  POSTcontract,
+  GETContracts,
+} = require("../controllers/contractController");
 router.post("/", upload.single("contract_image"), POSTcontract);
+router.get("/", GETContracts);
 
 module.exports = router;

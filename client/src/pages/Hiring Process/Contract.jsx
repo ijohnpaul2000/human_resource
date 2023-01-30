@@ -11,19 +11,26 @@ import { ToastContainer } from "react-toastify";
 import axios from "axios";
 import {
   getAppointmentsInfo,
+  getContracts,
+  SET_CONTRACT_MODAL_STATE,
   SET_MODAL_STATE,
   SET_SELECTED_APPLICANT,
+  SET_SELECTED_CONTRACT,
 } from "../../redux/features/contractReducer";
 import ViewContractSigning from "../../components/ViewContractSigning";
+import ContractImage from "../../components/ContractImage";
 
 const Contract = () => {
   const dispatch = useDispatch();
   const {
     isOpened,
+    isContractModalOpened,
     appointmentInfo,
     applicantsInfo,
     selectedApplicant,
     selectedAppointment,
+    selectedContract,
+    activeContracts,
   } = useSelector((store) => store.contract);
 
   const columns = [
@@ -32,10 +39,11 @@ const Contract = () => {
   ];
 
   const signedColumns = [
-    { field: "Applicant", header: "Applicant" },
+    { field: "Employee", header: "Employee" },
     { field: "salary", header: "Salary" },
-    { field: "contactDate", header: "Contact Date" },
-    { field: "signature", header: "Signature" },
+    { field: "contract_date", header: "Contract Date" },
+    { field: "contract_status", header: "Contract Status" },
+    { field: "contract_image", header: "Contract Image" },
   ];
 
   const renderName = (rowData, item) => {
@@ -49,14 +57,18 @@ const Contract = () => {
   };
 
   const signedrenderName = (rowData, item) => {
-    if (item.field === "Applicant") {
+    if (item.field === "Employee") {
       return (
-        rowData["Applicant"].firstname + " " + rowData["Applicant"].lastname
+        rowData["Employee"]?.firstname + " " + rowData["Employee"]?.lastname
       );
     } else {
       return rowData[item.field];
     }
   };
+
+  useEffect(() => {
+    dispatch(getContracts());
+  }, [dispatch]);
 
   const renderHeader = () => {
     return (
@@ -67,6 +79,37 @@ const Contract = () => {
           className="p-button-primary"
           onClick={() => dispatch(SET_MODAL_STATE(true))}
           disabled={!selectedApplicant}
+        />
+        {/* <Button
+          type="button"
+          icon="pi pi-trash"
+          className="p-button-danger"
+          onClick={() => {
+            renderDialog(
+              "Do you want to delete this?",
+              "Delete Data",
+              "pi pi-exclamation-triangle",
+              "DANGER",
+              deleteAppointment,
+              dispatch(SET_MODAL({ isOpen: false }))
+            );
+          }}
+          disabled={!selectedAppointment}
+          tooltipOptions={{ position: "bottom" }}
+        /> */}
+      </div>
+    );
+  };
+
+  const renderHeaderSigned = () => {
+    return (
+      <div className="flex gap-4 align-items-center">
+        <Button
+          type="button"
+          icon="pi pi-eye"
+          className="p-button-primary"
+          onClick={() => dispatch(SET_CONTRACT_MODAL_STATE(true))}
+          disabled={!selectedContract}
         />
         {/* <Button
           type="button"
@@ -173,15 +216,17 @@ const Contract = () => {
           <TabPanel header="Signed">
             <DataTable
               size="small"
-              value={appointmentInfo} //TODO: To be checked
+              value={activeContracts} //TODO: To be checked
               responsiveLayout="scroll"
               showGridlines
-              selection={selectedApplicant}
+              header={renderHeaderSigned}
+              selection={selectedContract}
               selectionMode="radiobutton"
-              // onSelectionChange={(e) => {
-              //   dispatch(SET_SELECTED_APPLICANT(e.value)); //TODO: to be implemented later
-              //   console.log(e.value.Applicant);
-              // }}
+              onSelectionChange={(e) => {
+                dispatch(SET_SELECTED_CONTRACT(e.value)); //TODO: to be implemented later
+                console.log(e.value);
+              }}
+              onEmptied={() => dispatch(SET_SELECTED_CONTRACT(null))}
             >
               <Column
                 selectionMode="single"
@@ -191,6 +236,22 @@ const Contract = () => {
             </DataTable>
           </TabPanel>
         </TabView>
+        <Dialog
+          visible={isContractModalOpened}
+          resizable={true}
+          header="Contract Image"
+          style={{ width: "900px" }}
+          className="p-fluid"
+          modal
+          onHide={() => {
+            dispatch(SET_CONTRACT_MODAL_STATE(false));
+            dispatch(getAppointmentsInfo());
+          }}
+        >
+          <ContractImage
+            imageLink={`http://localhost:5000/api/contract-image/${selectedContract.contract_image}`}
+          />
+        </Dialog>
       </div>
     </div>
   );
