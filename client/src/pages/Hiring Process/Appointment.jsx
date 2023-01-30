@@ -46,7 +46,7 @@ const Appointment = () => {
 
   const renderHeader = () => {
     return (
-      <div className="flex align-items-center gap-4">
+      <div className="flex gap-4 align-items-center">
         <Button
           type="button"
           icon="pi pi-plus"

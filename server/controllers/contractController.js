@@ -15,7 +15,7 @@ const { generateFilename } = require("../utils/generateFilename");
 // @access Public
 const POSTcontract = expressAsyncHandler(async (req, res) => {
   const { applicant_id, salary, contract_date } = req.body;
-  const files = req.files;
+  const files = req.file;
 
   const appointmentInfo = await Appointment.findOne({
     where: { applicant_id },
@@ -47,7 +47,7 @@ const POSTcontract = expressAsyncHandler(async (req, res) => {
   });
 
   const activeContract = await Contract.findOne({
-    where: { applicant_id },
+    where: { employee_id: applicant_id, contract_status: "active" },
   });
 
   //* Will convert the user_level from applicant to employee
@@ -66,18 +66,19 @@ const POSTcontract = expressAsyncHandler(async (req, res) => {
       message: "This applicant have an active contract.",
     });
   }
+  console.log(req.body, req.file);
 
-  Object.keys(files).forEach((file) => {
-    const filepath = path.join(
-      __dirname,
-      `../files/${file}`,
-      generateFilename(files[file].name)
-    );
+  // Object.keys(files).forEach((file) => {
+  //   const filepath = path.join(
+  //     __dirname,
+  //     `../files/${file}`,
+  //     generateFilename(files[file].name)
+  //   );
 
-    files[file].mv(filepath, (err) => {
-      if (err) return res.status(500).json({ status: "error", message: err });
-    });
-  });
+  //   files[file].mv(filepath, (err) => {
+  //     if (err) return res.status(500).json({ status: "error", message: err });
+  //   });
+  // });
 
   try {
     const employee = {
@@ -92,17 +93,17 @@ const POSTcontract = expressAsyncHandler(async (req, res) => {
       user_level: "employee",
     };
 
-    console.log(updatedUser);
-
-    await Contract.create({
+    const newContract = {
       id: v4(),
-      applicant_id,
-      salary,
-      contract_date,
-      contract_image: files.contract_image.name,
-    });
-
+      employee_id: applicant_id,
+      ...req.body,
+      contract_status: "Active",
+      contract_image: files.originalname,
+    };
+    console.log({ newContract });
     await Employee.create(employee);
+
+    await Contract.create(newContract);
 
     await User.update(updatedUser, { where: { id: applicant_id } });
 

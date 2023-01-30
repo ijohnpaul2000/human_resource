@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         primaryKey: true,
       },
-      applicant_id: {
+      employee_id: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -23,6 +23,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATEONLY,
         allowNull: false,
       },
+      contract_status: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        defaultValue: "Active",
+      },
       contract_image: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -33,11 +38,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   Contract.associate = (models) => {
-    Contract.belongsTo(models.Applicant, {
-      foreignKey: "applicant_id",
+    Contract.belongsTo(models.Employee, {
+      foreignKey: "employee_id",
       onUpdate: "CASCADE",
       onDelete: "CASCADE",
     });
   };
+
   return Contract;
 };

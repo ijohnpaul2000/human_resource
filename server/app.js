@@ -1,10 +1,10 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+
 require("dotenv").config({ path: "../.env" });
 const { errorHandler } = require("./middlewares/errorMiddleware");
 const { initializeDirectory } = require("./utils/initializeDirectory");
-
 initializeDirectory();
 
 //* ROUTES IMPORTS
@@ -58,6 +58,7 @@ app.use("/api/contract-image", contractImageRoutes);
 
 //* Database
 const db = require("./models");
+const multer = require("multer");
 
 //* App Middleware
 app.use(errorHandler);

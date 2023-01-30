@@ -51,6 +51,7 @@ const POSTappointment = expressAsyncHandler(async (req, res) => {
     const createdAppointment = await Appointment.create(newAppointment);
     res.status(200).json(createdAppointment);
   } catch (error) {
+    console.log(error);
     res
       .status(500)
       .json({ message: "Something went wrong! Please try again later." });

@@ -60,7 +60,7 @@ const Contract = () => {
 
   const renderHeader = () => {
     return (
-      <div className="flex align-items-center gap-4">
+      <div className="flex gap-4 align-items-center">
         <Button
           type="button"
           icon="pi pi-pencil"
@@ -161,7 +161,10 @@ const Contract = () => {
               style={{ width: "900px" }}
               className="p-fluid"
               modal
-              onHide={() => dispatch(SET_MODAL_STATE(false))}
+              onHide={() => {
+                dispatch(SET_MODAL_STATE(false));
+                dispatch(getAppointmentsInfo());
+              }}
             >
               <ViewContractSigning />
             </Dialog>
