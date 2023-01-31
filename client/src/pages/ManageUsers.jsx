@@ -25,6 +25,8 @@ const ManageUsers = () => {
     (store) => store.users
   );
 
+  const currentUser = useSelector((state) => state.auth.user.username);
+
   // Columns for the table
   const columns = [
     { field: "name", header: "Name" },
@@ -129,7 +131,9 @@ const ManageUsers = () => {
       <div className="header">Manage Users</div>
       <DataTable
         size="small"
-        value={userInfo}
+        value={userInfo.filter((element) => {
+          return element.username !== currentUser;
+        })}
         responsiveLayout="scroll"
         showGridlines
         header={renderHeader}
