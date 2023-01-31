@@ -21,7 +21,6 @@ import { BsChevronRight } from "react-icons/bs";
 const EditEmployee = () => {
   const dispatch = useDispatch();
   const { selectedContract } = useSelector((store) => store.contract);
-
   const initialValues = {
     contract_id: selectedContract?.id,
     employee_id: selectedContract?.employee_id,
@@ -36,25 +35,23 @@ const EditEmployee = () => {
     validationSchema,
     onSubmit: async (values, { resetForm }) => {
       try {
-        dispatch(editContract(values));
+        dispatch(editContract(values))
+          .unwrap()
+          .then((res) => {
+            if (res.status === "success") {
+              notifyToast("Employee Edited Successfully.", "success");
+            } else {
+              notifyToast("Something went wrong.", "error");
+            }
+          });
         dispatch(getAppointmentsInfo());
-        dispatch(getContracts());
         dispatch(SET_SELECTED_CONTRACT(""));
-        dispatch(
-          SET_CONTRACT_MODAL_STATE({
-            isContractModalOpen: false,
-            contractModalType: "",
-          })
-        );
-        notifyToast("Information Edit Successfully.", "success");
-
         resetForm();
       } catch (error) {
         notifyToast(error, "error");
       }
     },
   });
-
   console.log(formik.values);
 
   const isFieldValid = (fieldName) =>
@@ -236,12 +233,12 @@ const EditEmployee = () => {
                 value={formik.initialValues.isEmployeeDeployed}
                 defaultValue
               >
-                {formik.initialValues.isEmployeeDeployed === 1
+                {formik.initialValues.isEmployeeDeployed === true
                   ? "Deployed"
                   : "Not Deployed"}
               </option>
               <option value={!formik.initialValues.isEmployeeDeployed}>
-                {formik.initialValues.isEmployeeDeployed !== 1
+                {formik.initialValues.isEmployeeDeployed === false
                   ? "Deployed"
                   : "Not Deployed"}
               </option>

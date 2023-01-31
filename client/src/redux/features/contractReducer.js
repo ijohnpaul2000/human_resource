@@ -59,19 +59,15 @@ export const signContract = createAsyncThunk(
   }
 );
 
-export const getContracts = createAsyncThunk(
-  "api/contract",
-  async (_, { rejectWithValue }) => {
-    try {
-      const result = await axios.get("http://localhost:5000/api/contract");
-      console.log("Tangina resulto to", result);
-      return result.data.contracts;
-    } catch (error) {
-      console.log(error);
-      rejectWithValue(error.response.data.message);
-    }
+export const getContracts = createAsyncThunk("api/contract", async () => {
+  try {
+    const result = await axios.get("http://localhost:5000/api/contract");
+    console.log({ contracts: result.data.contracts });
+    return result.data.contracts;
+  } catch (error) {
+    console.log(error);
   }
-);
+});
 
 export const editContract = createAsyncThunk(
   "api/contract",
@@ -108,6 +104,9 @@ const contractSlice = createSlice({
       state.isContractModalOpened = payload.isOpen;
       state.contractModalType = payload.type;
     },
+    SET_ACTIVE_CONTRACTS: (state, { payload }) => {
+      state.activeContracts = payload;
+    },
   },
   extraReducers: {
     [signContract.pending]: (state) => {
@@ -116,18 +115,17 @@ const contractSlice = createSlice({
     [signContract.fulfilled]: (state, action) => {
       state.isLoading = false;
     },
-    [signContract.rejected]: (state) => {
-      state.isLoading = false;
-    },
-    [getContracts.pending]: (state) => {
+    [getContracts.pending]: (state, action) => {
       state.isLoading = true;
     },
     [getContracts.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log("Tangina action", action.payload);
       state.activeContracts = action.payload;
     },
     [getContracts.rejected]: (state) => {
+      state.isLoading = false;
+    },
+    [signContract.rejected]: (state) => {
       state.isLoading = false;
     },
     [editContract.pending]: (state) => {
@@ -168,5 +166,6 @@ export const {
   SET_SELECTED_APPLICANT,
   SET_SELECTED_CONTRACT,
   SET_CONTRACT_MODAL_STATE,
+  SET_ACTIVE_CONTRACTS,
 } = contractSlice.actions;
 export default contractSlice.reducer;

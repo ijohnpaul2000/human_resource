@@ -58,15 +58,16 @@ const POSTcontract = expressAsyncHandler(async (req, res) => {
   if (!appointmentInfo) {
     return res.status(404).json({
       message: "Applicant not found",
+      status: "error",
     });
   }
 
   if (activeContract) {
     return res.status(200).json({
       message: "This applicant have an active contract.",
+      status: "error",
     });
   }
-  console.log(req.body, req.file);
 
   // Object.keys(files).forEach((file) => {
   //   const filepath = path.join(
@@ -84,7 +85,7 @@ const POSTcontract = expressAsyncHandler(async (req, res) => {
     const employee = {
       ...appointmentInfo.dataValues.Applicant.dataValues,
       employee_status: "active",
-      isEmployeeDeployed: false,
+      isEmployeeDeployed: true,
       date_hired: moment().format("YYYY-MM-DD"),
     };
 
@@ -100,7 +101,6 @@ const POSTcontract = expressAsyncHandler(async (req, res) => {
       contract_status: "Active",
       contract_image: files.originalname,
     };
-    console.log({ newContract });
     await Employee.create(employee);
 
     await Contract.create(newContract);
@@ -157,7 +157,7 @@ const GETContracts = expressAsyncHandler(async (req, res) => {
 
 const PUTContracts = expressAsyncHandler(async (req, res) => {
   const { id } = req.params;
-  const { contract_status, employee_status } = req.body;
+  const { contract_status, isEmployeeDeployed } = req.body;
 
   try {
     const contract = await Contract.findOne({
@@ -181,13 +181,16 @@ const PUTContracts = expressAsyncHandler(async (req, res) => {
 
     const updatedEmployee = {
       ...employee,
-      employee_status,
+      isEmployeeDeployed,
     };
+
     await Contract.update(updatedContract, { where: { id } });
 
     await Employee.update(updatedEmployee, {
       where: { id: contract.employee_id },
     });
+
+    console.log(isEmployeeDeployed, contract_status);
 
     res.status(200).json({
       status: "success",

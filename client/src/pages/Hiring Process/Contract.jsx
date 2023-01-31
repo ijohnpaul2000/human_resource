@@ -12,6 +12,7 @@ import axios from "axios";
 import {
   getAppointmentsInfo,
   getContracts,
+  SET_ACTIVE_CONTRACTS,
   SET_CONTRACT_MODAL_STATE,
   SET_MODAL_STATE,
   SET_SELECTED_APPLICANT,
@@ -71,7 +72,12 @@ const Contract = () => {
   useEffect(() => {
     dispatch(SET_SELECTED_APPLICANT(null));
     dispatch(SET_SELECTED_CONTRACT(null));
-    dispatch(getContracts());
+    dispatch(getContracts())
+      .unwrap()
+      .then((res) => {
+        dispatch(SET_ACTIVE_CONTRACTS(res));
+      });
+    dispatch(getAppointmentsInfo());
     dispatch(
       SET_CONTRACT_MODAL_STATE({
         isContractModalOpen: false,
@@ -197,9 +203,10 @@ const Contract = () => {
     />
   ));
 
-  useEffect(() => {
+  /* useEffect(() => {
     dispatch(getAppointmentsInfo());
-  }, [dispatch]);
+    dispatch(getContracts());
+  }, [dispatch]); */
   return (
     <div>
       <div className="header">Contract Signing</div>
@@ -253,7 +260,6 @@ const Contract = () => {
               selectionMode="radiobutton"
               onSelectionChange={(e) => {
                 dispatch(SET_SELECTED_CONTRACT(e.value)); //TODO: to be implemented later
-                console.log(e.value);
               }}
               onEmptied={() => dispatch(SET_SELECTED_CONTRACT(null))}
             >
@@ -303,14 +309,16 @@ const Contract = () => {
           onHide={() => {
             dispatch(SET_CONTRACT_MODAL_STATE(false));
             dispatch(getAppointmentsInfo());
+            dispatch(getContracts());
           }}
         >
-          <ContractImage
-            imageLink={
-              selectedContract &&
-              `http://localhost:5000/api/contract-image/${selectedContract.contract_image}`
-            }
-          />
+          {contractModalType === "view_contract" ? (
+            <ContractImage
+              imageLink={`http://localhost:5000/api/contract-image/${selectedContract.contract_image}`}
+            />
+          ) : (
+            <EditEmployee />
+          )}
         </Dialog>
       </div>
     </div>

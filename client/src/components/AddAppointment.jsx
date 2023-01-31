@@ -13,7 +13,6 @@ import { ToastContainer } from "react-toastify";
 import axios from "axios";
 import { validationSchema } from "../yupUtils/comp/AppointmentYup";
 import { getAppointments } from "../redux/features/Entities/AppointmentsThunk";
-import { getContracts } from "../redux/features/contractReducer";
 
 const dayjs = require("dayjs");
 
@@ -79,7 +78,6 @@ const AddAppointment = () => {
         });
         resetForm();
         dispatch(getAppointments());
-        dispatch(getContracts());
         dispatch(getApplicantsInfo());
         console.log(response);
         notifyToast(

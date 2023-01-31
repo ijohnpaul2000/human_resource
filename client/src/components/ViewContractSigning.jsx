@@ -7,6 +7,9 @@ import { validationSchema } from "../yupUtils/comp/ContractYup";
 import { useRef } from "react";
 import {
   getAppointmentsInfo,
+  getContracts,
+  SET_ACTIVE_CONTRACTS,
+  SET_CONTRACT_MODAL_STATE,
   signContract,
 } from "../redux/features/contractReducer";
 import moment from "moment";
@@ -44,11 +47,23 @@ const ViewContractSigning = () => {
         dispatch(signContract(formData))
           .unwrap()
           .then((res) => {
-            console.log({ formData });
-            notifyToast(res, "success");
+            if (res.status === "success") {
+              notifyToast(res.message, "success");
+            } else {
+              notifyToast(res.message, "error");
+            }
           });
         dispatch(SET_SELECTED_USER(""));
+        dispatch(getContracts());
 
+        setTimeout(() => {
+          dispatch(
+            SET_CONTRACT_MODAL_STATE({
+              isContractModalOpen: false,
+              contractModalType: "",
+            })
+          );
+        }, 1000);
         resetForm();
       } catch (error) {
         notifyToast(error, "error");
