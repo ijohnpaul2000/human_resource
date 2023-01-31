@@ -40,9 +40,13 @@ const ViewContractSigning = () => {
       formData.append("contract_image", contractImage);
 
       try {
-        dispatch(signContract(formData));
-        dispatch(getContracts());
-        dispatch(getAppointmentsInfo());
+        console.log({ formData });
+        dispatch(signContract(formData))
+          .unwrap()
+          .then((res) => {
+            console.log({ formData });
+            notifyToast(res, "success");
+          });
         dispatch(SET_SELECTED_USER(""));
 
         resetForm();
