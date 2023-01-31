@@ -19,6 +19,7 @@ import {
 } from "../../redux/features/contractReducer";
 import ViewContractSigning from "../../components/ViewContractSigning";
 import ContractImage from "../../components/ContractImage";
+import EditEmployee from "../../components/EditEmployee";
 
 const Contract = () => {
   const dispatch = useDispatch();
@@ -31,6 +32,7 @@ const Contract = () => {
     selectedAppointment,
     selectedContract,
     activeContracts,
+    contractModalType,
   } = useSelector((store) => store.contract);
 
   const columns = [
@@ -67,7 +69,19 @@ const Contract = () => {
   };
 
   useEffect(() => {
+    dispatch(SET_SELECTED_APPLICANT(null));
+    dispatch(SET_SELECTED_CONTRACT(null));
     dispatch(getContracts());
+    dispatch(
+      SET_CONTRACT_MODAL_STATE({
+        isContractModalOpen: false,
+        contractModalType: "",
+      })
+    );
+    return () => {
+      dispatch(SET_SELECTED_APPLICANT(null));
+      dispatch(SET_SELECTED_CONTRACT(null));
+    };
   }, [dispatch]);
 
   const renderHeader = () => {
@@ -108,7 +122,22 @@ const Contract = () => {
           type="button"
           icon="pi pi-eye"
           className="p-button-primary"
-          onClick={() => dispatch(SET_CONTRACT_MODAL_STATE(true))}
+          onClick={() =>
+            dispatch(
+              SET_CONTRACT_MODAL_STATE({ isOpen: true, type: "view_contract" })
+            )
+          }
+          disabled={!selectedContract}
+        />
+        <Button
+          type="button"
+          icon="pi pi-pencil"
+          className="p-button-primary"
+          onClick={() =>
+            dispatch(
+              SET_CONTRACT_MODAL_STATE({ isOpen: true, type: "edit_employee" })
+            )
+          }
           disabled={!selectedContract}
         />
         {/* <Button
@@ -232,14 +261,42 @@ const Contract = () => {
                 selectionMode="single"
                 headerStyle={{ width: "3em" }}
               ></Column>
+
               {signedColumnComponent}
+              <Column
+                field={"Employee.isEmployeeDeployed"}
+                header={"Deployment Status"}
+                headerStyle={{
+                  justifyContent: "center",
+                  padding: "1rem 2rem",
+                  wordBreak: "normal",
+                  color: "#000",
+                }}
+                body={(rowData) => {
+                  return (
+                    <div>
+                      {rowData.Employee.isEmployeeDeployed ? (
+                        <p className="p-tag p-tag-success">Deployed</p>
+                      ) : (
+                        <p className="p-tag p-tag-danger">Not Deployed</p>
+                      )}
+                    </div>
+                  );
+                }}
+                sortable
+                filter
+              />
             </DataTable>
           </TabPanel>
         </TabView>
         <Dialog
           visible={isContractModalOpened}
           resizable={true}
-          header="Contract Image"
+          header={
+            contractModalType === "view_contract"
+              ? "Contract Image"
+              : "Edit Contract"
+          }
           style={{ width: "900px" }}
           className="p-fluid"
           modal
@@ -248,12 +305,16 @@ const Contract = () => {
             dispatch(getAppointmentsInfo());
           }}
         >
-          <ContractImage
-            imageLink={
-              selectedContract &&
-              `http://localhost:5000/api/contract-image/${selectedContract.contract_image}`
-            }
-          />
+          {contractModalType === "view_contract" ? (
+            <ContractImage
+              imageLink={
+                selectedContract &&
+                `http://localhost:5000/api/contract-image/${selectedContract.contract_image}`
+              }
+            />
+          ) : (
+            <EditEmployee />
+          )}
         </Dialog>
       </div>
     </div>

@@ -13,6 +13,7 @@ import { ToastContainer } from "react-toastify";
 import axios from "axios";
 import { validationSchema } from "../yupUtils/comp/AppointmentYup";
 import { getAppointments } from "../redux/features/Entities/AppointmentsThunk";
+import { getContracts } from "../redux/features/contractReducer";
 
 const dayjs = require("dayjs");
 
@@ -78,6 +79,7 @@ const AddAppointment = () => {
         });
         resetForm();
         dispatch(getAppointments());
+        dispatch(getContracts());
         dispatch(getApplicantsInfo());
         console.log(response);
         notifyToast(
@@ -112,7 +114,7 @@ const AddAppointment = () => {
       isFieldValid(error) && (
         <small
           id="emailHelp"
-          className="block mt-1 text-red-500 text-xs italic"
+          className="block mt-1 text-xs italic text-red-500"
         >
           {formik.errors[error]}
         </small>
@@ -132,11 +134,11 @@ const AddAppointment = () => {
   */
   return (
     <div>
-      <div className="block p-6 rounded-lg shadow-lg bg-white">
+      <div className="block p-6 bg-white rounded-lg shadow-lg">
         <form className="w-full" onSubmit={formik.handleSubmit}>
-          <div className="flex flex-wrap -mx-3 mt-2 mb-2 gap-y-2">
-            <div className="form-group w-full px-3">
-              <label className="form-label inline-block mb-2 text-gray-700 font-bold">
+          <div className="flex flex-wrap mt-2 mb-2 -mx-3 gap-y-2">
+            <div className="w-full px-3 form-group">
+              <label className="inline-block mb-2 font-bold text-gray-700 form-label">
                 Applicant
               </label>
               <div className="relative">
@@ -162,9 +164,9 @@ const AddAppointment = () => {
               </div>
             </div>
           </div>
-          <div className="flex flex-wrap -mx-3 mt-2 mb-2 gap-y-2">
-            <div className="form-group w-full px-3 md:w-1/2">
-              <label className="form-label inline-block mb-2 text-gray-700 font-bold">
+          <div className="flex flex-wrap mt-2 mb-2 -mx-3 gap-y-2">
+            <div className="w-full px-3 form-group md:w-1/2">
+              <label className="inline-block mb-2 font-bold text-gray-700 form-label">
                 Date
               </label>
               <input
@@ -181,8 +183,8 @@ const AddAppointment = () => {
               />
               {getErrorMessage("appointment_date")}
             </div>
-            <div className="form-group w-full px-3 md:w-1/2">
-              <label className="form-label inline-block mb-2 text-gray-700 font-bold">
+            <div className="w-full px-3 form-group md:w-1/2">
+              <label className="inline-block mb-2 font-bold text-gray-700 form-label">
                 Time
               </label>
               <input
@@ -200,9 +202,9 @@ const AddAppointment = () => {
             </div>
           </div>
 
-          <div className="flex flex-wrap -mx-3 mt-2 mb-2 gap-y-2">
-            <div className="form-group w-full px-3 md:w-1/2">
-              <label className="form-label inline-block mb-2 text-gray-700 font-bold">
+          <div className="flex flex-wrap mt-2 mb-2 -mx-3 gap-y-2">
+            <div className="w-full px-3 form-group md:w-1/2">
+              <label className="inline-block mb-2 font-bold text-gray-700 form-label">
                 Location
               </label>
               <input
@@ -219,8 +221,8 @@ const AddAppointment = () => {
               />
               {getErrorMessage("appointment_location")}
             </div>
-            <div className="form-group w-full px-3 md:w-1/2">
-              <label className="form-label inline-block mb-2 text-gray-700 font-bold">
+            <div className="w-full px-3 form-group md:w-1/2">
+              <label className="inline-block mb-2 font-bold text-gray-700 form-label">
                 Type
               </label>
 
@@ -241,7 +243,7 @@ const AddAppointment = () => {
                   <option value="Orientation">Orientation</option>
                   <option value="Contract Signing">Contract Signing</option>
                 </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
+                <div className="absolute inset-y-0 right-0 flex items-center px-2 text-gray-500 pointer-events-none">
                   <BsChevronRight />
                 </div>
               </div>
@@ -249,9 +251,9 @@ const AddAppointment = () => {
             </div>
           </div>
 
-          <div className="flex flex-wrap -mx-3 mt-2 mb-2 gap-y-2">
-            <div className="form-group w-full px-3">
-              <label className="form-label inline-block mb-2 text-gray-700 font-bold">
+          <div className="flex flex-wrap mt-2 mb-2 -mx-3 gap-y-2">
+            <div className="w-full px-3 form-group">
+              <label className="inline-block mb-2 font-bold text-gray-700 form-label">
                 Description
               </label>
               <textarea

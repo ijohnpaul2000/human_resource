@@ -132,7 +132,12 @@ const GETContracts = expressAsyncHandler(async (req, res) => {
       {
         model: Employee,
         as: "Employee",
-        attributes: ["firstname", "middlename", "lastname"],
+        attributes: [
+          "firstname",
+          "middlename",
+          "lastname",
+          "isEmployeeDeployed",
+        ],
       },
     ],
   });
@@ -149,7 +154,56 @@ const GETContracts = expressAsyncHandler(async (req, res) => {
   });
 });
 
+const PUTContracts = expressAsyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { contract_status, employee_status } = req.body;
+
+  try {
+    const contract = await Contract.findOne({
+      where: { id },
+    });
+
+    const employee = await Employee.findOne({
+      where: { id: contract.employee_id },
+    });
+
+    if (!contract) {
+      return res.status(404).json({
+        message: "Contract not found",
+      });
+    }
+
+    const updatedContract = {
+      ...contract,
+      contract_status,
+    };
+
+    const updatedEmployee = {
+      ...employee,
+      employee_status,
+    };
+    await Contract.update(updatedContract, { where: { id } });
+
+    await Employee.update(updatedEmployee, {
+      where: { id: contract.employee_id },
+    });
+
+    res.status(200).json({
+      status: "success",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      data: {
+        message: "Something went wrong",
+      },
+      status: "failed",
+    });
+  }
+});
+
 module.exports = {
   POSTcontract,
   GETContracts,
+  PUTContracts,
 };

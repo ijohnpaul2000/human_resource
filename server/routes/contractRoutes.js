@@ -18,8 +18,11 @@ const upload = multer({ storage: storage });
 const {
   POSTcontract,
   GETContracts,
+  PUTContracts,
 } = require("../controllers/contractController");
+
 router.post("/", upload.single("contract_image"), POSTcontract);
 router.get("/", GETContracts);
+router.put("/:id", PUTContracts);
 
 module.exports = router;

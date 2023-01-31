@@ -1,27 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useFormik } from "formik";
+import { Formik, useFormik } from "formik";
 import { ToastContainer } from "react-toastify";
 import { notifyToast } from "../helpers/notifyToast";
 import { validationSchema } from "../yupUtils/comp/ContractYup";
 import { useRef } from "react";
 import {
+  editContract,
   getAppointmentsInfo,
   getContracts,
+  SET_CONTRACT_MODAL_STATE,
   SET_MODAL_STATE,
+  SET_SELECTED_CONTRACT,
   signContract,
 } from "../redux/features/contractReducer";
 import moment from "moment";
 import { SET_SELECTED_USER } from "../redux/features/userReducer";
+import { BsChevronRight } from "react-icons/bs";
 
-const ViewContractSigning = () => {
+const EditEmployee = () => {
   const dispatch = useDispatch();
-  const { selectedApplicant } = useSelector((store) => store.contract);
+  const { selectedContract } = useSelector((store) => store.contract);
 
   const initialValues = {
-    applicant_id: selectedApplicant?.applicant_id,
-    salary: 0,
-    contract_date: "",
+    contract_id: selectedContract?.id,
+    employee_id: selectedContract?.employee_id,
+    contract_status: selectedContract?.contract_status,
+    isEmployeeDeployed: selectedContract?.Employee?.isEmployeeDeployed,
   };
 
   const contractRef = useRef(null);
@@ -30,23 +35,18 @@ const ViewContractSigning = () => {
     initialValues,
     validationSchema,
     onSubmit: async (values, { resetForm }) => {
-      const contractImage = contractRef.current.files[0];
-
-      let formData = new FormData();
-      formData.append("applicant_id", values.applicant_id);
-      formData.append(
-        "contract_date",
-        moment(values.contract_date).format("YYYY-MM-DD")
-      );
-      formData.append("salary", values.salary);
-      formData.append("contract_image", contractImage);
-
       try {
-        dispatch(signContract(formData));
-        dispatch(getContracts());
+        dispatch(editContract(values));
         dispatch(getAppointmentsInfo());
-        dispatch(SET_SELECTED_USER(""));
-        notifyToast("Contract Added Successfully.", "success");
+        dispatch(getContracts());
+        dispatch(SET_SELECTED_CONTRACT(""));
+        dispatch(
+          SET_CONTRACT_MODAL_STATE({
+            isContractModalOpen: false,
+            contractModalType: "",
+          })
+        );
+        notifyToast("Information Edit Successfully.", "success");
 
         resetForm();
       } catch (error) {
@@ -54,6 +54,8 @@ const ViewContractSigning = () => {
       }
     },
   });
+
+  console.log(formik.values);
 
   const isFieldValid = (fieldName) =>
     formik.touched[fieldName] && formik.errors[fieldName];
@@ -71,6 +73,17 @@ const ViewContractSigning = () => {
     );
   };
 
+  useEffect(() => {
+    return () => {
+      dispatch(
+        SET_CONTRACT_MODAL_STATE({
+          isContractModalOpen: false,
+          contractModalType: "",
+        })
+      );
+    };
+  }, [dispatch]);
+
   return (
     <>
       <form
@@ -81,15 +94,28 @@ const ViewContractSigning = () => {
         <div className="flex flex-wrap mt-2 mb-2 -mx-3 gap-y-2">
           <div className="w-full px-3 form-group md:w-1/3">
             <label className="inline-block mb-2 font-bold text-gray-700 form-label">
-              Applicant ID
+              Employee ID
             </label>
             <input
               type="text"
-              id="applicant_id"
-              name="applicant_id"
+              id="employee_id"
+              name="employee_id"
               className="formFields"
               disabled
-              value={formik.values.applicant_id}
+              value={formik.values.employee_id}
+            />
+          </div>
+          <div className="w-full px-3 form-group md:w-1/3">
+            <label className="inline-block mb-2 font-bold text-gray-700 form-label">
+              Contract ID
+            </label>
+            <input
+              type="text"
+              id="contract_id"
+              name="contract_id"
+              className="formFields"
+              disabled
+              value={formik.values.contract_id}
             />
           </div>
         </div>
@@ -105,7 +131,7 @@ const ViewContractSigning = () => {
               placeholder="Enter first name"
               className="formFields"
               disabled
-              value={selectedApplicant["Applicant"]?.firstname}
+              value={selectedContract["Employee"]?.firstname}
             />
           </div>
 
@@ -120,7 +146,7 @@ const ViewContractSigning = () => {
               placeholder="Enter middle name"
               className="formFields"
               disabled
-              value={selectedApplicant["Applicant"]?.middlename}
+              value={selectedContract["Employee"]?.middlename}
             />
           </div>
 
@@ -137,7 +163,7 @@ const ViewContractSigning = () => {
                   placeholder="Enter lastname"
                   className="formFields"
                   disabled
-                  value={selectedApplicant["Applicant"]?.lastname}
+                  value={selectedContract["Employee"]?.lastname}
                 />
               </div>
               <div className="w-2/6 w-full px-3 pr-0">
@@ -151,7 +177,7 @@ const ViewContractSigning = () => {
                   id="suffix"
                   name="suffix"
                   placeholder="Suff."
-                  value={selectedApplicant["Applicant"]?.suffix}
+                  value={selectedContract["Applicant"]?.suffix}
                 />
               </div>
             </div>
@@ -161,63 +187,66 @@ const ViewContractSigning = () => {
           <div className="w-full px-3 form-group md:w-1/3">
             <label
               className="inline-block mb-2 font-bold text-gray-700 form-label"
-              htmlFor="salary"
+              htmlFor="contract_status"
             >
-              Salary
+              Contract Status
             </label>
-            <input
-              type="number"
-              id="salary"
-              name="salary"
-              placeholder="Enter salary"
+            <select
+              type="text"
+              id="contract_status"
+              name="contract_status"
+              placeholder="Enter contract_status"
               /* className="formFields" */
               className={
                 isFieldValid("")
                   ? "border-2 border-red-600 formFields"
                   : "formFields"
               }
-              value={formik.values.salary}
+              value={formik.values.contract_status}
               onChange={formik.handleChange}
-            />
+            >
+              <option value="Active">Active</option>
+              <option value="Endo">End of Contract</option>
+              <option value="Inactive">Inactive</option>
+            </select>
             {/* {getErrorMessage("address")} */}
           </div>
 
           <div className="w-full px-3 form-group md:w-1/3">
-            <label className="inline-block mb-2 font-bold text-gray-700 form-label">
-              Contract Date
+            <label
+              className="inline-block mb-2 font-bold text-gray-700 form-label"
+              htmlFor="isEmployeeDeployed"
+            >
+              Employee Deployment Status
             </label>
-            <input
-              type="date"
-              id="contract_date"
-              name="contract_date"
-              placeholder="Enter date"
+            <select
+              type="text"
+              id="isEmployeeDeployed"
+              name="isEmployeeDeployed"
               /* className="formFields" */
               className={
-                isFieldValid("contact")
+                isFieldValid("")
                   ? "border-2 border-red-600 formFields"
                   : "formFields"
               }
-              value={formik.values.contract_date}
+              value={formik.values.isEmployeeDeployed}
               onChange={formik.handleChange}
-            />
+            >
+              <option
+                value={formik.initialValues.isEmployeeDeployed}
+                defaultValue
+              >
+                {formik.initialValues.isEmployeeDeployed === 1
+                  ? "Deployed"
+                  : "Not Deployed"}
+              </option>
+              <option value={!formik.initialValues.isEmployeeDeployed}>
+                {formik.initialValues.isEmployeeDeployed !== 1
+                  ? "Deployed"
+                  : "Not Deployed"}
+              </option>
+            </select>
             {/* {getErrorMessage("address")} */}
-          </div>
-
-          <div className="w-full px-3 form-group md:w-1/3">
-            <label className="inline-block mb-2 font-bold text-gray-700 form-label">
-              Contract Image
-            </label>
-            <input
-              type="file"
-              placeholder="Enter location"
-              ref={contractRef}
-              className={
-                isFieldValid("address")
-                  ? "border-2 border-red-600 formFields"
-                  : "formFields"
-              }
-            />
-            {getErrorMessage("address")}
           </div>
         </div>
         <div className="flex justify-end">
@@ -225,7 +254,7 @@ const ViewContractSigning = () => {
             type="submit"
             className="form-btn disabled:opacity-50 enabled:hover:bg-pink-400"
           >
-            Submit
+            Edit
           </button>
         </div>
       </form>
@@ -234,4 +263,4 @@ const ViewContractSigning = () => {
   );
 };
 
-export default ViewContractSigning;
+export default EditEmployee;

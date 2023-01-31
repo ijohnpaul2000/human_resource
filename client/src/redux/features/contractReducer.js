@@ -10,6 +10,7 @@ const initialState = {
   isContractModalOpened: false,
   isLoading: false,
   activeContracts: [],
+  contractModalType: "",
 };
 
 export const getAppointmentsInfo = createAsyncThunk(
@@ -63,8 +64,24 @@ export const getContracts = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const result = await axios.get("http://localhost:5000/api/contract");
-      console.log(result);
+      console.log("Tangina resulto to", result);
       return result.data.contracts;
+    } catch (error) {
+      console.log(error);
+      rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
+export const editContract = createAsyncThunk(
+  "api/contract",
+  async (body, { rejectWithValue }) => {
+    try {
+      const result = await axios.put(
+        `http://localhost:5000/api/contract/${body.contract_id}`,
+        body
+      );
+      return result.data;
     } catch (error) {
       rejectWithValue(error.response.data.message);
     }
@@ -87,8 +104,9 @@ const contractSlice = createSlice({
     SET_SELECTED_CONTRACT: (state, action) => {
       state.selectedContract = action.payload;
     },
-    SET_CONTRACT_MODAL_STATE: (state, action) => {
-      state.isContractModalOpened = action.payload;
+    SET_CONTRACT_MODAL_STATE: (state, { payload }) => {
+      state.isContractModalOpened = payload.isOpen;
+      state.contractModalType = payload.type;
     },
   },
   extraReducers: {
@@ -106,9 +124,19 @@ const contractSlice = createSlice({
     },
     [getContracts.fulfilled]: (state, action) => {
       state.isLoading = false;
+      console.log("Tangina action", action.payload);
       state.activeContracts = action.payload;
     },
     [getContracts.rejected]: (state) => {
+      state.isLoading = false;
+    },
+    [editContract.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [editContract.fulfilled]: (state, action) => {
+      state.isLoading = false;
+    },
+    [editContract.rejected]: (state) => {
       state.isLoading = false;
     },
     [getAppointmentsInfo.pending]: (state) => {

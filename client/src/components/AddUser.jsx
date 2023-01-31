@@ -112,7 +112,7 @@ const AddUser = () => {
       isFieldValid(error) && (
         <small
           id="emailHelp"
-          className="block mt-1 text-red-500 text-xs italic"
+          className="block mt-1 text-xs italic text-red-500"
         >
           {formik.errors[error]}
         </small>
@@ -133,7 +133,7 @@ const AddUser = () => {
 
   return (
     <div>
-      <div className="block p-6 rounded-lg shadow-lg bg-white">
+      <div className="block p-6 bg-white rounded-lg shadow-lg">
         <div
           className="text-center"
           style={
@@ -144,26 +144,26 @@ const AddUser = () => {
         >
           <img
             src={`https://api.multiavatar.com/${selectedUser.firstname}.svg`}
-            className="rounded-full w-32 mb-4 mx-auto"
+            className="w-32 mx-auto mb-4 rounded-full"
             alt="Avatar"
           />
           <div className="flex justify-center">
             <Chip
               label={`${selectedUser.firstname} ${selectedUser.middlename} ${selectedUser.lastname}`}
               icon="pi pi-user"
-              className="mr-2 mb-2 custom-chip"
+              className="mb-2 mr-2 custom-chip"
             />
             <Chip
               label={selectedUser.username}
               icon="pi pi-at"
-              className="mr-2 mb-2"
+              className="mb-2 mr-2"
             />
           </div>
           <div className="flex justify-center">
             <Chip
               label={selectedUser.email}
               icon="pi pi-envelope"
-              className="mr-2 mb-2"
+              className="mb-2 mr-2"
             />
           </div>
         </div>
@@ -171,15 +171,15 @@ const AddUser = () => {
         <form className="w-full" onSubmit={formik.handleSubmit}>
           {/* First Name to Last Name */}
           <div
-            className="flex flex-wrap -mx-3 mt-2 mb-2 gap-y-2"
+            className="flex flex-wrap mt-2 mb-2 -mx-3 gap-y-2"
             style={
               selectedUser
                 ? { visibility: "hidden", display: "none" }
                 : { visibility: "visible" }
             }
           >
-            <div className="form-group w-full px-3 md:w-1/3">
-              <label className="form-label inline-block mb-2 text-gray-700 font-bold">
+            <div className="w-full px-3 form-group md:w-1/3">
+              <label className="inline-block mb-2 font-bold text-gray-700 form-label">
                 First Name
               </label>
               <input
@@ -197,8 +197,8 @@ const AddUser = () => {
               {getErrorMessage("firstname")}
             </div>
 
-            <div className="form-group w-full px-3 md:w-1/3">
-              <label className="form-label inline-block mb-2 text-gray-700 font-bold">
+            <div className="w-full px-3 form-group md:w-1/3">
+              <label className="inline-block mb-2 font-bold text-gray-700 form-label">
                 Middle Name
               </label>
               <input
@@ -216,8 +216,8 @@ const AddUser = () => {
               {getErrorMessage("middlename")}
             </div>
 
-            <div className="form-group w-full px-3 md:w-1/3">
-              <label className="form-label inline-block mb-2 text-gray-700 font-bold">
+            <div className="w-full px-3 form-group md:w-1/3">
+              <label className="inline-block mb-2 font-bold text-gray-700 form-label">
                 Last Name
               </label>
               <input
@@ -238,15 +238,15 @@ const AddUser = () => {
 
           {/* Username to Email */}
           <div
-            className="flex flex-wrap -mx-3 mt-2 mb-2 gap-y-2"
+            className="flex flex-wrap mt-2 mb-2 -mx-3 gap-y-2"
             style={
               selectedUser
                 ? { visibility: "hidden", display: "none" }
                 : { visibility: "visible" }
             }
           >
-            <div className="form-group w-full px-3 md:w-1/2">
-              <label className="form-label inline-block mb-2 text-gray-700 font-bold">
+            <div className="w-full px-3 form-group md:w-1/2">
+              <label className="inline-block mb-2 font-bold text-gray-700 form-label">
                 User Name
               </label>
               <input
@@ -264,8 +264,8 @@ const AddUser = () => {
               {getErrorMessage("username")}
             </div>
 
-            <div className="form-group w-full px-3 md:w-1/2">
-              <label className="form-label inline-block mb-2 text-gray-700 font-bold">
+            <div className="w-full px-3 form-group md:w-1/2">
+              <label className="inline-block mb-2 font-bold text-gray-700 form-label">
                 Email
               </label>
               <input
@@ -284,9 +284,9 @@ const AddUser = () => {
             </div>
           </div>
 
-          <div className="flex flex-wrap -mx-3 mt-2 mb-2 gap-y-2">
-            <div className="form-group w-full px-3">
-              <label className="form-label inline-block mb-2 text-gray-700 font-bold">
+          <div className="flex flex-wrap mt-2 mb-2 -mx-3 gap-y-2">
+            <div className="w-full px-3 form-group">
+              <label className="inline-block mb-2 font-bold text-gray-700 form-label">
                 User Role
               </label>
 
@@ -307,8 +307,9 @@ const AddUser = () => {
                   <option value="super_user">Super User</option>
                   <option value="user">Staff</option>
                   <option value="applicant">Applicant</option>
+                  <option value="employee">Employee</option>
                 </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
+                <div className="absolute inset-y-0 right-0 flex items-center px-2 text-gray-500 pointer-events-none">
                   <BsChevronRight />
                 </div>
               </div>
@@ -323,7 +324,7 @@ const AddUser = () => {
             >
               <Checkbox
                 inputId="binary"
-                className="mr-2 ml-3"
+                className="ml-3 mr-2"
                 checked={checked}
                 onChange={(e) => setChecked(e.checked)}
               />
@@ -331,10 +332,10 @@ const AddUser = () => {
             </div>
 
             <div
-              className="form-group w-full px-3"
+              className="w-full px-3 form-group"
               style={checked ? { display: "block" } : { display: "none" }}
             >
-              <label className="form-label inline-block mb-2 text-gray-700 font-bold">
+              <label className="inline-block mb-2 font-bold text-gray-700 form-label">
                 Password
               </label>
               <input
@@ -352,10 +353,10 @@ const AddUser = () => {
               {getErrorMessage("password")}
             </div>
             <div
-              className="form-group w-full px-3"
+              className="w-full px-3 form-group"
               style={checked ? { display: "block" } : { display: "none" }}
             >
-              <label className="form-label inline-block mb-2 text-gray-700 font-bold">
+              <label className="inline-block mb-2 font-bold text-gray-700 form-label">
                 Confirm Password
               </label>
               <input

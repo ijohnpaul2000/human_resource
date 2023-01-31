@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Row } from "primereact/row";
 import { ColumnGroup } from "primereact/columngroup";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 /*
  * * APPLICANT SCREENING WILL CHECK
@@ -36,14 +37,24 @@ const ApplicantsScreening = () => {
   /* 
     It will rendered the table of the Applicants including their status.
   */
+
+  const [filteredApplicants, setFilteredApplicants] = useState([]);
+
+  useEffect(() => {
+    const filteredApplicants = applicants?.filter((applicant) => {
+      return applicant.application_status.toLowerCase() === "screening";
+    });
+
+    console.log({ applicants, filteredApplicants });
+    setFilteredApplicants(filteredApplicants);
+  }, [applicants]);
   return (
     <>
-      <h1 className="my-5 font-poppins text-2xl font-semibold">
+      <h1 className="my-5 text-2xl font-semibold font-poppins">
         Applicants for Screening
       </h1>
-      <span>TODO: Filter out applicant for screening only.</span>
       <DataTable
-        value={applicants}
+        value={filteredApplicants}
         responsiveLayout="scroll"
         showGridlines
         size="small"
