@@ -251,7 +251,7 @@ const Contract = () => {
           <ContractImage
             imageLink={
               selectedContract &&
-              `http://localhost:5000/api/contract-image/${selectedContract.contract_image}`
+              `http://localhost:5000/api/contract-image/${selectedContract?.contract_image}`
             }
           />
         </Dialog>
