@@ -14,6 +14,7 @@ import ApplicantsScreening from "../components/ApplicantsScreening";
 import DeployedEmployee from "../components/charts/DeployedEmployee";
 import RegisterApplicant from "./RegisterApplicant";
 import ListAppointment from "./Hiring Process/ListAppointment";
+import { getContracts } from "../redux/features/contractReducer";
 
 const Dashboard = () => {
   /* 
@@ -71,6 +72,7 @@ const Dashboard = () => {
     dispatch(getAppointments());
     dispatch(getEmployeesData());
     dispatch(getRegisteredNo());
+    dispatch(getContracts());
   }, [dispatch]);
 
   /* 
@@ -117,7 +119,7 @@ const Dashboard = () => {
         <ListAppointment />
       ) : (
         <>
-          <h1 className="text-3xl font-poppins font-semibold mb-4">
+          <h1 className="mb-4 text-3xl font-semibold font-poppins">
             Dashboard
           </h1>
           <div className="w-full grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">

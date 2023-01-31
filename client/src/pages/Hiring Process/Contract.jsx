@@ -309,7 +309,11 @@ const Contract = () => {
           onHide={() => {
             dispatch(SET_CONTRACT_MODAL_STATE(false));
             dispatch(getAppointmentsInfo());
-            dispatch(getContracts());
+            dispatch(getContracts())
+              .unwrap()
+              .then((res) => {
+                dispatch(SET_ACTIVE_CONTRACTS(res));
+              });
           }}
         >
           {contractModalType === "view_contract" ? (
