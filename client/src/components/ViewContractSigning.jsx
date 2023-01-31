@@ -7,8 +7,6 @@ import { validationSchema } from "../yupUtils/comp/ContractYup";
 import { useRef } from "react";
 import {
   getAppointmentsInfo,
-  getContracts,
-  SET_MODAL_STATE,
   signContract,
 } from "../redux/features/contractReducer";
 import moment from "moment";
@@ -46,7 +44,6 @@ const ViewContractSigning = () => {
         dispatch(getContracts());
         dispatch(getAppointmentsInfo());
         dispatch(SET_SELECTED_USER(""));
-        notifyToast("Contract Added Successfully.", "success");
 
         resetForm();
       } catch (error) {

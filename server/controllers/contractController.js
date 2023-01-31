@@ -51,7 +51,7 @@ const POSTcontract = expressAsyncHandler(async (req, res) => {
   });
 
   //* Will convert the user_level from applicant to employee
-  const userInfo = await User.findOne({
+  const userInfo = await Contract.findOne({
     where: { id: applicant_id },
   });
 
@@ -84,7 +84,7 @@ const POSTcontract = expressAsyncHandler(async (req, res) => {
     const employee = {
       ...appointmentInfo.dataValues.Applicant.dataValues,
       employee_status: "active",
-      isEmployeeDeployed: true,
+      isEmployeeDeployed: false,
       date_hired: moment().format("YYYY-MM-DD"),
     };
 
@@ -100,6 +100,7 @@ const POSTcontract = expressAsyncHandler(async (req, res) => {
       contract_status: "Active",
       contract_image: files.originalname,
     };
+    console.log({ newContract });
     await Employee.create(employee);
 
     await Contract.create(newContract);
