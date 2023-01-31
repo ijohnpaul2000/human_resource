@@ -305,16 +305,9 @@ const Contract = () => {
             dispatch(getAppointmentsInfo());
           }}
         >
-          {contractModalType === "view_contract" ? (
-            <ContractImage
-              imageLink={
-                selectedContract &&
-                `http://localhost:5000/api/contract-image/${selectedContract.contract_image}`
-              }
-            />
-          ) : (
-            <EditEmployee />
-          )}
+          <ContractImage
+            imageLink={`http://localhost:5000/api/contract-image/${selectedContract.contract_image}`}
+          />
         </Dialog>
       </div>
     </div>
