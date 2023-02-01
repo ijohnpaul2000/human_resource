@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { sidebarData } from "../data/sidebarData";
 
-import { AiOutlineDatabase, AiOutlineHome } from "react-icons/ai";
+import { AiOutlineDatabase, AiOutlineHome, AiOutlineUsergroupAdd } from "react-icons/ai";
 import { IoStatsChartSharp, IoSettingsOutline } from "react-icons/io5";
 import { HiOutlineChevronRight } from "react-icons/hi";
 import { MdOutlineSecurity } from "react-icons/md";
@@ -93,13 +93,15 @@ const Sidebar = () => {
             to="/manage-users"
             onClick={() => dispatch(SET_LINK_ACTIVE("ManageUsers"))}
           >
-            <li
-              className={`${
-                linkActive === "ManageUsers" && "bg-gray-700 text-white"
-              }`}
-            >
-              <AiOutlineHome /> Manage Users
-            </li>
+            <div className={`${curretUserLevel === "applicant" ? "hidden" : ""}`}>
+              <li
+                className={`${
+                  linkActive === "ManageUsers" && "bg-gray-700 text-white"
+                }`}
+              >
+                <AiOutlineUsergroupAdd /> Manage Users
+              </li>
+            </div>
           </Link>
           <div className={`${curretUserLevel === "applicant" ? "hidden" : ""}`}>
             <li onClick={() => dispatch(TOGGLE_SUBMENU())}>
