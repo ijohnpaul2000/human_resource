@@ -1,3 +1,5 @@
 node_modules
 certifcate.crt
 server/config/config.json
+client/dockerfile.prod
+client/dockerfile.dev

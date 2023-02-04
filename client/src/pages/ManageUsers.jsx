@@ -25,6 +25,7 @@ const ManageUsers = () => {
     (store) => store.users
   );
 
+  console.log(userInfo);
   const currentUser = useSelector((state) => state.auth.user.username);
 
   // Columns for the table
@@ -48,7 +49,7 @@ const ManageUsers = () => {
   // Button Group on the top of table
   const renderHeader = () => {
     return (
-      <div className="flex align-items-center gap-4">
+      <div className="flex gap-4 align-items-center">
         <Button
           type="button"
           icon="pi pi-plus"
@@ -131,9 +132,10 @@ const ManageUsers = () => {
       <div className="header">Manage Users</div>
       <DataTable
         size="small"
-        value={userInfo.filter((element) => {
-          return element.username !== currentUser;
-        })}
+        // userInfo.filter((element) => {
+        //   return element.username !== currentUser;
+        // })
+        value={userInfo}
         responsiveLayout="scroll"
         showGridlines
         header={renderHeader}

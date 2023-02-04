@@ -17,6 +17,8 @@ const Screening = () => {
     onSubmit: async (values, { resetForm }) => {
       let data = {};
       let uuid = v4();
+
+      console.log(uuid);
       data = { ...values, applicationType: "Office", id: uuid };
 
       try {
@@ -51,7 +53,9 @@ const Screening = () => {
       middlename: middlename,
       lastname: lastname,
       username: firstname,
-      password: firstname + lastname,
+      password: (firstname + middlename + lastname)
+        .replace(/\s+/g, "")
+        .toLowerCase(),
       user_level: "applicant",
       email: email,
     };
@@ -135,7 +139,7 @@ const Screening = () => {
       isFieldValid(error) && (
         <small
           id="emailHelp"
-          className="block mt-1 text-red-500 text-xs italic"
+          className="block mt-1 text-xs italic text-red-500"
         >
           {formik.errors[error]}
         </small>
@@ -146,12 +150,12 @@ const Screening = () => {
   return (
     <div>
       <div className="header">Applicant Screening</div>
-      <div className="block p-6 rounded-lg shadow-lg bg-white">
+      <div className="block p-6 bg-white rounded-lg shadow-lg">
         <form className="w-full" onSubmit={formik.handleSubmit}>
           {/* First Name to Suffix */}
-          <div className="flex flex-wrap -mx-3 mt-2 mb-2 gap-y-2">
-            <div className="form-group w-full px-3 md:w-1/3">
-              <label className="form-label inline-block mb-2 text-gray-700 font-bold">
+          <div className="flex flex-wrap mt-2 mb-2 -mx-3 gap-y-2">
+            <div className="w-full px-3 form-group md:w-1/3">
+              <label className="inline-block mb-2 font-bold text-gray-700 form-label">
                 First Name
               </label>
               <input
@@ -169,8 +173,8 @@ const Screening = () => {
               {getErrorMessage("firstname")}
             </div>
 
-            <div className="form-group w-full px-3 md:w-1/3">
-              <label className="form-label inline-block mb-2 text-gray-700 font-bold">
+            <div className="w-full px-3 form-group md:w-1/3">
+              <label className="inline-block mb-2 font-bold text-gray-700 form-label">
                 Middle Name
               </label>
               <input
@@ -188,10 +192,10 @@ const Screening = () => {
               {getErrorMessage("middlename")}
             </div>
 
-            <div className="form-group w-full px-3 md:w-1/3">
+            <div className="w-full px-3 form-group md:w-1/3">
               <div className="flex flex-wrap">
-                <div className="w-full pr-3 w-4/6">
-                  <label className="form-label inline-block mb-2 text-gray-700 font-bold">
+                <div className="w-4/6 w-full pr-3">
+                  <label className="inline-block mb-2 font-bold text-gray-700 form-label">
                     Last Name
                   </label>
                   <input
@@ -208,8 +212,8 @@ const Screening = () => {
                   />
                   {getErrorMessage("lastname")}
                 </div>
-                <div className="w-full pr-0 px-3 w-2/6">
-                  <label className="form-label inline-block mb-2 text-gray-700 font-bold">
+                <div className="w-2/6 w-full px-3 pr-0">
+                  <label className="inline-block mb-2 font-bold text-gray-700 form-label">
                     Suffix
                   </label>
                   <input
@@ -226,9 +230,9 @@ const Screening = () => {
           </div>
 
           {/* Contact to Address */}
-          <div className="flex flex-wrap -mx-3 mt-2 mb-2 gap-y-2">
-            <div className="form-group w-full px-3 md:w-1/3">
-              <label className="form-label inline-block mb-2 text-gray-700 font-bold">
+          <div className="flex flex-wrap mt-2 mb-2 -mx-3 gap-y-2">
+            <div className="w-full px-3 form-group md:w-1/3">
+              <label className="inline-block mb-2 font-bold text-gray-700 form-label">
                 Contact Number
               </label>
               <input
@@ -246,8 +250,8 @@ const Screening = () => {
               {getErrorMessage("contact")}
             </div>
 
-            <div className="form-group w-full px-3 md:w-1/3">
-              <label className="form-label inline-block mb-2 text-gray-700 font-bold">
+            <div className="w-full px-3 form-group md:w-1/3">
+              <label className="inline-block mb-2 font-bold text-gray-700 form-label">
                 Email
               </label>
               <input
@@ -265,8 +269,8 @@ const Screening = () => {
               {getErrorMessage("email")}
             </div>
 
-            <div className="form-group w-full px-3 md:w-1/3">
-              <label className="form-label inline-block mb-2 text-gray-700 font-bold">
+            <div className="w-full px-3 form-group md:w-1/3">
+              <label className="inline-block mb-2 font-bold text-gray-700 form-label">
                 Address
               </label>
               <input
@@ -286,9 +290,9 @@ const Screening = () => {
           </div>
 
           {/* City to Birthplace  */}
-          <div className="flex flex-wrap -mx-3 mt-2 mb-2 gap-y-2">
-            <div className="form-group w-full px-3 md:w-1/3">
-              <label className="form-label inline-block mb-2 text-gray-700 font-bold">
+          <div className="flex flex-wrap mt-2 mb-2 -mx-3 gap-y-2">
+            <div className="w-full px-3 form-group md:w-1/3">
+              <label className="inline-block mb-2 font-bold text-gray-700 form-label">
                 City
               </label>
               <input
@@ -306,10 +310,10 @@ const Screening = () => {
               {getErrorMessage("city")}
             </div>
 
-            <div className="form-group w-full px-3 md:w-1/3">
+            <div className="w-full px-3 form-group md:w-1/3">
               <div className="flex flex-wrap">
-                <div className="w-full pr-3 w-4/6">
-                  <label className="form-label inline-block mb-2 text-gray-700 font-bold">
+                <div className="w-4/6 w-full pr-3">
+                  <label className="inline-block mb-2 font-bold text-gray-700 form-label">
                     Birthdate
                   </label>
                   <input
@@ -333,8 +337,8 @@ const Screening = () => {
                   />
                   {getErrorMessage("birthdate")}
                 </div>
-                <div className="w-full pr-0 px-3 w-2/6">
-                  <label className="form-label inline-block mb-2 text-gray-700 font-bold">
+                <div className="w-2/6 w-full px-3 pr-0">
+                  <label className="inline-block mb-2 font-bold text-gray-700 form-label">
                     Age
                   </label>
                   <input
@@ -355,8 +359,8 @@ const Screening = () => {
               </div>
             </div>
 
-            <div className="form-group w-full px-3 md:w-1/3">
-              <label className="form-label inline-block mb-2 text-gray-700 font-bold">
+            <div className="w-full px-3 form-group md:w-1/3">
+              <label className="inline-block mb-2 font-bold text-gray-700 form-label">
                 Birthplace
               </label>
               <input
@@ -375,9 +379,9 @@ const Screening = () => {
             </div>
           </div>
 
-          <div className="flex flex-wrap -mx-3 mt-2 mb-2 gap-y-2">
-            <div className="form-group w-full px-3 md:w-1/4">
-              <label className="form-label inline-block mb-2 text-gray-700 font-bold">
+          <div className="flex flex-wrap mt-2 mb-2 -mx-3 gap-y-2">
+            <div className="w-full px-3 form-group md:w-1/4">
+              <label className="inline-block mb-2 font-bold text-gray-700 form-label">
                 Citizenship
               </label>
               <input
@@ -395,8 +399,8 @@ const Screening = () => {
               {getErrorMessage("citizenship")}
             </div>
 
-            <div className="form-group w-full px-3 md:w-1/4">
-              <label className="form-label inline-block mb-2 text-gray-700 font-bold">
+            <div className="w-full px-3 form-group md:w-1/4">
+              <label className="inline-block mb-2 font-bold text-gray-700 form-label">
                 Educational Background
               </label>
 
@@ -417,15 +421,15 @@ const Screening = () => {
                   <option value="High School">High School</option>
                   <option value="College">College</option>
                 </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
+                <div className="absolute inset-y-0 right-0 flex items-center px-2 text-gray-500 pointer-events-none">
                   <BsChevronRight />
                 </div>
               </div>
               {getErrorMessage("educational_background")}
             </div>
 
-            <div className="form-group w-full px-3 md:w-1/4">
-              <label className="form-label inline-block mb-2 text-gray-700 font-bold">
+            <div className="w-full px-3 form-group md:w-1/4">
+              <label className="inline-block mb-2 font-bold text-gray-700 form-label">
                 Religion
               </label>
               <input
@@ -443,8 +447,8 @@ const Screening = () => {
               {getErrorMessage("religion")}
             </div>
 
-            <div className="form-group w-full px-3 md:w-1/4">
-              <label className="form-label inline-block mb-2 text-gray-700 font-bold">
+            <div className="w-full px-3 form-group md:w-1/4">
+              <label className="inline-block mb-2 font-bold text-gray-700 form-label">
                 Sex
               </label>
               <div className="relative">
@@ -457,16 +461,16 @@ const Screening = () => {
                   <option value={"Male"}>Male</option>
                   <option value={"Female"}>Female</option>
                 </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
+                <div className="absolute inset-y-0 right-0 flex items-center px-2 text-gray-500 pointer-events-none">
                   <BsChevronRight />
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="flex flex-wrap -mx-3 mt-2 mb-2 gap-y-2">
-            <div className="form-group w-full px-3">
-              <label className="form-label inline-block mb-2 text-gray-700 font-bold">
+          <div className="flex flex-wrap mt-2 mb-2 -mx-3 gap-y-2">
+            <div className="w-full px-3 form-group">
+              <label className="inline-block mb-2 font-bold text-gray-700 form-label">
                 Notes
               </label>
               <textarea
@@ -481,9 +485,9 @@ const Screening = () => {
             </div>
           </div>
 
-          <div className="flex flex-wrap -mx-3 mt-2 mb-2 gap-y-2">
-            <div className="form-group w-full px-3 md:w-1/4">
-              <label className="form-label inline-block mb-2 text-gray-700 font-bold">
+          <div className="flex flex-wrap mt-2 mb-2 -mx-3 gap-y-2">
+            <div className="w-full px-3 form-group md:w-1/4">
+              <label className="inline-block mb-2 font-bold text-gray-700 form-label">
                 Submitted Requirement
               </label>
               <div className="relative">
@@ -496,13 +500,13 @@ const Screening = () => {
                   <option value={1}>Complete</option>
                   <option value={0}>Incomplete</option>
                 </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
+                <div className="absolute inset-y-0 right-0 flex items-center px-2 text-gray-500 pointer-events-none">
                   <BsChevronRight />
                 </div>
               </div>
             </div>
-            <div className="form-group w-full px-3 md:w-1/4">
-              <label className="form-label inline-block mb-2 text-gray-700 font-bold">
+            <div className="w-full px-3 form-group md:w-1/4">
+              <label className="inline-block mb-2 font-bold text-gray-700 form-label">
                 Civil Status
               </label>
               <div className="relative">
@@ -518,13 +522,13 @@ const Screening = () => {
                   <option value="Separated">Separated</option>
                   <option value="Divorced">Divorced</option>
                 </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
+                <div className="absolute inset-y-0 right-0 flex items-center px-2 text-gray-500 pointer-events-none">
                   <BsChevronRight />
                 </div>
               </div>
             </div>
-            <div className="form-group w-full px-3 md:w-1/4">
-              <label className="form-label inline-block mb-2 text-gray-700 font-bold">
+            <div className="w-full px-3 form-group md:w-1/4">
+              <label className="inline-block mb-2 font-bold text-gray-700 form-label">
                 Applicant Status
               </label>
               <div className="relative">
@@ -540,13 +544,13 @@ const Screening = () => {
                     Incomplete Requirements
                   </option>
                 </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
+                <div className="absolute inset-y-0 right-0 flex items-center px-2 text-gray-500 pointer-events-none">
                   <BsChevronRight />
                 </div>
               </div>
             </div>
-            {/* <div className="form-group w-full px-3 md:w-1/4">
-              <label className="form-label inline-block mb-2 text-gray-700 font-bold">
+            {/* <div className="w-full px-3 form-group md:w-1/4">
+              <label className="inline-block mb-2 font-bold text-gray-700 form-label">
                 Application Status
               </label>
               <div className="relative">
@@ -560,7 +564,7 @@ const Screening = () => {
                   <option value={"interview"}>Interview</option>
                   <option value={"deployment"}>Deployment</option>
                 </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
+                <div className="absolute inset-y-0 right-0 flex items-center px-2 text-gray-500 pointer-events-none">
                   <BsChevronRight />
                 </div>
               </div>
