@@ -29,7 +29,7 @@ const POSTuser = expressAsyncHandler(async (req, res) => {
 
   try {
     const newUser = {
-      id: id ?? v4(),
+      id,
       firstname,
       middlename,
       lastname,

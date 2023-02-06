@@ -37,7 +37,7 @@ const Sidebar = () => {
   const linkActive = useSelector((state) => state.sidebar.linkActive);
 
   const currentUser = useSelector((state) => state.auth.user.username);
-  const curretUserLevel = useSelector((state) => state.auth.user.user_level);
+  const currentUserLevel = useSelector((state) => state.auth.user.user_level);
 
   const handleLogout = () => {
     navigate("/");
@@ -71,7 +71,7 @@ const Sidebar = () => {
         <img src={avatar} alt="" className="max-w-[50px]" />
         <div className="pl-4">
           <p className="">{currentUser}</p>
-          <p className="">{curretUserLevel}</p>
+          <p className="">{currentUserLevel}</p>
         </div>
       </div>
 
@@ -81,19 +81,21 @@ const Sidebar = () => {
             to="/dashboard"
             onClick={() => dispatch(SET_LINK_ACTIVE("Dashboard"))}
           >
-            <li
-              className={`${
-                linkActive === "Dashboard" && "bg-gray-700 text-white"
-              }`}
-            >
-              <AiOutlineHome /> Dashboard
-            </li>
+            <div className={`${currentUserLevel === "user" ? "hidden" : ""}`}>
+              <li
+                className={`${
+                  linkActive === "Dashboard" && "bg-gray-700 text-white"
+                }`}
+              >
+                <AiOutlineHome /> Dashboard
+              </li>
+            </div>
           </Link>
           <Link
             to="/manage-users"
             onClick={() => dispatch(SET_LINK_ACTIVE("ManageUsers"))}
           >
-            <div className={`${curretUserLevel === "applicant" ? "hidden" : ""}`}>
+            <div className={`${(currentUserLevel === "applicant" || currentUserLevel === "admin" || currentUserLevel === "user") ? "hidden" : ""}`}>
               <li
                 className={`${
                   linkActive === "ManageUsers" && "bg-gray-700 text-white"
@@ -103,7 +105,7 @@ const Sidebar = () => {
               </li>
             </div>
           </Link>
-          <div className={`${curretUserLevel === "applicant" ? "hidden" : ""}`}>
+          <div className={`${currentUserLevel === "applicant" ? "hidden" : ""}`}>
             <li onClick={() => dispatch(TOGGLE_SUBMENU())}>
               <AiOutlineDatabase />
               Hiring Process Menu{" "}
@@ -116,26 +118,27 @@ const Sidebar = () => {
 
             <div className={`${isSubMenuOpen ? "" : "hidden"}`}>
               {sidebarData.map((item) => (
-                <Link
-                  key={item.path}
-                  to={item.path}
-                  onClick={() => {
-                    dispatch(SET_LINK_ACTIVE(item.title));
-                  }}
-                >
-                  <li
-                    className={`${
-                      linkActive === item.title && "bg-gray-700 text-white"
-                    } `}
+                <div key={item.path} className={`${(currentUserLevel === "user" && item.path !== "/applicant/appointment") ? "hidden" : ""}`}>
+                  <Link
+                    to={item.path}
+                    onClick={() => {
+                      dispatch(SET_LINK_ACTIVE(item.title));
+                    }}
                   >
-                    {item.title}
-                  </li>
-                </Link>
+                    <li
+                      className={`${
+                        linkActive === item.title && "bg-gray-700 text-white"
+                      } `}
+                    >
+                      {item.title}
+                    </li>
+                  </Link>
+                </div>
               ))}
             </div>
           </div>
 
-          <div className={`${curretUserLevel === "applicant" ? "hidden" : ""}`}>
+          <div className={`${(currentUserLevel === "applicant" || currentUserLevel === "user") ? "hidden" : ""}`}>
             <Link
               to="/monitor-status"
               onClick={() => dispatch(SET_LINK_ACTIVE("Monitor Status"))}
@@ -151,10 +154,10 @@ const Sidebar = () => {
           </div>
 
           {/* //TODO: ADD DIALOG FOR PREFERENCES NO NEED TO SET LINK ACTIVE BECAUSE IT'S A DIALOG*/}
-          <li>
+          {/* <li>
             <IoSettingsOutline />
             Preferences
-          </li>
+          </li> */}
           <li
             onClick={() =>
               renderDialog(
@@ -199,7 +202,7 @@ const Sidebar = () => {
     //     <img src={avatar} alt="" className="max-w-[50px]" />
     //     <div className="pl-4">
     //       <p className="">{currentUser}</p>
-    //       <p className="">{curretUserLevel}</p>
+    //       <p className="">{currentUserLevel}</p>
     //     </div>
     //   </div>
 
@@ -218,7 +221,7 @@ const Sidebar = () => {
     //           <AiOutlineHome /> Dashboard
     //         </li>
     //       </Link>
-    //       <div className={`${curretUserLevel === "applicant" ? "hidden" : ""}`}>
+    //       <div className={`${currentUserLevel === "applicant" ? "hidden" : ""}`}>
     //         <li onClick={() => dispatch(TOGGLE_SUBMENU())}>
     //           <AiOutlineDatabase />
     //           Hiring Process Menu{" "}
@@ -250,7 +253,7 @@ const Sidebar = () => {
     //         </div>
     //       </div>
 
-    //       <div className={`${curretUserLevel === "applicant" ? "hidden" : ""}`}>
+    //       <div className={`${currentUserLevel === "applicant" ? "hidden" : ""}`}>
     //         <Link
     //           to="/dashboard"
     //           onClick={() => dispatch(SET_LINK_ACTIVE("Monitor Status"))}
