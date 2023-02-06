@@ -21,7 +21,7 @@ const SharedLayout = () => {
     useSelector((state) => state.auth.isAuthenticated) ||
     localStorage.getItem("userToken");
 
-  if (!isAuthenticated) {
+  if (!isAuthenticated || !userLevel) {
     return <NotAuthenticated />;
   }
 
