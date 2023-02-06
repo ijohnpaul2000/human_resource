@@ -3,6 +3,7 @@ import SharedLayout from "./layouts/SharedLayout";
 import Dashboard from "./pages/Dashboard";
 import Error404 from "./pages/Error404";
 import MonitorStatus from "./pages/MonitorStatus";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 import {
   Appointment,
@@ -23,13 +24,23 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/" element={<SharedLayout />}>
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/manage-users" element={<ManageUsers />} />
-          <Route path="/applicant/screening" element={<Screening />} />
-          <Route path="/applicant/requirements" element={<Requirements />} />
-          <Route path="/applicant/appointment" element={<Appointment />} />
-          <Route path="/applicant/contract" element={<Contract />} />
-          <Route path="/applicant/examination" element={<Examination />} />
-          <Route path="/monitor-status" element={<MonitorStatus />} />
+
+          <Route element={<ProtectedRoute allowedRoles={["user", "admin", "super_user"]} />}>
+            <Route path="/applicant/appointment" element={<Appointment />} />
+          </Route>
+
+          <Route element={<ProtectedRoute allowedRoles={["admin", "super_user"]} />}>
+            <Route path="/applicant/screening" element={<Screening />} />
+            <Route path="/applicant/requirements" element={<Requirements />} />
+            <Route path="/applicant/contract" element={<Contract />} />
+            <Route path="/applicant/examination" element={<Examination />} />
+            <Route path="/monitor-status" element={<MonitorStatus />} />
+          </Route>
+
+          <Route element={<ProtectedRoute allowedRoles={["super_user"]} />}>
+            <Route path="/manage-users" element={<ManageUsers />} />
+          </Route>
+
           <Route path="/register-applicant" element={<RegisterApplicant />} />
         </Route>
         <Route path="*" element={<Error404 />} />

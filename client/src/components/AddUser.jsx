@@ -306,7 +306,6 @@ const AddUser = () => {
                   <option value="admin">Admin</option>
                   <option value="super_user">Super User</option>
                   <option value="user">Staff</option>
-                  <option value="applicant">Applicant</option>
                 </select>
                 <div className="absolute inset-y-0 right-0 flex items-center px-2 text-gray-500 pointer-events-none">
                   <BsChevronRight />
