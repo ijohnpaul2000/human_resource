@@ -18,15 +18,20 @@ const Screening = () => {
       let data = {};
       let uuid = v4();
 
-      console.log(uuid);
-      data = { ...values, applicationType: "Office", id: uuid };
+      data = {
+        ...values,
+        from_url: "applicant/screening",
+        applicationType: "Office",
+        id: uuid,
+      };
+
+      console.log({ data });
 
       try {
         const response = await axios.post(
           "http://localhost:5000/api/applicants/",
           data
         );
-        console.log(response);
         notifyToast("Applicant Added", "success");
 
         //Requirements Checker. rap ulit

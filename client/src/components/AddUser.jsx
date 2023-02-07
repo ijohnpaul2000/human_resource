@@ -76,7 +76,10 @@ const AddUser = () => {
           url: selectedUser
             ? `http://localhost:5000/api/users/${selectedUser.id}`
             : "http://localhost:5000/api/users",
-          data: values,
+          data: {
+            ...values,
+            from_url: "manage-users",
+          },
         });
         resetForm();
         dispatch(getUsersInfo());
@@ -129,7 +132,7 @@ const AddUser = () => {
     if (selectedUser === "") {
       setChecked(true);
     }
-  }, [dispatch]);
+  }, [dispatch, selectedUser]);
 
   return (
     <div>

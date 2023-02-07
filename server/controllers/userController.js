@@ -7,7 +7,7 @@ const bcrypt = require("bcryptjs");
 //@desc Create a new user
 //@access Public
 const POSTuser = expressAsyncHandler(async (req, res) => {
-  const {
+  let {
     id,
     firstname,
     middlename,
@@ -16,6 +16,7 @@ const POSTuser = expressAsyncHandler(async (req, res) => {
     password,
     user_level,
     email,
+    from_url,
   } = req.body;
 
   const existingUser = await User.findOne({ where: { username } });
@@ -26,6 +27,10 @@ const POSTuser = expressAsyncHandler(async (req, res) => {
 
   const gensalt = 10;
   const hashedPassword = await bcrypt.hash(password, gensalt);
+
+  if (from_url?.toLowerCase() === "manage-users") {
+    id = v4();
+  }
 
   try {
     const newUser = {
