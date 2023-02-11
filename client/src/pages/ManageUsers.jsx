@@ -3,6 +3,10 @@ import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
+import { Dropdown } from "primereact/dropdown";
+import { Chip } from "primereact/chip";
+import { ColumnGroup } from 'primereact/columngroup';
+import { Row } from 'primereact/row';
 import {
   SET_SELECTED_USER,
   USER_INFO,
@@ -16,6 +20,10 @@ import { notifyToast } from "../helpers/notifyToast";
 import { ToastContainer } from "react-toastify";
 import { SET_MODAL } from "../redux/features/modalReducer";
 
+// Filtration System
+import { SET_FILTER, SET_GLOBAL_VALUE } from "../redux/filterReducer";
+import { FilterMatchMode, FilterOperator } from "primereact/api";
+
 import axios from "axios";
 
 const ManageUsers = () => {
@@ -25,22 +33,131 @@ const ManageUsers = () => {
     (store) => store.users
   );
 
+  const { filters, globalFilterValue } = useSelector(
+    (store) => store.filtration
+  );
+
+  const userLevel = ["admin", "super_user", "user", "applicant"];
+
   console.log(userInfo);
   const currentUser = useSelector((state) => state.auth.user.username);
 
-  // Columns for the table
+  // Set the Filters while Searching
+  const initFilter = () => {
+    dispatch(
+      SET_FILTER({
+        global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+        firstname: {
+          operator: FilterOperator.AND,
+          constraints: [
+            { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+          ],
+        },
+        email: {
+          operator: FilterOperator.AND,
+          constraints: [
+            { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+          ],
+        },
+        username: {
+          operator: FilterOperator.AND,
+          constraints: [
+            { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+          ],
+        },
+        user_level: {
+          operator: FilterOperator.AND,
+          constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }],
+        },
+        date_added: {
+          operator: FilterOperator.AND,
+          constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }],
+        },
+      })
+    );
+
+    dispatch(SET_GLOBAL_VALUE(""));
+  };
+
+  // For User Level UI
+  const userLevelBodyTemplate = (rowData) => {
+    return <Chip label={rowData.user_level} />;
+  };
+
+  const userLevelFilterTemplate = (options) => {
+    return (
+      <Dropdown
+        value={options.value}
+        options={userLevel}
+        onChange={(e) => options.filterCallback(e.value, options.index)}
+        itemTemplate={userLevelItemTemplate}
+        placeholder="Select a User Level"
+        className="p-column-filter"
+        showClear
+      />
+    );
+  };
+
+  const userLevelItemTemplate = (option) => {
+    return (
+      <span className={`requirement-badge status-complete`}>{option}</span>
+    );
+  };
+
+  //Template for names
+  const fullNameFilterTemplate = (rowData) => {
+    return (
+      <Chip
+        label={`${rowData.firstname} ${rowData.middlename} ${rowData.lastname}`}
+      />
+    );
+  };
+
+  // Other columns for the table
   const columns = [
-    { field: "name", header: "Name" },
-    { field: "email", header: "Email" },
-    { field: "username", header: "Username" },
-    { field: "user_level", header: "User Level" },
-    { field: "date_added", header: "Date Added" },
+    {
+      field: "firstname",
+      header: "First Name",
+      filterEl: "",
+    },
+    {
+      field: "middlename",
+      header: "Middle Name",
+      filterEl: "",
+    },
+    {
+      field: "lastname",
+      header: "Last Name",
+      filterEl: "",
+    },
+    {
+      field: "email",
+      header: "Email",
+      filterEl: "",
+    },
+    {
+      field: "username",
+      header: "Username",
+      filterEl: "",
+    },
+    {
+      field: "user_level",
+      header: "User Level",
+      filterEl: userLevelFilterTemplate,
+    },
+    {
+      field: "date_added",
+      header: "Date Added",
+      filterEl: "",
+    },
   ];
 
-  // To join multiple columns
+  // To custom rendering of the data
   const renderName = (rowData, item) => {
     if (item.field === "name") {
-      return `${rowData.firstname} ${rowData.middlename} ${rowData.lastname}`;
+      return fullNameFilterTemplate(rowData);
+    } else if (item.field === "user_level") {
+      return userLevelBodyTemplate(rowData);
     } else {
       return rowData[item.field];
     }
@@ -105,6 +222,7 @@ const ManageUsers = () => {
       body={renderName}
       sortable
       filter
+      filterElement={item.filterEl}
     />
   ));
 
@@ -124,6 +242,12 @@ const ManageUsers = () => {
 
   useEffect(() => {
     dispatch(getUsersInfo());
+    initFilter();
+
+    return () => {
+      console.log("test");
+      SET_FILTER(null);
+    }
   }, [dispatch]);
 
   // Actual UI Renderer
@@ -139,13 +263,25 @@ const ManageUsers = () => {
         responsiveLayout="scroll"
         showGridlines
         header={renderHeader}
+        filters={filters}
         selection={selectedUser}
         selectionMode="radiobutton"
+        filterDisplay="menu"
+        globalFilterFields={[
+          "firstname",
+          "middlename",
+          "lastname",
+          "email",
+          "username",
+          "user_level",
+          "date_added",
+        ]}
         onSelectionChange={(e) => {
           dispatch(SET_SELECTED_USER(e.value));
         }}
       >
-        <Column selectionMode="single" headerStyle={{ width: "3em" }}></Column>
+        <Column selectionMode="single" headerStyle={{ width: "3em" }} />
+        
         {columnComponent}
       </DataTable>
       <Dialog
