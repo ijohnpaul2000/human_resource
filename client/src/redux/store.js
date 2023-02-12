@@ -14,6 +14,7 @@ import requirementReducer from "./features/requirementReducer";
 import contractReducer from "./features/contractReducer";
 import userReducer from "./features/userReducer";
 import filterReducer from "./filterReducer";
+import applicantEmployeeReducer from "./features/applicantEmployeeReducer";
 
 //ENTITIES
 import ApplicantsThunk from "./features/Entities/ApplicantsThunk";
@@ -36,6 +37,7 @@ const rootReducer = combineReducers({
   contract: contractReducer,
   users: userReducer,
   filtration: filterReducer,
+  applicantEmployee: applicantEmployeeReducer,
   //ENTITIES
   applicants: ApplicantsThunk,
   appointments: AppointmentsThunk,
