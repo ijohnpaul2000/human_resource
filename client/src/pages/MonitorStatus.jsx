@@ -22,7 +22,7 @@ const MonitorStatus = () => {
 
       <div className="pb-20">
         <h1 className="font-poppins text-2xl font-semibold">
-          Employement Status
+          Emplocant Status
         </h1>
         <ApplicantEmployeeView />
       </div>

@@ -325,6 +325,7 @@ const Contract = () => {
           )}
         </Dialog>
       </div>
+      <ToastContainer />
     </div>
   );
 };

@@ -17,6 +17,7 @@ const ApplicantEmployeeView = () => {
     (state) => state.applicantEmployee.employeeInfo
   );
 
+  console.log({ employeeInfo });
   let statusLevel = [];
 
   /* 
@@ -33,6 +34,15 @@ const ApplicantEmployeeView = () => {
           rowSpan={2}
           field={tab === 0 ? "employee_status" : "applicant_status"}
         />
+        {tab === 0 && (
+          <Column
+            sortable
+            filter
+            header="Deployment Location"
+            rowSpan={2}
+            field="deployment_location"
+          />
+        )}
       </Row>
       <Row>
         <Column
@@ -99,7 +109,7 @@ const ApplicantEmployeeView = () => {
     >
       <TabPanel header="Employees" rightIcon="pi pi-id-card ml-2">
         <DataTable
-          value={employeeInfo.data.employees}
+          value={employeeInfo?.data?.employees}
           responsiveLayout="scroll"
           showGridlines
           size="small"
@@ -110,11 +120,12 @@ const ApplicantEmployeeView = () => {
           <Column field="middlename" header="Middle Name" />
           <Column field="lastname" header="Last Name" />
           <Column field="employee_status" header="Status" />
+          <Column field="deployment_location" header="Deployment Location" />
         </DataTable>
       </TabPanel>
       <TabPanel header="Applicants" rightIcon="pi pi-user ml-2">
         <DataTable
-          value={employeeInfo.data.applicants}
+          value={employeeInfo?.data?.applicants}
           responsiveLayout="scroll"
           showGridlines
           size="small"

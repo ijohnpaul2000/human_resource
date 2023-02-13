@@ -1,17 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Row } from "primereact/row";
 import { ColumnGroup } from "primereact/columngroup";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getApplicantsData } from "../redux/features/Entities/ApplicantsThunk";
+import { getEmployeesData } from "../redux/features/Entities/EmployeesThunk";
 const ApplicantsStatus = () => {
-
   /* 
     Simple declaring of variable to retrieve all the applicants data.
   */
-  const applicants = useSelector((state) => state.applicants.applicantsData); 
+  const applicants = useSelector((state) => state.applicants.applicantsData);
 
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getApplicantsData());
+    dispatch(getEmployeesData());
+  }, [dispatch]);
 
   /* 
     For dynamic rendering of the headers for the UI.
@@ -33,7 +39,6 @@ const ApplicantsStatus = () => {
       </Row>
     </ColumnGroup>
   );
-
 
   /* 
     It will rendered the table in the browser.

@@ -49,6 +49,16 @@ const POSTappointment = expressAsyncHandler(async (req, res) => {
     };
 
     const createdAppointment = await Appointment.create(newAppointment);
+
+    await Applicant.update(
+      {
+        ...existingApplicant,
+        application_status: appointment_type,
+      },
+      {
+        where: { id: applicant_id },
+      }
+    );
     res.status(200).json(createdAppointment);
   } catch (error) {
     console.log(error);

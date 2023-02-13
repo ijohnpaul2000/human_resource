@@ -28,6 +28,7 @@ const POSTemployee = expressAsyncHandler(async (req, res) => {
     employee_status,
     isEmployeeDeployed,
     date_hired,
+    deployment_location,
   } = req.body;
 
   const existingEmployee = await Employee.findOne({ where: { email } });
@@ -59,6 +60,7 @@ const POSTemployee = expressAsyncHandler(async (req, res) => {
       employee_status,
       isEmployeeDeployed,
       date_hired,
+      deployment_location,
     };
 
     await Employee.create(newEmployee);

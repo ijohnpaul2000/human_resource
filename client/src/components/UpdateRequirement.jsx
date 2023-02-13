@@ -50,7 +50,6 @@ const UpdateRequirement = () => {
           url: `http://localhost:5000/api/requirements/${selectedRequirement.applicant_id}`,
           data: values,
         });
-        resetForm();
         notifyToast("Requirement Updated", "success");
         console.log(response);
         dispatch(SET_SELECTED_REQUIREMENT(""));
@@ -58,6 +57,7 @@ const UpdateRequirement = () => {
       } catch (error) {
         notifyToast(error.response.data.message, "error");
       }
+      resetForm();
     },
   });
 

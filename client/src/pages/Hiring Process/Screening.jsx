@@ -43,11 +43,10 @@ const Screening = () => {
           values.lastname,
           values.email
         );
-
-        resetForm();
       } catch (error) {
         notifyToast(error.response.data.message, "error");
       }
+      resetForm();
     },
   });
 

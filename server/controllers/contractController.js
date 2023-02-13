@@ -14,7 +14,9 @@ const { generateFilename } = require("../utils/generateFilename");
 // @desc Create a new contract
 // @access Public
 const POSTcontract = expressAsyncHandler(async (req, res) => {
-  const { applicant_id, salary, contract_date } = req.body;
+  const { applicant_id, salary, contract_date, deployment_location } = req.body;
+
+  console.log({ "request body": req.body });
   const files = req.file;
 
   const appointmentInfo = await Appointment.findOne({
@@ -87,6 +89,7 @@ const POSTcontract = expressAsyncHandler(async (req, res) => {
       employee_status: "active",
       isEmployeeDeployed: true,
       date_hired: moment().format("YYYY-MM-DD"),
+      deployment_location,
     };
 
     const updatedUser = {

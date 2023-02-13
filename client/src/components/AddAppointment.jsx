@@ -76,7 +76,6 @@ const AddAppointment = () => {
             : "http://localhost:5000/api/appointments",
           data: values,
         });
-        resetForm();
         dispatch(getAppointments());
         dispatch(getApplicantsInfo());
         console.log(response);
@@ -89,6 +88,7 @@ const AddAppointment = () => {
       } catch (error) {
         notifyToast(error.response.data.message, "error");
       }
+      resetForm();
     },
   });
 

@@ -23,6 +23,7 @@ const ViewContractSigning = () => {
     applicant_id: selectedApplicant?.applicant_id,
     salary: 0,
     contract_date: "",
+    deployment_location: "",
   };
 
   const contractRef = useRef(null);
@@ -41,20 +42,13 @@ const ViewContractSigning = () => {
       );
       formData.append("salary", values.salary);
       formData.append("contract_image", contractImage);
+      formData.append("deployment_location", values.deployment_location);
 
       try {
         console.log({ formData });
-        dispatch(signContract(formData))
-          .unwrap()
-          .then((res) => {
-            if (res.status === "success") {
-              notifyToast(res.message, "success");
-            } else {
-              notifyToast(res.message, "error");
-            }
-          });
-        dispatch(SET_SELECTED_USER(""));
-        dispatch(getContracts());
+        dispatch(signContract(formData));
+
+        notifyToast("Contract signed successfully", "success");
 
         setTimeout(() => {
           dispatch(
@@ -64,10 +58,13 @@ const ViewContractSigning = () => {
             })
           );
         }, 1000);
-        resetForm();
+
+        dispatch(SET_SELECTED_USER(""));
       } catch (error) {
         notifyToast(error, "error");
       }
+      dispatch(getContracts());
+      resetForm();
     },
   });
 
@@ -121,7 +118,11 @@ const ViewContractSigning = () => {
               placeholder="Enter first name"
               className="formFields"
               disabled
-              value={selectedApplicant ? selectedApplicant["Applicant"]?.firstname : ""}
+              value={
+                selectedApplicant
+                  ? selectedApplicant["Applicant"]?.firstname
+                  : ""
+              }
             />
           </div>
 
@@ -136,7 +137,11 @@ const ViewContractSigning = () => {
               placeholder="Enter middle name"
               className="formFields"
               disabled
-              value={selectedApplicant ? selectedApplicant["Applicant"]?.middlename : ""}
+              value={
+                selectedApplicant
+                  ? selectedApplicant["Applicant"]?.middlename
+                  : ""
+              }
             />
           </div>
 
@@ -153,7 +158,11 @@ const ViewContractSigning = () => {
                   placeholder="Enter lastname"
                   className="formFields"
                   disabled
-                  value={selectedApplicant ? selectedApplicant["Applicant"]?.lastname : ""}
+                  value={
+                    selectedApplicant
+                      ? selectedApplicant["Applicant"]?.lastname
+                      : ""
+                  }
                 />
               </div>
               <div className="w-2/6 w-full px-3 pr-0">
@@ -167,7 +176,11 @@ const ViewContractSigning = () => {
                   id="suffix"
                   name="suffix"
                   placeholder="Suff."
-                  value={selectedApplicant ? selectedApplicant["Applicant"]?.suffix : ""}
+                  value={
+                    selectedApplicant
+                      ? selectedApplicant["Applicant"]?.suffix
+                      : ""
+                  }
                 />
               </div>
             </div>
@@ -234,6 +247,31 @@ const ViewContractSigning = () => {
               }
             />
             {getErrorMessage("address")}
+          </div>
+        </div>
+        <div className="flex flex-wrap mt-2 mb-2 -mx-3 gap-y-2">
+          <div className="w-full px-3 form-group md:w-1/3">
+            <label
+              className="inline-block mb-2 font-bold text-gray-700 form-label"
+              htmlFor="deployment_location"
+            >
+              Deployment Location
+            </label>
+            <input
+              type="text"
+              id="deployment_location"
+              name="deployment_location"
+              placeholder="Enter deployment location"
+              /* className="formFields" */
+              className={
+                isFieldValid("")
+                  ? "border-2 border-red-600 formFields"
+                  : "formFields"
+              }
+              value={formik.values.deployment_location}
+              onChange={formik.handleChange}
+            />
+            {/* {getErrorMessage("address")} */}
           </div>
         </div>
         <div className="flex justify-end">

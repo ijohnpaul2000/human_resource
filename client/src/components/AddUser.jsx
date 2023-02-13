@@ -81,7 +81,6 @@ const AddUser = () => {
             from_url: "manage-users",
           },
         });
-        resetForm();
         dispatch(getUsersInfo());
         console.log(response);
         notifyToast(selectedUser ? "User Updated" : "User Added", "success");
@@ -90,6 +89,7 @@ const AddUser = () => {
       } catch (error) {
         notifyToast(error.response.data.message, "error");
       }
+      resetForm();
     },
   });
 

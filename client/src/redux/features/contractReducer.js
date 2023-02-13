@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { notifyToast } from "../../helpers/notifyToast";
 
 const initialState = {
   appointmentInfo: [],
@@ -52,6 +53,7 @@ export const signContract = createAsyncThunk(
           },
         }
       );
+
       return result.data;
     } catch (error) {
       rejectWithValue(error.response.data.message);
